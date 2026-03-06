@@ -1,0 +1,189 @@
+\documentclass[a4paper,12pt]{ctexart}
+
+% ================= 宏包引入 =================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}      % 插入图片
+\usepackage{hyperref}      % 超链接
+\usepackage{amsmath}       % 数学公式
+\usepackage{amssymb}       % 数学符号
+\usepackage{booktabs}      % 表格三线表
+\usepackage{float}         % 图片位置控制
+\usepackage{titlesec}      % 标题格式
+\usepackage{fancyhdr}      % 页眉页脚
+\usepackage{biblatex}      % 参考文献管理 (或者使用 natbib，这里推荐 biblatex 配合 biber)
+\usepackage{listings}      % 代码插入
+
+% ================= 页面设置 =================
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\linespread{1.5}           % 行间距 1.5 倍
+\setcounter{secnumdepth}{3} % 章节编号深度
+
+% ================= 参考文献配置 =================
+% 注意：确保根目录下有 cites.bib 文件
+\addbibresource{../cites.bib} 
+
+% ================= 自定义命令 =================
+\newcommand{\logk}[1]{\log^{(#1)} n} % 迭代对数快捷命令
+\newcommand{\bigO}[1]{O(#1)}         % 大O符号
+
+% ================= 封面信息 =================
+\title{\textbf{毕业设计开题报告}\\[1em]
+\Large 对基于 k-kick tree 的哈希表的研究与复现}
+
+\author{学生姓名：肖扬 \\ 
+        学号：221900387 \\ 
+        专业：智能化软件}
+
+\date{\today}
+
+\begin{document}
+
+% 生成封面
+\maketitle
+
+% 封面后空白页或声明页（可选）
+\newpage
+\tableofcontents
+\newpage
+
+% ================= 正文开始 =================
+
+\section{Background and Significance of the Topic Selection}
+
+\subsection{Research Background}
+Hash table is one of the most fundamental data structures in modern database management systems (DBMS), caching systems, and search engines. Its core objective is to support dynamic insertion and deletion operations while providing a query time complexity of $O(1)$. However, over the past sixty years since the birth of hash tables, the academic community has been facing a theoretical bottleneck: under the condition of constant-time operations, the lower bound of wasted bits per key-value pair (Wasted Bits) is $\Theta(\log \log n)$ bits \cite{pagh2001low}. 
+The 2021 paper \textit{On the Optimal Time/Space Tradeoff for Hash Tables} \cite{bender2021optimal} broke this deadlock. This research proposed a new hash scheme based on \textbf{k-kick tree}, proving that by appropriately increasing the time complexity of insertion and deletion operations (from $O(1)$ to $O(k)$), the space waste can be reduced exponentially to $O(\log^{(k)} n)$ bits. When $k=\log^* n$, the space waste can be reduced to a constant level of $O(1)$, achieving a significant breakthrough in both theory and engineering.
+
+\subsection{Research significance}
+This graduation project aims to reproduce this cutting-edge hash scheme and integrate it into common database management systems. Its significance mainly lies in follows:
+\begin{enumerate}
+    \item \textbf{Theoretical value}:Verify the exponential trade-off curve of "time versus space".
+    \item \textbf{Engineering value}：Reducing memory usage means lower costs and higher concurrency capabilities. Improve the storage efficiency of the existing database in scenarios with limited memory.
+\end{enumerate}
+
+
+\section{Research Objectives and Main Contents}
+
+\begin{enumerate}
+    \item \textbf{Algorithm reproduction}:Implement the hierarchical bucket management and element eviction logic of the core algorithm of the k-kick tree.
+    \item \textbf{System integration}:Integrate this hash scheme into a lightweight database system.
+    \item \textbf{Theoretical analysis}:Based on the original paper and the code implementation, analyze the correctness and complexity of the algorithm.
+    \item \textbf{Performance verification}:Verify the time complexity and space complexity through experiments.
+\end{enumerate}
+
+
+\section{Technical route and implementation plan}
+
+\subsection{Development environment}
+\begin{itemize}
+    \item \textbf{Programming language}:Cplusplus
+    \item \textbf{Biuld tools}:CMake
+    \item \textbf{Database baseline}:LevelDB or self-developed DB
+\end{itemize}
+
+\subsection{algorithm in pseudo-code}
+\begin{lstlisting}
+# 全局参数
+MAX_KICK_DEPTH = k  # 对应 k-Kick Tree 的深度限制
+TABLE_SIZE = m
+Table = Array[0..m-1] of Element or EMPTY
+
+# 哈希函数族: h(x, depth) 返回 x 在指定深度的探测位置
+function h(x, depth):
+    return HashFunction(x, seed=depth) % TABLE_SIZE
+
+# 核心插入函数：尝试将元素 item 插入到指定深度
+# 返回 True 如果成功，False 如果失败（需要上层处理）
+function InsertWithKick(item, depth):
+    if depth > MAX_KICK_DEPTH:
+        return False  # 超过最大踢出深度，插入失败
+    
+    pos = h(item, depth)
+    
+    if Table[pos] is EMPTY:
+        # 情况 1: 位置为空，直接放入
+        Table[pos] = item
+        return True
+    else:
+        # 情况 2: 位置被占用，执行 "Kick" 操作
+        displaced_item = Table[pos]
+        
+        # 尝试将被挤出的元素 displaced_item 
+        # 移到下一层 (depth + 1)
+
+        if InsertWithKick(displaced_item, depth + 1):
+            # 如果被挤出的元素找到了新家
+            # 当前 item 就可以占据这个位置
+            Table[pos] = item
+            return True
+        else:
+            # 如果被挤出的元素无法安置，回滚或上报失败
+            # 在某些变体中，这里可能触发局部重哈希
+            return False
+
+# 主插入接口
+function HashTable_Insert(key, value):
+    item = (key, value)
+    
+    # 从深度 0 开始尝试
+    if not InsertWithKick(item, 0):
+        # 如果 k-Kick 失败，根据具体实现可能需要：
+        # 1. 扩大表大小并 rehash (标准开放寻址)
+        # 2. 使用备用哈希函数重新尝试 (Cuckoo 风格)
+        # 在理论最优构造中，只要表有足够冗余，此步极少发生
+        RehashAndResize()
+        HashTable_Insert(key, value)
+
+# 查找函数 (Probe Sequence)
+function HashTable_Find(key):
+    item_key = key
+    for d from 0 to MAX_KICK_DEPTH:
+        pos = h(item_key, d)
+        if Table[pos] is EMPTY:
+            return NOT_FOUND
+        if Table[pos].key == key:
+            return Table[pos].value
+    return NOT_FOUND
+\end{lstlisting}
+
+
+\subsection{Implementation steps}
+\begin{enumerate}
+    \item \textbf{First stage (Literature and Prototype)}:Read the paper and complete my "message.md" notes; write an algorithm prototype using pseudo-code to verify the correctness of the logic.
+    \item \textbf{The second stage (core implementation)}:Implement the k-kick tree, Mini-array and dynamic manager modules using C++. Write unit tests to cover edge cases.
+    \item \textbf{The third stage (system integration)}：Integrate the module into a certain database project, replace the existing hash index, and implement the persistent interface.
+    \item \textbf{The fourth stage (experiment and optimization)}：Design benchmark tests, collect performance data under different $k$ values and data distributions, and draw charts.
+    \item \textbf{The fifth stage (thesis writing)}：Organize experimental data and write the graduation thesis.
+\end{enumerate}
+
+\section{Expected outcome}
+\begin{enumerate}
+    \item A complete and compilable running source code of the k-kick tree hash library.
+    \item A simple database system prototype integrated with this hash scheme.
+    \item A test report that has been tested according to the expected design.
+    \item A graduation design thesis.
+\end{enumerate}
+
+\section{Progress Schedule}
+\begin{table}[H]
+\centering
+\caption{Progress Schedule}
+\begin{tabular}{lll}
+\toprule
+\textbf{period} & \textbf{task}  \\
+\midrule
+Project initiation & Reading the original paper to understand the algorithm principle \\
+From the 13th day to the middle & Algorithm prototype design, implementation of core data structures and core module code, then complete the main code \\
+Weeks 8-11 & Database integration \\
+Weeks 12-13 & Performance testing, data collection and chart drawing, experimental report, complete the first draft of the paper \\
+Week 14 & Paper revision \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ================= 参考文献 =================
+\printbibliography[title={References}]
+
+\end{document}
