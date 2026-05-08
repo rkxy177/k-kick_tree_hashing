@@ -11,12 +11,10 @@
 % info 类用于录入个人信息
 %   带*号的为对应英文字段
 \njusetup[info]{
-    title = {第一行标题\\第二行标题\\第三行标题},
+    title = {基于k-kick树的最优时空权衡哈希表的设计与实现},
     % 中文题目
-    % 直接填写标题就是自动换行
-    % 可以使用换行控制符(\\)手动指定换行位置
     %
-    title* = {My Title in English},
+    title* = {Design and Implementation of Optimal Time/Space Tradeoff Hash Table Based on k-kick Trees},
     % 英文题目
     %
     author = {姓名},
@@ -24,13 +22,11 @@
     %
     author* = {Ming Xing},
     % 作者英文姓名
-    % 一般使用拼音
     %
-    keywords = {我,就是,充数的,关键词},
+    keywords = {哈希表,时空权衡,k-kick树,弹性哈希,位压缩路由,LevelDB},
     % 中文关键词列表
-    % 使用英文半角逗号(,)分隔
     %
-    keywords* = {Dummy,Keywords,Here,{It Is}},
+    keywords* = {hash table,time-space tradeoff,k-kick tree,elastic hashing,bit-packed routing,LevelDB},
     % 英文关键词
     % 使用英文半角逗号(,)分隔
     %
@@ -131,7 +127,7 @@
     % 默认为顺序编码制（numeric）
     % 可选著者-出版年制（author-year）
     %
-    resource = {njuthesis-sample.bib},
+    resource = {references.bib},
     % 参考文献数据源
     % 需要带扩展名的完整文件名
     % 可使用逗号分隔多个文件

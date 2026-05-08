@@ -83,7 +83,7 @@
       <file>article.bcf</file>
     </requires>
     <requires type="editable">
-      <file>njuthesis-sample.bib</file>
+      <file>references.bib</file>
     </requires>
   </external>
 </requests>
