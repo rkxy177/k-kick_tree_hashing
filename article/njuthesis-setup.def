@@ -17,49 +17,49 @@
     title* = {Design and Implementation of Optimal Time/Space Tradeoff Hash Table Based on k-kick Trees},
     % 英文题目
     %
-    author = {姓名},
+    author = {肖扬},
     % 作者姓名
     %
-    author* = {Ming Xing},
+    author* = {Yang Xiao},
     % 作者英文姓名
     %
-    keywords = {哈希表,时空权衡,k-kick树,弹性哈希,位压缩路由,LevelDB},
+    keywords = {哈希表,时空权衡,k-kick树,位压缩路由,LevelDB},
     % 中文关键词列表
     %
     keywords* = {hash table,time-space tradeoff,k-kick tree,elastic hashing,bit-packed routing,LevelDB},
     % 英文关键词
     % 使用英文半角逗号(,)分隔
     %
-    grade = {2018},
+    grade = {2022},
     % 年级
     %
-    student-id = {181850195},
+    student-id = {221900387},
     % 学号或工号
     % 研究生请斟酌大小写字母格式
     % 本模板并不会自动更正大小写
     %
-    department = {化学化工学院},
-    department* = {School of Chemistry and Chemical Engineering},
+    department = {智能软件工程学院},
+    department* = {School of Intelligent Software and Engineering},
     % 院系
     %
-    major = {化学},
-    major* = {Chemistry},
+    major = {软件工程},
+    major* = {Software and Engineering},
     % 专业
     %
     % major = {封面专业,摘要专业},
     % 研究生专业型学位可能遇到两处内容不一致的情况
     %
-    supervisor = {导师姓名,教授},
-    supervisor*= {Professor My Supervisor},
+    supervisor = {刘明谋,副教授},
+    supervisor*= {Associate Professor Mingmou Liu},
     % 导师全称
     % 使用英文半角逗号(,)分隔中文姓名和职称
     %
-    % supervisor-ii = {第二导师姓名,副教授},
-    % supervisor-ii* = {Associate Professor My Second Supervisor},
+    % supervisor-ii = {},
+    % supervisor-ii* = {},
     % 第二导师全称
     % 如果确实没有第二导师，不填写即可
     %
-    submit-date = {2022-05-20},
+    submit-date = {2026-05-12},
     % 提交日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期

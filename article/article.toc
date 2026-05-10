@@ -22,45 +22,50 @@
 \contentsline {section}{\numberline {3.2}MiniArray：位压缩数组}{10}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}设计动机}{10}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}双模存储}{10}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}LocalQueryRouter：局部查询路由}{11}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}条目格式}{11}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}两级路由中的使用}{11}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Cubby：单级弹性哈希表}{11}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}槽元数据编码}{11}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.3}LocalQueryRouter：二叉Trie局部查询路由}{10}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}设计原理（论文 §4.3 + Lemma 15）}{10}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}紧凑编码方案}{11}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}与论文的差异}{11}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}两级路由中的使用}{11}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Cubby：单级弹性哈希表}{12}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}槽元数据编码}{12}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}踢出算法}{12}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}容量尺度}{13}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Facility：全局分层管理器}{13}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}合并机制}{13}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}插入/查询/删除流程}{13}{subsection.3.5.2}%
-\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第四章}算法实现}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}文件结构}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}MiniArray实现}{15}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}位操作原语}{15}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}模式切换}{15}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}LocalQueryRouter实现}{16}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Cubby实现}{16}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}bin参数计算}{16}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}深度分配}{16}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}last\_occupied\_idx\_优化}{16}{subsection.4.4.3}%
-\contentsline {section}{\numberline {4.5}Facility实现}{16}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{16}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}合并与重建}{17}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}复杂度分析}{17}{section.4.6}%
-\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第五章}实验与分析}{19}{chapter.5}%
-\contentsline {section}{\numberline {5.1}实验设置}{19}{section.5.1}%
-\contentsline {section}{\numberline {5.2}插入性能}{19}{section.5.2}%
-\contentsline {section}{\numberline {5.3}查询性能}{20}{section.5.3}%
-\contentsline {section}{\numberline {5.4}删除性能}{21}{section.5.4}%
-\contentsline {section}{\numberline {5.5}内存占用}{22}{section.5.5}%
-\contentsline {section}{\numberline {5.6}所有操作总览}{22}{section.5.6}%
-\contentsline {section}{\numberline {5.7}吞吐量分析}{23}{section.5.7}%
-\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第六章}LevelDB 集成}{25}{chapter.6}%
-\contentsline {section}{\numberline {6.1}集成动机}{25}{section.6.1}%
-\contentsline {section}{\numberline {6.2}适配层设计}{25}{section.6.2}%
-\contentsline {section}{\numberline {6.3}MemTable修改}{25}{section.6.3}%
-\contentsline {section}{\numberline {6.4}编译期开关}{26}{section.6.4}%
-\contentsline {section}{\numberline {6.5}注意事项}{26}{section.6.5}%
-\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第七章}总结与展望}{27}{chapter.7}%
-\contentsline {section}{\numberline {7.1}工作总结}{27}{section.7.1}%
-\contentsline {section}{\numberline {7.2}不足与展望}{27}{section.7.2}%
-\contentsline {chapter}{\bigger \normalfont \sffamily 致\hskip 2em\relax {}谢}{29}{chapter*.21}%
+\contentsline {subsection}{\numberline {3.4.3}容量尺度}{14}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Facility：全局分层管理器}{14}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}合并机制}{14}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}插入/查询/删除流程}{14}{subsection.3.5.2}%
+\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第四章}算法实现}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}文件结构}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}MiniArray实现}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}位操作原语}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}模式切换}{17}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}LocalQueryRouter实现（紧凑MiniArray Trie）}{18}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}紧凑节点编码}{18}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}核心算法}{18}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}显式双指针设计}{19}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Cubby实现}{19}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}bin参数计算}{19}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}深度分配}{19}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}空闲槽查找}{20}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Facility实现}{20}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{20}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}合并与路由更新}{20}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}复杂度分析}{21}{section.4.6}%
+\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第五章}实验与分析}{23}{chapter.5}%
+\contentsline {section}{\numberline {5.1}实验设置}{23}{section.5.1}%
+\contentsline {section}{\numberline {5.2}插入性能}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}查询性能}{24}{section.5.3}%
+\contentsline {section}{\numberline {5.4}删除性能}{25}{section.5.4}%
+\contentsline {section}{\numberline {5.5}内存占用}{26}{section.5.5}%
+\contentsline {section}{\numberline {5.6}所有操作总览}{27}{section.5.6}%
+\contentsline {section}{\numberline {5.7}吞吐量分析}{27}{section.5.7}%
+\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第六章}LevelDB 集成}{29}{chapter.6}%
+\contentsline {section}{\numberline {6.1}集成动机}{29}{section.6.1}%
+\contentsline {section}{\numberline {6.2}适配层设计}{29}{section.6.2}%
+\contentsline {section}{\numberline {6.3}MemTable修改}{29}{section.6.3}%
+\contentsline {section}{\numberline {6.4}编译期开关}{30}{section.6.4}%
+\contentsline {section}{\numberline {6.5}注意事项}{30}{section.6.5}%
+\contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第七章}总结与展望}{31}{chapter.7}%
+\contentsline {section}{\numberline {7.1}工作总结}{31}{section.7.1}%
+\contentsline {section}{\numberline {7.2}不足与展望}{32}{section.7.2}%
+\contentsline {chapter}{\bigger \normalfont \sffamily 致\hskip 2em\relax {}谢}{33}{chapter*.22}%

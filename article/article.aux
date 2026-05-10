@@ -17,6 +17,8 @@
 \providecommand*\HyPL@Entry[1]{}
 \abx@aux@refcontext{none/global//global/global}
 \HyPL@Entry{0<</P()>>}
+\abx@aux@cite{0}{bender2022optimal}
+\abx@aux@segm{0}{0}{bender2022optimal}
 \HyPL@Entry{2<</S/R>>}
 \@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  目\hskip 2em\relax {}录}{V}{chapter*.3}\protected@file@percent }
 \abx@aux@cite{0}{pagh2001low}
@@ -77,112 +79,120 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {3-2}{\ignorespaces MiniArray双模存储\relax }}{10}{figure.caption.5}\protected@file@percent }
 \newlabel{tab:miniarray}{{3-2}{10}{MiniArray双模存储\relax }{figure.caption.5}{}}
 \newlabel{tab:miniarray@cref}{{[figure][2][3]3-2}{[1][10][]10}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}LocalQueryRouter：局部查询路由}{11}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}条目格式}{11}{subsection.3.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3-3}{\ignorespaces LocalQueryRouter条目格式\relax }}{11}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:lqr}{{3-3}{11}{LocalQueryRouter条目格式\relax }{figure.caption.6}{}}
-\newlabel{fig:lqr@cref}{{[figure][3][3]3-3}{[1][10][]11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}两级路由中的使用}{11}{subsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Cubby：单级弹性哈希表}{11}{section.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}槽元数据编码}{11}{subsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}LocalQueryRouter：二叉Trie局部查询路由}{10}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}设计原理（论文 §4.3 + Lemma 15）}{10}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}紧凑编码方案}{11}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}与论文的差异}{11}{subsection.3.3.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3-1}{\ignorespaces LocalQueryRouter 实现与论文对照\relax }}{11}{table.caption.6}\protected@file@percent }
+\newlabel{tab:lqr_compare}{{3-1}{11}{LocalQueryRouter 实现与论文对照\relax }{table.caption.6}{}}
+\newlabel{tab:lqr_compare@cref}{{[table][1][3]3-1}{[1][11][]11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}两级路由中的使用}{11}{subsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Cubby：单级弹性哈希表}{12}{section.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}槽元数据编码}{12}{subsection.3.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}踢出算法}{12}{subsection.3.4.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces try\_place(key, max\_depth)\relax }}{12}{algorithm.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}容量尺度}{13}{subsection.3.4.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3-1}{\ignorespaces Cubby容量尺度\relax }}{13}{table.caption.7}\protected@file@percent }
-\newlabel{tab:cubcap}{{3-1}{13}{Cubby容量尺度\relax }{table.caption.7}{}}
-\newlabel{tab:cubcap@cref}{{[table][1][3]3-1}{[1][12][]13}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Facility：全局分层管理器}{13}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}合并机制}{13}{subsection.3.5.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3-2}{\ignorespaces 合并阈值\relax }}{13}{table.caption.8}\protected@file@percent }
-\newlabel{tab:merge}{{3-2}{13}{合并阈值\relax }{table.caption.8}{}}
-\newlabel{tab:merge@cref}{{[table][2][3]3-2}{[1][13][]13}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}插入/查询/删除流程}{13}{subsection.3.5.2}\protected@file@percent }
-\pp@pagectr{footnote}{4}{23}{15}
-\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第四章}算法实现}{15}{chapter.4}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces try\_place(key, max\_depth)\relax }}{13}{algorithm.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}容量尺度}{14}{subsection.3.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3-2}{\ignorespaces Cubby容量尺度\relax }}{14}{table.caption.7}\protected@file@percent }
+\newlabel{tab:cubcap}{{3-2}{14}{Cubby容量尺度\relax }{table.caption.7}{}}
+\newlabel{tab:cubcap@cref}{{[table][2][3]3-2}{[1][13][]14}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Facility：全局分层管理器}{14}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}合并机制}{14}{subsection.3.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3-3}{\ignorespaces 合并阈值\relax }}{14}{table.caption.8}\protected@file@percent }
+\newlabel{tab:merge}{{3-3}{14}{合并阈值\relax }{table.caption.8}{}}
+\newlabel{tab:merge@cref}{{[table][3][3]3-3}{[1][14][]14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}插入/查询/删除流程}{14}{subsection.3.5.2}\protected@file@percent }
+\pp@pagectr{footnote}{4}{25}{17}
+\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第四章}算法实现}{17}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10.0pt}}
 \@writefile{lot}{\addvspace {10.0pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}文件结构}{15}{section.4.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4-1}{\ignorespaces 源代码文件\relax }}{15}{table.caption.9}\protected@file@percent }
-\newlabel{tab:files}{{4-1}{15}{源代码文件\relax }{table.caption.9}{}}
-\newlabel{tab:files@cref}{{[table][1][4]4-1}{[1][15][]15}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}MiniArray实现}{15}{section.4.2}\protected@file@percent }
-\newlabel{sec:ma-impl}{{4.2}{15}{MiniArray实现}{section.4.2}{}}
-\newlabel{sec:ma-impl@cref}{{[section][2][4]4.2}{[1][15][]15}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}位操作原语}{15}{subsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}模式切换}{15}{subsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}LocalQueryRouter实现}{16}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Cubby实现}{16}{section.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}bin参数计算}{16}{subsection.4.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}深度分配}{16}{subsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}last\_occupied\_idx\_优化}{16}{subsection.4.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Facility实现}{16}{section.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{16}{subsection.4.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}合并与重建}{17}{subsection.4.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}复杂度分析}{17}{section.4.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4-2}{\ignorespaces 复杂度汇总\relax }}{17}{table.caption.10}\protected@file@percent }
-\newlabel{tab:complexity}{{4-2}{17}{复杂度汇总\relax }{table.caption.10}{}}
-\newlabel{tab:complexity@cref}{{[table][2][4]4-2}{[1][17][]17}}
-\pp@pagectr{footnote}{5}{27}{19}
-\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第五章}实验与分析}{19}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}文件结构}{17}{section.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4-1}{\ignorespaces 源代码文件\relax }}{17}{table.caption.9}\protected@file@percent }
+\newlabel{tab:files}{{4-1}{17}{源代码文件\relax }{table.caption.9}{}}
+\newlabel{tab:files@cref}{{[table][1][4]4-1}{[1][17][]17}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}MiniArray实现}{17}{section.4.2}\protected@file@percent }
+\newlabel{sec:ma-impl}{{4.2}{17}{MiniArray实现}{section.4.2}{}}
+\newlabel{sec:ma-impl@cref}{{[section][2][4]4.2}{[1][17][]17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}位操作原语}{17}{subsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}模式切换}{17}{subsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}LocalQueryRouter实现（紧凑MiniArray Trie）}{18}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}紧凑节点编码}{18}{subsection.4.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4-1}{\ignorespaces 紧凑节点编码方案\relax }}{18}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:compact_node}{{4-1}{18}{紧凑节点编码方案\relax }{figure.caption.10}{}}
+\newlabel{fig:compact_node@cref}{{[figure][1][4]4-1}{[1][17][]18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}核心算法}{18}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}显式双指针设计}{19}{subsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Cubby实现}{19}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}bin参数计算}{19}{subsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}深度分配}{19}{subsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}空闲槽查找}{20}{subsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Facility实现}{20}{section.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{20}{subsection.4.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}合并与路由更新}{20}{subsection.4.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}复杂度分析}{21}{section.4.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4-2}{\ignorespaces 复杂度汇总（紧凑 MiniArray Trie 版）\relax }}{21}{table.caption.11}\protected@file@percent }
+\newlabel{tab:complexity}{{4-2}{21}{复杂度汇总（紧凑 MiniArray Trie 版）\relax }{table.caption.11}{}}
+\newlabel{tab:complexity@cref}{{[table][2][4]4-2}{[1][20][]21}}
+\pp@pagectr{footnote}{5}{31}{23}
+\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第五章}实验与分析}{23}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10.0pt}}
 \@writefile{lot}{\addvspace {10.0pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}实验设置}{19}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}插入性能}{19}{section.5.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-1}{\ignorespaces 插入时间对比（线性 + 对数-对数尺度）\relax }}{19}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:insert}{{5-1}{19}{插入时间对比（线性 + 对数-对数尺度）\relax }{figure.caption.11}{}}
-\newlabel{fig:insert@cref}{{[figure][1][5]5-1}{[1][19][]19}}
-\@writefile{lot}{\contentsline {table}{\numberline {5-1}{\ignorespaces 插入时间比较（单位：微秒）\relax }}{20}{table.caption.12}\protected@file@percent }
-\newlabel{tab:insert}{{5-1}{20}{插入时间比较（单位：微秒）\relax }{table.caption.12}{}}
-\newlabel{tab:insert@cref}{{[table][1][5]5-1}{[1][19][]20}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}查询性能}{20}{section.5.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-2}{\ignorespaces 查询时间对比\relax }}{20}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:query}{{5-2}{20}{查询时间对比\relax }{figure.caption.13}{}}
-\newlabel{fig:query@cref}{{[figure][2][5]5-2}{[1][20][]20}}
-\@writefile{lot}{\contentsline {table}{\numberline {5-2}{\ignorespaces 查询时间比较（单位：微秒）\relax }}{20}{table.caption.14}\protected@file@percent }
-\newlabel{tab:query}{{5-2}{20}{查询时间比较（单位：微秒）\relax }{table.caption.14}{}}
-\newlabel{tab:query@cref}{{[table][2][5]5-2}{[1][20][]20}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}删除性能}{21}{section.5.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-3}{\ignorespaces 删除时间对比\relax }}{21}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:delete}{{5-3}{21}{删除时间对比\relax }{figure.caption.15}{}}
-\newlabel{fig:delete@cref}{{[figure][3][5]5-3}{[1][21][]21}}
-\@writefile{lot}{\contentsline {table}{\numberline {5-3}{\ignorespaces 删除时间比较（单位：微秒）\relax }}{21}{table.caption.16}\protected@file@percent }
-\newlabel{tab:delete}{{5-3}{21}{删除时间比较（单位：微秒）\relax }{table.caption.16}{}}
-\newlabel{tab:delete@cref}{{[table][3][5]5-3}{[1][21][]21}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}内存占用}{22}{section.5.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-4}{\ignorespaces 内存占用对比（总计 + 每元素）\relax }}{22}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:mem}{{5-4}{22}{内存占用对比（总计 + 每元素）\relax }{figure.caption.17}{}}
-\newlabel{fig:mem@cref}{{[figure][4][5]5-4}{[1][21][]22}}
-\@writefile{lot}{\contentsline {table}{\numberline {5-4}{\ignorespaces 内存占用比较\relax }}{22}{table.caption.18}\protected@file@percent }
-\newlabel{tab:mem}{{5-4}{22}{内存占用比较\relax }{table.caption.18}{}}
-\newlabel{tab:mem@cref}{{[table][4][5]5-4}{[1][22][]22}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}所有操作总览}{22}{section.5.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-5}{\ignorespaces 插入/查询/删除综合对比（对数-对数尺度）\relax }}{22}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:all}{{5-5}{22}{插入/查询/删除综合对比（对数-对数尺度）\relax }{figure.caption.19}{}}
-\newlabel{fig:all@cref}{{[figure][5][5]5-5}{[1][22][]22}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.7}吞吐量分析}{23}{section.5.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5-6}{\ignorespaces 每秒操作数对比\relax }}{23}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:tp}{{5-6}{23}{每秒操作数对比\relax }{figure.caption.20}{}}
-\newlabel{fig:tp@cref}{{[figure][6][5]5-6}{[1][22][]23}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}实验设置}{23}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}插入性能}{23}{section.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-1}{\ignorespaces 插入时间对比（线性 + 对数-对数尺度）\relax }}{23}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:insert}{{5-1}{23}{插入时间对比（线性 + 对数-对数尺度）\relax }{figure.caption.12}{}}
+\newlabel{fig:insert@cref}{{[figure][1][5]5-1}{[1][23][]23}}
+\@writefile{lot}{\contentsline {table}{\numberline {5-1}{\ignorespaces 插入时间比较（单位：微秒）\relax }}{24}{table.caption.13}\protected@file@percent }
+\newlabel{tab:insert}{{5-1}{24}{插入时间比较（单位：微秒）\relax }{table.caption.13}{}}
+\newlabel{tab:insert@cref}{{[table][1][5]5-1}{[1][23][]24}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}查询性能}{24}{section.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-2}{\ignorespaces 查询时间对比\relax }}{24}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:query}{{5-2}{24}{查询时间对比\relax }{figure.caption.14}{}}
+\newlabel{fig:query@cref}{{[figure][2][5]5-2}{[1][24][]24}}
+\@writefile{lot}{\contentsline {table}{\numberline {5-2}{\ignorespaces 查询时间比较（单位：微秒）\relax }}{25}{table.caption.15}\protected@file@percent }
+\newlabel{tab:query}{{5-2}{25}{查询时间比较（单位：微秒）\relax }{table.caption.15}{}}
+\newlabel{tab:query@cref}{{[table][2][5]5-2}{[1][24][]25}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}删除性能}{25}{section.5.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-3}{\ignorespaces 删除时间对比\relax }}{25}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:delete}{{5-3}{25}{删除时间对比\relax }{figure.caption.16}{}}
+\newlabel{fig:delete@cref}{{[figure][3][5]5-3}{[1][25][]25}}
+\@writefile{lot}{\contentsline {table}{\numberline {5-3}{\ignorespaces 删除时间比较（单位：微秒）\relax }}{26}{table.caption.17}\protected@file@percent }
+\newlabel{tab:delete}{{5-3}{26}{删除时间比较（单位：微秒）\relax }{table.caption.17}{}}
+\newlabel{tab:delete@cref}{{[table][3][5]5-3}{[1][25][]26}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}内存占用}{26}{section.5.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-4}{\ignorespaces 内存占用对比（总计 + 每元素）\relax }}{26}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:mem}{{5-4}{26}{内存占用对比（总计 + 每元素）\relax }{figure.caption.18}{}}
+\newlabel{fig:mem@cref}{{[figure][4][5]5-4}{[1][26][]26}}
+\@writefile{lot}{\contentsline {table}{\numberline {5-4}{\ignorespaces 内存占用比较\relax }}{26}{table.caption.19}\protected@file@percent }
+\newlabel{tab:mem}{{5-4}{26}{内存占用比较\relax }{table.caption.19}{}}
+\newlabel{tab:mem@cref}{{[table][4][5]5-4}{[1][26][]26}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}所有操作总览}{27}{section.5.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-5}{\ignorespaces 插入/查询/删除综合对比（对数-对数尺度）\relax }}{27}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:all}{{5-5}{27}{插入/查询/删除综合对比（对数-对数尺度）\relax }{figure.caption.20}{}}
+\newlabel{fig:all@cref}{{[figure][5][5]5-5}{[1][27][]27}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}吞吐量分析}{27}{section.5.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5-6}{\ignorespaces 每秒操作数对比\relax }}{27}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:tp}{{5-6}{27}{每秒操作数对比\relax }{figure.caption.21}{}}
+\newlabel{fig:tp@cref}{{[figure][6][5]5-6}{[1][27][]27}}
 \abx@aux@cite{0}{leveldb}
 \abx@aux@segm{0}{0}{leveldb}
-\pp@pagectr{footnote}{6}{33}{25}
-\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第六章}LevelDB 集成}{25}{chapter.6}\protected@file@percent }
+\pp@pagectr{footnote}{6}{37}{29}
+\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第六章}LevelDB 集成}{29}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10.0pt}}
 \@writefile{lot}{\addvspace {10.0pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}集成动机}{25}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}适配层设计}{25}{section.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}MemTable修改}{25}{section.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.4}编译期开关}{26}{section.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.5}注意事项}{26}{section.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}集成动机}{29}{section.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}适配层设计}{29}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}MemTable修改}{29}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}编译期开关}{30}{section.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.5}注意事项}{30}{section.6.5}\protected@file@percent }
 \abx@aux@cite{0}{bender2022optimal}
 \abx@aux@segm{0}{0}{bender2022optimal}
-\pp@pagectr{footnote}{7}{35}{27}
-\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第七章}总结与展望}{27}{chapter.7}\protected@file@percent }
+\pp@pagectr{footnote}{7}{39}{31}
+\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  \numberline {第七章}总结与展望}{31}{chapter.7}\protected@file@percent }
 \@writefile{lof}{\addvspace {10.0pt}}
 \@writefile{lot}{\addvspace {10.0pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}工作总结}{27}{section.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}不足与展望}{27}{section.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  致\hskip 2em\relax {}谢}{29}{chapter*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}工作总结}{31}{section.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}不足与展望}{32}{section.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\bigger \normalfont  \sffamily  致\hskip 2em\relax {}谢}{33}{chapter*.22}\protected@file@percent }
 \abx@aux@read@bbl@mdfivesum{nohash}
 \abx@aux@read@bblrerun
-\gdef \@abspage@last{38}
+\gdef \@abspage@last{42}
