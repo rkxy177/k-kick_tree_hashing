@@ -42,17 +42,16 @@
 2022年，Bender等人提出了一种基于$k$-kick树的新型哈希方案，
 从理论上证明可通过将更新操作的时间复杂度放宽至$O(k)$，将每元素的空间浪费指数级
 压缩至$O(\log^{(k)} n)$比特，打破了$\Omega(\log\log n)$的空间下界。
-本文基于该理论实现了分层弹性哈希存储结构（Facility与Cubby），包含优先级踢出机制
-（\S3.1）、基于MiniArray位压缩的紧凑二叉Trie局部查询路由（\S4.3 + Lemma 15）以及
+本文基于该理论实现了分层弹性哈希存储结构，包含优先级踢出机制、
+基于MiniArray位压缩的紧凑二叉Trie局部查询路由以及
 8-bit Lookup Table查询加速。槽元数据和空闲槽位图分别通过双层MiniArray压缩至
-每槽4比特和1比特，Trie节点以紧凑位编码存储（$\sim$5--8B/节点）。
+每槽4比特和1比特，Trie节点以紧凑位编码存储。
 在$n\leq 10^{6}$个32位键值对的实验规模下，与\texttt{std::unordered\_map}进行了
-插入、查询、删除和空间占用的全面对比。实验表明：插入在$n\leq 2\times10^5$时
-每操作仅$\sim$0.8 us（近似常数），合并策略避免了$O(N)$全量路由重建；
-查询在LUT加速下达$\sim$1.95 us/op（$n=10^6$）；空间占用在$n=2\times10^5$时
-仅9 MB（45 B/key），在$n=10^6$时为97 MB，通过动态cubby容量控制合并空间效率。
-最后将方案集成为LevelDB MemTable的点查询加速器，提供编译期
-（\texttt{-DUSE\_KICK\_HASH}）和运行时（\texttt{SetUseKickHash}）双向开关，
+插入、查询、删除和空间占用的对比。实验表明：插入在$n\leq 2\times10^5$时
+每操作仅$\sim$0.8 us，合并策略避免了$O(N)$全量路由重建；
+查询在LUT加速下达$\sim$1.95 us/op；空间占用在$n=2\times10^5$时
+约为9 MB，在$n=10^6$时为97 MB，通过动态cubby容量控制合并空间效率。
+最后将方案集成为LevelDB MemTable的点查询加速器，提供编译期和运行时双向开关，
 集成实验验证适配层开销仅5.17 ns/次，查询性能在$n=2\times10^5$时达0.35 us/op。
 
 \noindent\textbf{关键词}：哈希表，时空权衡，k-kick树，位压缩路由，LevelDB
@@ -66,16 +65,16 @@ theoretically proving that by relaxing update time to
 $O(k)$, per-element space waste can be exponentially compressed to
 $O(\log^{(k)} n)$ bits, breaking the $\Omega(\log\log n)$ lower bound.
 This thesis implements the algorithm, constructing a hierarchical elastic hash
-storage structure (Facility and Cubby), implementing the priority-based kicking
-mechanism (\S3.1) and a compact binary trie local query router (\S4.3) using
-MiniArray bit-packing (Lemma 15), with slot metadata compressed to 4+1 bits via
+storage structure , implementing the priority-based kicking
+mechanism and a compact binary trie local query router  using
+MiniArray bit-packing , with slot metadata compressed to 4+1 bits via
 dual MiniArrays and an 8-bit lookup table for query acceleration.
 Experiments with $n\leq 10^{6}$ 32-bit key-value pairs compare insertion, query,
 deletion and space against \texttt{std::unordered\_map}.
 The implementation achieves $\sim$0.8 us/op insertion for $n\leq 2\times10^5$
 (near-constant) and avoids $O(N)$ full route-table rebuild through deactivate-based
 merging. Query time is $\sim$1.95 us/op at $n=10^6$ with LUT acceleration.
-Space is 9 MB at $n=2\times10^5$ (45 B/key) and 97 MB at $n=10^6$ (97 B/key),
+Space is 9 MB at $n=2\times10^5$ (45 B/key) and 97 MB at $n=10^6$ ,
 controlled by dynamic cubby sizing.
 The scheme is integrated into LevelDB's MemTable with a
 \texttt{-DUSE\_KICK\_HASH} compile-time switch and \texttt{SetUseKickHash()} runtime
@@ -121,12 +120,10 @@ $\log^{(1)} n = \log n$。当$k = \log^{*} n$（等式右侧表示对$n$进行�
 本毕业设计旨在复现这一前沿的哈希算法，并将其集成到常见的数据库管理系统中。
 研究意义如下：
 
-\textbf{理论价值}：通过实验对论文理论进行验证，通过调整$k$的值研究$k$如何
-影响时间与空间复杂度，探索最优的$k$值选择策略。
+\textbf{理论价值}：通过实验对论文理论进行验证
 
 \textbf{工程价值}：减少内存使用意味着成本降低和并发能力增强，在内存有限
-的场景中提高现有数据库的存储效率。将其集成到数据库观察空间存储效率提升
-效果。
+的场景中提高现有数据库的存储效率。
 
 \section{研究现状}
 
