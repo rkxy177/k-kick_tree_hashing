@@ -39,19 +39,19 @@
 
 \begin{abstract}
 哈希表是支持动态数据操作的基础数据结构，其时空权衡一直是算法研究的核心议题。
-2022年，Bender等人提出了一种基于$k$-kick树的新型哈希方案\cite{1}，
+2022年，Bender等人提出了一种基于$k$-kick树的新型哈希方案，
 从理论上证明可通过将更新操作的时间复杂度放宽至$O(k)$，将每元素的空间浪费指数级
 压缩至$O(\log^{(k)} n)$比特，打破了$\Omega(\log\log n)$的空间下界。
 本文基于该理论实现了分层弹性哈希存储结构（Facility与Cubby），包含优先级踢出机制
 （\S3.1）、基于MiniArray位压缩的紧凑二叉Trie局部查询路由（\S4.3 + Lemma 15）以及
-8-bit Lookup Table查询加速\cite{7}。槽元数据和空闲槽位图分别通过双层MiniArray压缩至
+8-bit Lookup Table查询加速。槽元数据和空闲槽位图分别通过双层MiniArray压缩至
 每槽4比特和1比特，Trie节点以紧凑位编码存储（$\sim$5--8B/节点）。
 在$n\leq 10^{6}$个32位键值对的实验规模下，与\texttt{std::unordered\_map}进行了
 插入、查询、删除和空间占用的全面对比。实验表明：插入在$n\leq 2\times10^5$时
 每操作仅$\sim$0.8 us（近似常数），合并策略避免了$O(N)$全量路由重建；
 查询在LUT加速下达$\sim$1.95 us/op（$n=10^6$）；空间占用在$n=2\times10^5$时
 仅9 MB（45 B/key），在$n=10^6$时为97 MB，通过动态cubby容量控制合并空间效率。
-最后将方案集成为LevelDB MemTable\cite{2}的点查询加速器，提供编译期
+最后将方案集成为LevelDB MemTable的点查询加速器，提供编译期
 （\texttt{-DUSE\_KICK\_HASH}）和运行时（\texttt{SetUseKickHash}）双向开关，
 集成实验验证适配层开销仅5.17 ns/次，查询性能在$n=2\times10^5$时达0.35 us/op。
 
@@ -61,15 +61,15 @@
 \begin{abstract*}
 Hash tables are fundamental data structures supporting dynamic data operations,
 with their time-space tradeoffs being a core topic in algorithm research.
-In 2022, Bender et al.\ proposed a novel hashing scheme based on $k$-kick trees%
-\cite{1}, theoretically proving that by relaxing update time to
+In 2022, Bender et al.\ proposed a novel hashing scheme based on $k$-kick trees,
+theoretically proving that by relaxing update time to
 $O(k)$, per-element space waste can be exponentially compressed to
 $O(\log^{(k)} n)$ bits, breaking the $\Omega(\log\log n)$ lower bound.
 This thesis implements the algorithm, constructing a hierarchical elastic hash
 storage structure (Facility and Cubby), implementing the priority-based kicking
 mechanism (\S3.1) and a compact binary trie local query router (\S4.3) using
 MiniArray bit-packing (Lemma 15), with slot metadata compressed to 4+1 bits via
-dual MiniArrays and an 8-bit lookup table\cite{7} for query acceleration.
+dual MiniArrays and an 8-bit lookup table for query acceleration.
 Experiments with $n\leq 10^{6}$ 32-bit key-value pairs compare insertion, query,
 deletion and space against \texttt{std::unordered\_map}.
 The implementation achieves $\sim$0.8 us/op insertion for $n\leq 2\times10^5$
@@ -77,7 +77,7 @@ The implementation achieves $\sim$0.8 us/op insertion for $n\leq 2\times10^5$
 merging. Query time is $\sim$1.95 us/op at $n=10^6$ with LUT acceleration.
 Space is 9 MB at $n=2\times10^5$ (45 B/key) and 97 MB at $n=10^6$ (97 B/key),
 controlled by dynamic cubby sizing.
-The scheme is integrated into LevelDB's MemTable\cite{2} with a
+The scheme is integrated into LevelDB's MemTable with a
 \texttt{-DUSE\_KICK\_HASH} compile-time switch and \texttt{SetUseKickHash()} runtime
 toggle. Integration benchmarks show adapter overhead of only 5.17 ns/op and
 query performance of 0.35 us/op at $n=2\times10^5$.
@@ -101,9 +101,12 @@ $n$的增大而增加。为了实现这一点，哈希表往往需要在空间�
 通过额外的比特位存储信息来实现极低的时间复杂度。
 
 在要求插入、删除及查询操作均维持恒定时间复杂度（即期望时间或最坏情况时间为
-$O(1)$）的前提下，早期的理论工作\cite{3}表明，在严格限制更新操作
+$O(1)$）的前提下，早期的理论工作\cite{3,10}表明，在严格限制更新操作
 为$O(1)$时间且仅使用简单探测序列的模型下，每个键值对的空间冗余往往难以低于
-$\Omega(\log \log n)$比特。这一理论下界长期制约着哈希表空间效率的进一步提升。
+$\Omega(\log \log n)$比特。Fredman、Koml\'{o}s和Szemer\'{e}di于1984年提出的
+FKS完美哈希方案\cite{10}首次在严格$O(1)$最坏查询时间下实现了线性总空间，
+为哈希表时空权衡研究奠定了理论基础。然而这一理论下界长期制约着哈希表空间效率
+的进一步提升。
 
 2022年，Bender等人发表的论文《关于哈希表最优时间/空间权衡》%
 \cite{1}打破了这一僵局。这项研究提出了一种基于$k$-kick树
@@ -169,6 +172,17 @@ Cuckoo Hashing由Pagh和Rodler于2001年提出\cite{4}，通过引入
 \cite{1}，即任何此类方案若更新时间为$t$，则每元素必须使用
 $\Omega(\log^{(t)} n)$位的冗余。这意味着，若要在次对数级的更新时间下实现
 $O(1)$位的空间冗余，必须彻底脱离``增强开放寻址''的范式。
+
+\subsection{紧凑字典与空间高效结构}
+
+在空间高效哈希表的并行研究方向上，Raman和Rao\cite{12}提出了紧凑动态字典
+和树形结构，在保持$O(1)$查询时间的同时将空间占用压缩至接近信息论下界，
+为动态哈希表的紧凑存储提供了重要技术参考。Liu、Yin和Yu\cite{11}进一步
+研究了未知大小集合的紧凑过滤器（succinct filters），通过自适应空间分配
+策略实现了与静态过滤器相当的压缩率，揭示了空间高效哈希结构在多场景下的
+可拓展性。上述工作在``紧凑''（compact）—空间$O(\text{理论下界})$
+和``灵活''（dynamic）—支持在线插入/删除 之间实现了不同取舍，
+而k-kick树方案\cite{1}的贡献在于首次给出了时空权衡的完整理论曲线。
 
 \section{主要研究内容和目标}
 
@@ -236,15 +250,20 @@ $k$-kick树哈希方案的详细理论。
   \item \textbf{高效性}：计算速度快，$O(1)$时间
 \end{itemize}
 
-本文使用\texttt{splitmix64}\cite{5}作为最终化函数，对不同的
-使用场景通过不同种子值（seed）生成独立哈希族\cite{6}。
+本文使用\texttt{splitmix64}\cite{5}作为最终化函数，通过借鉴通用哈希
+（universal hashing）\cite{9,6}思想，对不同使用场景通过不同种子值（seed）
+生成独立哈希族。Dietzfelbinger和Meyer auf der Heide\cite{9}证明了
+通用哈希函数族可实现高效动态实时哈希，而Belazzougui等人的Hash-Displace-Compress
+框架\cite{6}进一步展示了多哈希族在紧凑存储中的有效性。
 
 \subsection{负载因子与空间效率}
 
 负载因子（load factor）$\alpha = n/m$表示当前存储元素数$n$与总槽数$m$的比值。
 空间效率通常用\textbf{每键浪费比特数}（wasted bits per key）$r$来衡量：
 若信息论最优空间为$\mathcal{B}$比特，哈希表使用$\mathcal{B} + rn$比特，则称
-浪费了$r$比特/键。本文研究的核心问题是如何在保障时间效率的前提下最小化$r$。
+浪费了$r$比特/键。紧凑动态字典\cite{12}在理论上证明了$r$可被压缩至
+$O(\log\log n)$比特以内，但需借助复杂的递归编码结构。本文研究的核心问题
+是如何在保障时间效率的前提下最小化$r$。
 
 \section{Cuckoo Hashing}
 
@@ -260,7 +279,10 @@ Cuckoo Hashing\cite{4}是一种经典的开地址哈希方案，其核心思想
 \end{enumerate}
 
 Cuckoo Hashing的优势在于\textbf{查询严格为$O(1)$}（只需检查$d$个位置），
-但其负载因子通常受限（$d=2$时约$50\%$）。
+但其负载因子通常受限（$d=2$时约$50\%$）。Arbitman、Naor和Segev\cite{8}
+进一步提出了去摊还Cuckoo Hashing方案，通过队列化踢出操作缓冲区实现了
+\textbf{确定性最坏情况}性能保证，利用全局预取技术\cite{9}控制踢出链长度，
+摆脱了经典方案对高概率分析的依赖。
 
 \section{k-kick树哈希方案}
 
