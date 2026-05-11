@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 00:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 00:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1242,7 +1242,8 @@ Package: blx-case-expl3 2022/02/02 v3.17 expl3 case changing code for biblatex
 ))
 \@quotelevel=\count494
 \@quotereset=\count495
- (./article.aux)
+
+No file article.aux.
 \openout1 = `article.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
@@ -1425,7 +1426,6 @@ LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `bold' on input line 35.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 35.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1482,14 +1482,17 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 35.
 LaTeX Info: Redefining \pageref on input line 35.
 LaTeX Info: Redefining \nameref on input line 35.
- (./article.out) (./article.out)
 \@outlinefile=\write4
 \openout4 = `article.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 \c@lstlisting=\count497
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
- (d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+(d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: XeTeX detected.
@@ -1653,4 +1656,365 @@ LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  TU/latinmodern-math.otf(3)/b/n --> TU/XITSMath-Regular(3)/b/n on input line 35.
 
-Package f
+Package fontspec Info: Font family 'XITSMath-Regular(4)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.539375-},{Size=8.130375-10.539375,Font=XITSMath-Regular,Style=MathScript},{Size=-8.130375,Font=XITSMath-Regular,Style=MathScriptScript}},Extension={.otf},StylisticSet={1}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.539375->"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<8.130375-10.539375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-8.130375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+\sym__um_fam1=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/m/n on input line 35.
+LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/b/n on input line 35.
+File: nju-emblem.pdf Graphic file (type pdf)
+<use nju-emblem.pdf>
+File: nju-name.pdf Graphic file (type pdf)
+<use nju-name.pdf>
+
+Package fontspec Info: Could not resolve font "KaiTi/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "KaiTi/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "KaiTi/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Font family 'KaiTi(0)' created for font 'KaiTi' with
+(fontspec)             options [Script={CJK},AutoFakeBold={2.17}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"KaiTi/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"KaiTi/OT:script=hani;language=dflt;embolden=2.17;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+[1
+
+
+] [2
+
+]
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 12.04628pt on input line 58.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 9.03471pt on input line 58.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.22777pt on input line 58.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 12.0437pt on input line 58.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 9.03278pt on input line 58.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 7.22623pt on input line 58.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 58.
+ (d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 58.
+ (d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+Package fontspec Info: Could not resolve font "FangSong/I" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: Could not resolve font "FangSong/BI" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: Could not resolve font "FangSong/I" (it probably
+(fontspec)             doesn't exist).
+
+LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
+(Font)              scaled to size 12.74046pt on input line 58.
+
+Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
+(fontspec)             with options [Script={CJK},AutoFakeBold={2.17}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"FangSong/OT:script=hani;language=dflt;embolden=2.17;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+ [1
+
+] [2
+
+] [3] [4
+
+]
+\tf@toc=\write5
+\openout5 = `article.toc'.
+
+ [5] [6
+
+]
+第一章
+
+Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "SimHei/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: Font family 'SimHei(0)' created for font 'SimHei' with
+(fontspec)             options [Script={CJK},AutoFakeBold={2.17}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"SimHei/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"SimHei/OT:script=hani;language=dflt;embolden=2.17;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+
+LaTeX Warning: Citation '2' on page 1 undefined on input line 105.
+
+
+LaTeX Warning: Citation '13' on page 1 undefined on input line 108.
+
+
+LaTeX Warning: Citation '13' on page 1 undefined on input line 110.
+
+
+LaTeX Warning: Citation '14' on page 1 undefined on input line 111.
+
+
+LaTeX Warning: Citation '3' on page 1 undefined on input line 117.
+
+
+LaTeX Warning: Citation '10' on page 1 undefined on input line 117.
+
+
+LaTeX Warning: Citation '10' on page 1 undefined on input line 120.
+
+[1
+
+]
+
+LaTeX Warning: Citation '1' on page 2 undefined on input line 125.
+
+
+LaTeX Warning: Citation '15' on page 2 undefined on input line 137.
+
+
+LaTeX Warning: Citation '18' on page 2 undefined on input line 157.
+
+
+LaTeX Warning: Citation '18' on page 2 undefined on input line 159.
+
+[2] [3]
+
+LaTeX Warning: Citation '4' on page 4 undefined on input line 191.
+
+
+LaTeX Warning: Citation '17' on page 4 undefined on input line 202.
+
+
+LaTeX Warning: Citation '8' on page 4 undefined on input line 209.
+
+
+LaTeX Warning: Citation '1' on page 4 undefined on input line 219.
+
+[4]
+
+LaTeX Warning: Citation '1' on page 5 undefined on input line 229.
+
+
+LaTeX Warning: Citation '12' on page 5 undefined on input line 239.
+
+
+LaTeX Warning: Citation '11' on page 5 undefined on input line 242.
+
+
+LaTeX Warning: Citation '1' on page 5 undefined on input line 247.
+
+[5]
+
+LaTeX Warning: Citation '1' on page 6 undefined on input line 255.
+
+
+LaTeX Warning: Citation '2' on page 6 undefined on input line 255.
+
+
+LaTeX Warning: Citation '1' on page 6 undefined on input line 260.
+
+[6]
+Overfull \hbox (49.63034pt too wide) in paragraph at lines 282--288
+[]\TU/SimSun(0)/b/n/12.045 全 面 的 性 能 对 比 实 验 与 集 成 效 果 评 估\TU/SimSun(0)/m/n/12.045 。|  以 \TU/TimesNewRoman(0)/m/n/12.045 C++ \TU/SimSun(0)/m/n/12.045 标 准 库 中 的 \TU/CourierNew(0)/m/n/12.045 std::unordered_map
+ []
+
+
+LaTeX Warning: Citation '2' on page 7 undefined on input line 302.
+
+[7] [8
+
+]
+第二章
+[9]
+
+LaTeX Warning: Citation '9' on page 10 undefined on input line 347.
+
+
+LaTeX Warning: Citation '9' on page 10 undefined on input line 351.
+
+
+LaTeX Warning: Citation '5' on page 10 undefined on input line 354.
+
+
+LaTeX Warning: Citation '9' on page 10 undefined on input line 357.
+
+
+LaTeX Warning: Citation '6' on page 10 undefined on input line 357.
+
+
+LaTeX Warning: Citation '6' on page 10 undefined on input line 359.
+
+
+LaTeX Warning: Citation '12' on page 10 undefined on input line 371.
+
+
+LaTeX Warning: Citation '16' on page 10 undefined on input line 373.
+
+
+LaTeX Warning: Citation '1' on page 10 undefined on input line 375.
+
+[10]
+
+LaTeX Warning: Citation '4' on page 11 undefined on input line 381.
+
+
+LaTeX Warning: Citation '8' on page 11 undefined on input line 393.
+
+
+LaTeX Warning: Citation '9' on page 11 undefined on input line 395.
+
+
+LaTeX Warning: Citation '1' on page 11 undefined on input line 400.
+
+
+LaTeX Warning: Citation '1' on page 11 undefined on input line 412.
+
+[11]
+
+LaTeX Warning: Citation '1' on page 12 undefined on input line 428.
+
+[12]
+第三章
+
+LaTeX Warning: Citation '1' on page 13 undefined on input line 441.
+
+
+LaTeX Warning: Reference `fig:arch' on page 13 undefined on input line 450.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 473--473
+[]\TU/CourierNew(0)/m/n/12.045 │   ├── [1]     tier-
+ []
+
+[13
+
+] [14]
+
+LaTeX Warning: Citation '1' on page 15 undefined on input line 502.
+
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 10.54048pt on input line 508.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.00075pt on input line 508.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 5.00053pt on input line 508.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 10.53824pt on input line 508.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 508.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 508.
+
+LaTeX Warning: Citation '1' on page 15 undefined on input line 532.
+
+[15]
+
+LaTeX Warning: Citation '1' on page 16 undefined on input line 560.
+
+
+LaTeX Warning: Citation '7' on page 16 undefined on input line 560.
+
+[16]
+
+LaTeX Warning: Citation '1' on page 17 undefined on input line 594.
+
+[17]
+
+LaTeX Warning: Citation '1' on page 18 undefined on input line 620.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 623.
+[18]
+
+LaTeX Warning: Citation '1' on page 19 undefined on input line 652.
+
+
+LaTeX Warning: Citation '1' on page 19 undefined on input line 676.
+
+[19] [20]
+第四章
+LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
+(Font)              scaled to size 11.14789pt on input line 738.
+
+Overfull \hbox (15.08705pt too wide) in paragraph at lines 734--744
+ [][] 
+ []
+
+
+Overfull \hbox (5.5494pt too wide) in paragraph at lines 748--753
+\TU/SimSun(0)/m/n/12.045 者 所 依 赖；| \TU/CourierNew(0)/m/n/12.045 local_query_router.hpp \TU/SimSun(0)/m/n/12.045 依 赖 \TU/CourierNew(0)/m/n/12.045 miniarray.hpp\TU/SimSun(0)/m/n/12.045 ；| \TU/CourierNew(0)/m/n/12.045 cubby.hpp
+ []
+
+[21
+
+]
+Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
+[]  \TU/CourierNew(0)/m/n/12.045 ┌──────┬────────────────────────────────────────────────────┐[] 
+ []
+
+
+Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
+[]  \TU/CourierNew(0)/m/n/12.045 ├──────┼────────────────────────────────────────────────────┤[] 
+ []
+
+
+Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
+[]  \TU/CourierNew(0)/m/n/12.045 └──────┴────────────────────────────────────────────────────┘[] 
+ []
+
+
+Overfull \hbox (37.08551pt too wide) in paragraph at lines 792--792

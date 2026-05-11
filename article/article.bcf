@@ -2819,4 +2819,115 @@
       <bcf:constraint type="mandatory">
         <bcf:field>title</bcf:field>
         <bcf:fieldor>
-  
+          <bcf:field>url</bcf:field>
+          <bcf:field>doi</bcf:field>
+          <bcf:field>eprint</bcf:field>
+        </bcf:fieldor>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>patent</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>author</bcf:field>
+        <bcf:field>title</bcf:field>
+        <bcf:field>number</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>periodical</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>editor</bcf:field>
+        <bcf:field>title</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>proceedings</bcf:entrytype>
+      <bcf:entrytype>mvproceedings</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>title</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>inproceedings</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>author</bcf:field>
+        <bcf:field>title</bcf:field>
+        <bcf:field>booktitle</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>report</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>author</bcf:field>
+        <bcf:field>title</bcf:field>
+        <bcf:field>type</bcf:field>
+        <bcf:field>institution</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>thesis</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>author</bcf:field>
+        <bcf:field>title</bcf:field>
+        <bcf:field>type</bcf:field>
+        <bcf:field>institution</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:entrytype>unpublished</bcf:entrytype>
+      <bcf:constraint type="mandatory">
+        <bcf:field>author</bcf:field>
+        <bcf:field>title</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+    <bcf:constraints>
+      <bcf:constraint type="data" datatype="isbn">
+        <bcf:field>isbn</bcf:field>
+      </bcf:constraint>
+      <bcf:constraint type="data" datatype="issn">
+        <bcf:field>issn</bcf:field>
+      </bcf:constraint>
+      <bcf:constraint type="data" datatype="ismn">
+        <bcf:field>ismn</bcf:field>
+      </bcf:constraint>
+      <bcf:constraint type="data" datatype="pattern" pattern="(?:sf|sm|sn|pf|pm|pn|pp)">
+        <bcf:field>gender</bcf:field>
+      </bcf:constraint>
+    </bcf:constraints>
+  </bcf:datamodel>
+  <!-- CITATION DATA -->
+  <!-- SECTION 0 -->
+  <bcf:bibdata section="0">
+    <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
+  </bcf:bibdata>
+  <bcf:section number="0">
+    <bcf:citekey order="1">2</bcf:citekey>
+    <bcf:citekey order="2">13</bcf:citekey>
+    <bcf:citekey order="3">13</bcf:citekey>
+    <bcf:citekey order="4">14</bcf:citekey>
+    <bcf:citekey order="5">3</bcf:citekey>
+    <bcf:citekey order="5">10</bcf:citekey>
+    <bcf:citekey order="6">10</bcf:citekey>
+    <bcf:citekey order="7">1</bcf:citekey>
+    <bcf:citekey order="8">15</bcf:citekey>
+    <bcf:citekey order="9">18</bcf:citekey>
+    <bcf:citekey order="10">18</bcf:citekey>
+    <bcf:citekey order="11">4</bcf:citekey>
+    <bcf:citekey order="12">17</bcf:citekey>
+    <bcf:citekey order="13">8</bcf:citekey>
+    <bcf:citekey order="14">1</bcf:citekey>
+    <bcf:citekey order="15">1</bcf:citekey>
+    <bcf:citekey order="16">12</bcf:citekey>
+    <bcf:citekey order="17">11</bcf:citekey>
+    <bcf:citekey order="18">1</bcf:citekey>
+    <bcf:citekey order="19">1</bcf:citekey>
+    <bcf:citekey order="20">2</bcf:citekey>
+    <bcf:citekey order="21">1</bcf:citekey>
+    <bcf:citekey order="22">2</bcf:citekey>
+    <bcf:citekey order="23">9</bcf:citekey>
+    <bcf:citekey order="24">9</bcf:citekey>
+    <bcf:citekey order="25">5</bcf:citekey>
+    <bcf:citekey order="26">9</bcf:citekey>
+    <bcf:citekey order="26">6</bcf:citekey>
+    <bcf:citekey order="27">6</bcf:citekey>
+    <bcf:
