@@ -2018,3 +2018,286 @@ Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
 
 
 Overfull \hbox (37.08551pt too wide) in paragraph at lines 792--792
+[] \TU/FangSong(0)/m/n/12.045 内 部 节 点 \TU/CourierNew(0)/m/n/12.045 : type=0,  \TU/FangSong(0)/m/n/12.045 数 据 \TU/CourierNew(0)/m/n/12.045 =[left_child( \TU/FangSong(0)/m/n/12.045 高 位 \TU/CourierNew(0)/m/n/12.045 )][right_child( \TU/FangSong(0)/m/n/12.045 低 位 \TU/CourierNew(0)/m/n/12.045 )][] 
+ []
+
+
+Overfull \hbox (49.82811pt too wide) in paragraph at lines 792--792
+[]  \TU/CourierNew(0)/m/n/12.045 entry_bits_ = 1 + max(2*child_bits_, fval_bits_+kh_bits_) ≤ 62[] 
+ []
+
+[22]
+Overfull \hbox (5.53967pt too wide) in paragraph at lines 823--825
+[]\TU/SimSun(0)/b/n/12.045 删 除 \TU/TimesNewRoman(0)/b/n/12.045 (remove)\TU/SimSun(0)/m/n/12.045 ：|  沿 \TU/TimesNewRoman(0)/m/n/12.045 Trie walk \TU/SimSun(0)/m/n/12.045 找 到 匹 配 叶 节 点 \TU/TimesNewRoman(0)/m/n/12.045 → \TU/SimSun(0)/m/n/12.045 写 入 空 叶 标 记  |（\TU/TimesNewRoman(0)/m/n/12.045 fval=0, hash=0\TU/SimSun(0)/m/n/12.045 ） ，|
+ []
+
+[23]
+
+LaTeX Warning: Citation '1' on page 24 undefined on input line 857.
+
+
+Overfull \hbox (16.64272pt too wide) in paragraph at lines 855--858
+[]\TU/CourierNew(0)/m/n/12.045 max_depth_for(key)\TU/SimSun(0)/m/n/12.045 ：|  对 键 做 \TU/TimesNewRoman(0)/m/n/12.045 hash\TU/SimSun(0)/m/n/12.045 ，|  使 用 概 率 公 式 $[][][][][][] [] [][] [] [][][][][] [][][]$
+ []
+
+
+Overfull \hbox (9.12465pt too wide) in paragraph at lines 861--865
+[]\TU/CourierNew(0)/m/n/12.045 free_bitmap_ |\TU/SimSun(0)/m/n/12.045 （\TU/TimesNewRoman(0)/m/n/12.045 MiniArray, 1 bit/slot, 0= \TU/SimSun(0)/m/n/12.045 占 用\TU/TimesNewRoman(0)/m/n/12.045 , 1= \TU/SimSun(0)/m/n/12.045 空 闲）|  配 合 \TU/CourierNew(0)/m/n/12.045 first_free_
+ []
+
+[24]
+
+LaTeX Warning: Reference `tab:complexity' on page 25 undefined on input line 887.
+
+
+Overfull \hbox (45.66318pt too wide) in paragraph at lines 892--903
+ [][] 
+ []
+
+[25] [26]
+第五章
+[27
+
+]
+File: src/benchmark_insert.png Graphic file (type bmp)
+<src/benchmark_insert.png>
+ [28]
+
+LaTeX Warning: Citation '1' on page 29 undefined on input line 999.
+
+File: src/benchmark_query.png Graphic file (type bmp)
+<src/benchmark_query.png>
+[29] [30]
+
+LaTeX Warning: Citation '7' on page 31 undefined on input line 1055.
+
+File: src/benchmark_delete.png Graphic file (type bmp)
+<src/benchmark_delete.png>
+[31]
+File: src/benchmark_memory.png Graphic file (type bmp)
+<src/benchmark_memory.png>
+
+
+LaTeX Warning: Reference `fig:mem' on page 32 undefined on input line 1130.
+
+
+LaTeX Warning: Reference `tab:mem' on page 32 undefined on input line 1130.
+
+
+LaTeX Warning: Citation '1' on page 32 undefined on input line 1134.
+
+[32]
+File: src/benchmark_all_operations.png Graphic file (type bmp)
+<src/benchmark_all_operations.png>
+File: src/benchmark_throughput.png Graphic file (type bmp)
+<src/benchmark_throughput.png>
+
+
+LaTeX Warning: Citation '1' on page 33 undefined on input line 1175.
+
+[33] [34]
+第六章
+
+LaTeX Warning: Citation '2' on page 35 undefined on input line 1198.
+
+
+Overfull \hbox (25.87762pt too wide) in paragraph at lines 1198--1200
+[]\TU/SimSun(0)/m/n/12.045 本 章 描 述 将 实 现 的 \TU/TimesNewRoman(0)/m/n/12.045 k-kick \TU/SimSun(0)/m/n/12.045 树 哈 希 方 案 集 成 到 \TU/TimesNewRoman(0)/m/n/12.045 Google LevelDB$[]$\TU/SimSun(0)/m/n/12.045 数 据 库 的 \TU/TimesNewRoman(0)/m/n/12.045 MemTable
+ []
+
+
+LaTeX Warning: Citation '2' on page 35 undefined on input line 1205.
+
+
+LaTeX Warning: Citation '1' on page 35 undefined on input line 1212.
+
+[35
+
+]
+Overfull \hbox (60.02213pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 ├── util/kick_hash/                ←  \TU/FangSong(0)/m/n/12.045 从  \TU/CourierNew(0)/m/n/12.045 ../code/  \TU/FangSong(0)/m/n/12.045 复 制 的 哈 希 方 案 头 文 件 [] 
+ []
+
+
+Overfull \hbox (90.60423pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 │   ├── facility.hpp               ← Facility:  \TU/FangSong(0)/m/n/12.045 分 层 管 理 器  \TU/CourierNew(0)/m/n/12.045 + deactivate \TU/FangSong(0)/m/n/12.045 合 并 [] 
+ []
+
+
+Overfull \hbox (100.79826pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 │   ├── cubby.hpp                  ← Cubby:  \TU/FangSong(0)/m/n/12.045 弹 性 哈 希  \TU/CourierNew(0)/m/n/12.045 + free_bitmap +  \TU/FangSong(0)/m/n/12.045 动 态 容 量 [] 
+ []
+
+
+Overfull \hbox (77.86168pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 │   └── local_query_router.hpp     ← LocalQueryRouter:  \TU/FangSong(0)/m/n/12.045 紧 凑 \TU/CourierNew(0)/m/n/12.045 Trie + LUT[] 
+ []
+
+
+Overfull \hbox (9.05197pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.h                  ←  \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : #ifdef USE_KICK_HASH[] 
+ []
+
+
+Overfull \hbox (42.18256pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.cc                 ←  \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : Add() \TU/FangSong(0)/m/n/12.045 双 写 \TU/CourierNew(0)/m/n/12.045 , Get() \TU/FangSong(0)/m/n/12.045 优 先 查 询 [] 
+ []
+
+
+Overfull \hbox (85.5072pt too wide) in paragraph at lines 1258--1258
+[]\TU/CourierNew(0)/m/n/12.045 └── CMakeLists.txt                 ← option(USE_KICK_HASH ...) +  \TU/FangSong(0)/m/n/12.045 编 译 开 关 [] 
+ []
+
+[36]
+
+LaTeX Warning: Citation '6' on page 37 undefined on input line 1274.
+
+[37]
+LaTeX Font Info:    Font shape `TU/CourierNew(0)/b/n' will be
+(Font)              scaled to size 10.63216pt on input line 1298.
+ [38]
+LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/it' will be
+(Font)              scaled to size 11.14789pt on input line 1326.
+
+
+LaTeX Font Warning: Font shape `TU/FangSong(0)/m/it' undefined
+(Font)              using `TU/FangSong(0)/m/n' instead on input line 1326.
+
+[39] (d:/environment/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) (d:/environment/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) [40] [41]
+Overfull \hbox (9.05197pt too wide) in paragraph at lines 1461--1461
+[]  \TU/CourierNew(0)/m/n/12.045 └── kick_table_.Insert(key, buf)          [ \TU/FangSong(0)/m/n/12.045 编 译 \TU/CourierNew(0)/m/n/12.045 ON +  \TU/FangSong(0)/m/n/12.045 运 行 \TU/CourierNew(0)/m/n/12.045 ON][] 
+ []
+
+
+Overfull \hbox (14.14897pt too wide) in paragraph at lines 1461--1461
+[]  \TU/CourierNew(0)/m/n/12.045 ├── kick_table_.Get(key) → O(1)  \TU/FangSong(0)/m/n/12.045 返 回       \TU/CourierNew(0)/m/n/12.045 [ \TU/FangSong(0)/m/n/12.045 编 译 \TU/CourierNew(0)/m/n/12.045 ON +  \TU/FangSong(0)/m/n/12.045 运 行 \TU/CourierNew(0)/m/n/12.045 ON][] 
+ []
+
+
+Overfull \hbox (77.86168pt too wide) in paragraph at lines 1461--1461
+[]\TU/CourierNew(0)/m/n/12.045 NewIterator() → SkipList::Iterator           [ \TU/FangSong(0)/m/n/12.045 不 受 影 响 ， 始 终 \TU/CourierNew(0)/m/n/12.045 SkipList][] 
+ []
+
+[42]
+File: src/benchmark_insert.png Graphic file (type bmp)
+<src/benchmark_insert.png>
+ [43]
+File: src/benchmark_query.png Graphic file (type bmp)
+<src/benchmark_query.png>
+ [44]
+Overfull \hbox (14.52684pt too wide) in paragraph at lines 1616--1629
+ [][] 
+ []
+
+[45]
+Overfull \hbox (4.78903pt too wide) in paragraph at lines 1640--1647
+[]\TU/SimSun(0)/b/n/12.045 代 码 复 用 的 工 程 实 现\TU/SimSun(0)/m/n/12.045 。|  从\TU/CourierNew(0)/m/n/12.045 ./code \TU/SimSun(0)/m/n/12.045 目 录 向 \TU/CourierNew(0)/m/n/12.045 leveldb/util/kick_hash/
+ []
+
+[46] [47] [48
+
+]
+第七章
+
+LaTeX Warning: Citation '1' on page 49 undefined on input line 1685.
+
+
+LaTeX Warning: Citation '1' on page 49 undefined on input line 1690.
+
+
+LaTeX Warning: Citation '7' on page 49 undefined on input line 1696.
+
+
+LaTeX Warning: Citation '1' on page 49 undefined on input line 1702.
+
+
+LaTeX Warning: Citation '1' on page 49 undefined on input line 1712.
+
+[49]
+
+LaTeX Warning: Citation '1' on page 50 undefined on input line 1722.
+
+
+LaTeX Warning: Citation '2' on page 50 undefined on input line 1730.
+
+
+LaTeX Warning: Citation '1' on page 50 undefined on input line 1749.
+
+[50]
+
+LaTeX Warning: Citation '1' on page 51 undefined on input line 1757.
+
+
+Overfull \hbox (46.73442pt too wide) in paragraph at lines 1755--1763
+[]\TU/SimSun(0)/b/n/12.045 容 量 模 型 的 进 一 步 精 细 化\TU/SimSun(0)/m/n/12.045 。|  当 前 的 动 态 容 量 计 算 采 用 了 $[][][][]  [] []
+ []
+
+
+LaTeX Warning: Citation '1' on page 51 undefined on input line 1766.
+
+
+LaTeX Warning: Citation '18' on page 51 undefined on input line 1776.
+
+
+LaTeX Warning: Citation '7' on page 51 undefined on input line 1783.
+
+[51]
+
+LaTeX Warning: Empty bibliography on input line 1800.
+
+[52]
+
+LaTeX Warning: Citation '1' on page 53 undefined on input line 1823.
+
+
+LaTeX Warning: Citation '2' on page 53 undefined on input line 1823.
+
+[53
+
+] [54
+
+]
+\tf@thm=\write6
+\openout6 = `article.thm'.
+
+ (./article.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `article.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `article.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  CE4A50F074BF582C97A33F345024C8C8;12639.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                article
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'article.run.xml'.
+\openout1 = `article.run.xml'.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 36962 strings out of 476179
+ 764089 string characters out of 5807780
+ 1752236 words of memory out of 5000000
+ 57163 multiletter control sequences out of 15000+600000
+ 478153 words of font info for 179 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 102i,20n,131p,3358b,4948s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on article.pdf (62 pages).
