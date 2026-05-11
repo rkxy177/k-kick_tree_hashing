@@ -150,10 +150,10 @@ Cuckoo Hashing由Pagh和Rodler于2001年提出\cite{4}，通过引入
 多候选位置及元素重定位机制，在最坏情况下实现了$O(1)$的查询时间。多候选位置
 改变了先前使用一个关于探测次数的探测函数生成探测序列的方式，转而采用多个哈希
 函数为每个元素生成多个可存入位置，每一个元素只会出现在属于自己的可存入位置中。
-元素重定位机制则从发现冲突退让并探测转变为发现可存入位置都有冲突就踢出一个
-元素，将该元素往属于它的其他可存入位置移动，重复进行直到不再冲突。这两种机制
-协作严格保证了任何键的查找操作只需要计算预先设置的哈希函数个数的次数，实现了
-常数级查询。
+元素重定位机制则从发现冲突退让并探测新的位置转变为发现可存入位置都有冲突就踢
+出一个元素，将该元素往属于它的其他可存入位置移动，重复进行直到不再冲突。这两
+种机制协作严格保证了任何键的查找操作只需要计算预先设置的哈希函数个数的次数，
+实现了常数级查询。
 
 \subsection{基于k-kick树的时空最优方案}
 
@@ -172,13 +172,12 @@ $O(1)$位的空间冗余，必须彻底脱离``增强开放寻址''的范式。
 
 \subsection{紧凑字典与空间高效结构}
 
-在空间高效哈希表的并行研究方向上，Raman和Rao\cite{12}提出了紧凑动态字典
+在空间高效哈希表的研究领域，Raman和Rao\cite{12}提出了紧凑动态字典
 和树形结构，在保持$O(1)$查询时间的同时将空间占用压缩至接近信息论下界，
-为动态哈希表的紧凑存储提供了重要技术参考。Liu、Yin和Yu\cite{11}进一步
-研究了未知大小集合的紧凑过滤器（succinct filters），通过自适应空间分配
+为动态哈希表的紧凑存储提供了重要技术参考。Liu、Yin和Yu进一步研究了未知大
+小集合的紧凑过滤器（succinct filters）\cite{11}，通过自适应空间分配
 策略实现了与静态过滤器相当的压缩率，揭示了空间高效哈希结构在多场景下的
-可拓展性。上述工作在``紧凑''（compact）—空间$O(\text{理论下界})$
-和``灵活''（dynamic）—支持在线插入/删除 之间实现了不同取舍，
+可拓展性。上述工作在紧凑空间和支持在线插入/删除 之间实现了不同取舍，
 而k-kick树方案\cite{1}的贡献在于首次给出了时空权衡的完整理论曲线。
 
 \section{主要研究内容和目标}
@@ -229,13 +228,13 @@ $k$-kick树哈希方案的详细理论。
 
 \begin{itemize}
   \item \textbf{插入}（Insert）：将键值对$(k, v)$存入表中
-  \item \textbf{查询}（Query/Lookup）：给定键$k$，返回对应的值$v$
+  \item \textbf{查询}（Query）：给定键$k$，返回对应的值$v$
   \item \textbf{删除}（Delete）：给定键$k$，从表中移除对应记录
 \end{itemize}
 
 理想情况下，三种操作均可在$O(1)$时间内完成。然而，当两个不同的键被哈希函数
 映射到同一位置时，就会发生\textbf{冲突}（collision）。冲突处理策略是哈希表设计
-的核心难题，不同的策略直接决定了哈希表在时间效率和空间占用上的表现。
+的核心难题，不同的策略导致了哈希表在实际使用时的时间效率和空间占用上的差异表现。
 
 \subsection{哈希函数}
 
@@ -247,20 +246,19 @@ $k$-kick树哈希方案的详细理论。
   \item \textbf{高效性}：计算速度快，$O(1)$时间
 \end{itemize}
 
-本文使用\texttt{splitmix64}\cite{5}作为最终化函数，通过借鉴通用哈希
-（universal hashing）\cite{9,6}思想，对不同使用场景通过不同种子值（seed）
-生成独立哈希族。Dietzfelbinger和Meyer auf der Heide\cite{9}证明了
-通用哈希函数族可实现高效动态实时哈希，而Belazzougui等人的Hash-Displace-Compress
+本文使用\texttt{splitmix64}\cite{5}作为最终化函数，通过借鉴通用哈希\cite{9,6}思想，
+对不同使用场景通过不同种子值生成独立哈希族。Dietzfelbinger和Meyer auf der Heide\cite{9}
+证明了通用哈希函数族可实现高效动态实时哈希，而Belazzougui等人的Hash-Displace-Compress
 框架\cite{6}进一步展示了多哈希族在紧凑存储中的有效性。
 
 \subsection{负载因子与空间效率}
 
 负载因子（load factor）$\alpha = n/m$表示当前存储元素数$n$与总槽数$m$的比值。
-空间效率通常用\textbf{每键浪费比特数}（wasted bits per key）$r$来衡量：
+空间效率通常用\textbf{每键浪费比特数}$r$来衡量：对于$n$规模的键
 若信息论最优空间为$\mathcal{B}$比特，哈希表使用$\mathcal{B} + rn$比特，则称
 浪费了$r$比特/键。紧凑动态字典\cite{12}在理论上证明了$r$可被压缩至
-$O(\log\log n)$比特以内，但需借助复杂的递归编码结构。本文研究的核心问题
-是如何在保障时间效率的前提下最小化$r$。
+$O(\log\log n)$比特以内，但需借助复杂的递归编码结构。本文尝试复现的哈希方案\cite{1}
+研究的核心问题是如何在一定程度内保障时间效率的前提下最小化$r$。
 
 \section{Cuckoo Hashing}
 
@@ -271,13 +269,13 @@ Cuckoo Hashing\cite{4}是一种经典的开地址哈希方案，其核心思想
   \item 依次检查$d$个候选位置，找到第一个空位即插入
   \item 若所有候选位置均被占用，随机选择一个候选位置上的现有键``踢出''（kick out），
     新键占据该位置
-  \item 被踢出的键尝试在其\textbf{其他}候选位置中寻找空位
+  \item 被踢出的键尝试在自己的其\textbf{其他}候选位置中寻找空位
   \item 重复上述过程，直到所有键都找到位置或达到预设的最大踢出次数
 \end{enumerate}
 
 Cuckoo Hashing的优势在于\textbf{查询严格为$O(1)$}（只需检查$d$个位置），
 但其负载因子通常受限（$d=2$时约$50\%$）。Arbitman、Naor和Segev\cite{8}
-进一步提出了去摊还Cuckoo Hashing方案，通过队列化踢出操作缓冲区实现了
+进一步提出了利用队列技术去摊还Cuckoo Hashing方案，通过队列化踢出操作缓冲区实现了
 \textbf{确定性最坏情况}性能保证，利用全局预取技术\cite{9}控制踢出链长度，
 摆脱了经典方案对高概率分析的依赖。
 
@@ -306,8 +304,8 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$。插入时按以下规则操作：
   \item 被踢键若触发新一轮踢出，则形成\textbf{踢出链}，但总踢出次数不超过$k$
 \end{enumerate}
 
-\textbf{关键性质}：高深度（小bin）的键优先踢出低深度（大bin）的键，被踢键
-保持原深度。每次插入至多触发$k$次踢出，因此\textbf{切换开销}为$O(k)$。
+\textbf{关键性质}：高深度的键优先踢出低深度的键，被踢键保持原深度。
+每次插入至多触发$k$次踢出，因此\textbf{切换开销}为$O(k)$。
 
 \subsection{理论保证}
 
@@ -430,24 +428,6 @@ lookup table 将 Trie 遍历从 $O(\log|S|)$ 加速至 $O(1)$。
 的目标节点，查询时直接跳转至该节点后继续遍历剩余位数。
 LUT 在 Trie 结构变化时失效（仅当 \texttt{nodes\_.size()} 增长时），
 叶值更新不影响 LUT 有效性。LUT 存储开销为 $256 \times 4\text{B} = 1\text{KB}$。
-
-\subsection{与论文的差异}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{l|c|c}
-\toprule
-\textbf{方面} & \textbf{论文\cite{1}} & \textbf{本次实现} \\
-\midrule
-编码方式 & E$_1$+E$_2$ 紧凑比特流 & MiniArray 位压缩 (显式双指针) \\
-查询时间 & O(1) (lookup table) & $O(\log|S|)$ + LUT 加速 \\
-每key空间 & $\sim$2.5 bytes & $\sim$5-8 bytes (路由器部分) \\
-路由器规模 & $O(\log n / \log\log n) \approx 93$ keys & capacity$\times 2$ (Cubby) / 4M (Facility) \\
-\bottomrule
-\end{tabular}
-\caption{LocalQueryRouter 实现与论文对照}
-\label{tab:lqr_compare}
-\end{table}
 
 \subsection{两级路由中的使用}
 
@@ -807,12 +787,15 @@ $10^6$ & $1.95\times 10^6$ & 75,586 & 25.8 \\
 \label{tab:query}
 \end{table}
 
-\textbf{分析}：查询在$n\leq 2\times10^5$时每操作$\sim$0.3--0.4 us
-（LUT跳过前8层，剩余路径仅$\sim\log_2|S|-8$层）。
-$n\geq 5\times10^5$后Trie深度随$\log_2 n$增长，每操作升至$\sim$0.5--1.95 us/op。
-相比unordered\_map慢约15--25×，主要差距来自紧凑Trie的逐位遍历和两级路由开销
-（facility级+cubby级），vs 哈希表单次探测。LUT加速\cite{7}将查询前8层从逐位遍历
-优化为$O(1)$跳转，查询时间在$n\leq 10^5$时已达每操作$<0.3$ us，$n=10^6$时约1.95 us/op。
+\textbf{结果分析}：
+在$n\leq 2\times10^5$的规模下，得益于查找表（LUT）跳过了前8层遍历，
+剩余路径长度仅为$\sim\log_2|S|-8$，单次操作耗时维持在0.3--0.4 us的低位。
+当数据规模扩展至$n\geq 5\times10^5$时，Trie深度随$\log_2 n$增加，
+导致单次操作成本上升至0.5--1.95 us。与unordered\_map相比，本文方法存在
+约15--25倍的延迟差距，这主要归因于紧凑Trie的逐位遍历机制及两级路由
+（facility级与cubby级）开销，不同于哈希表仅需单次探测。实验表明，LUT加速策略\cite{7}
+成功将前8层查询优化为$O(1)$跳转，使得$n\leq 10^5$时每操作耗时低于0.3 us，
+而在$n=10^6$时约为1.95 us。
 
 \section{删除性能}
 
