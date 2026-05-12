@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 16:17
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 17:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1802,7 +1802,12 @@ File: src/benchmark_query.png Graphic file (type bmp)
  [29] [30]
 File: src/benchmark_delete.png Graphic file (type bmp)
 <src/benchmark_delete.png>
- [31]
+
+Overfull \hbox (92.63016pt too wide) in paragraph at lines 1087--1092
+[]\TU/SimSun(0)/m/n/12.045 本 文 的 实 现 还 额 外 承 担 了 每 一 被 删 除 元 素 的 两 级 路 由 清 理 操 作  |（\TU/CourierNew(0)/m/n/12.045 cubby_router_.remove
+ []
+
+[31]
 File: src/benchmark_memory.png Graphic file (type bmp)
 <src/benchmark_memory.png>
  [32]
@@ -1870,12 +1875,7 @@ File: src/benchmark_insert.png Graphic file (type bmp)
  [43]
 File: src/benchmark_query.png Graphic file (type bmp)
 <src/benchmark_query.png>
- [44]
-Overfull \hbox (14.52684pt too wide) in paragraph at lines 1606--1619
- [][] 
- []
-
-[45]
+ [44] [45]
 Overfull \hbox (4.78903pt too wide) in paragraph at lines 1630--1637
 []\TU/SimSun(0)/b/n/12.045 代 码 复 用 的 工 程 实 现\TU/SimSun(0)/m/n/12.045 。|  从\TU/CourierNew(0)/m/n/12.045 ./code \TU/SimSun(0)/m/n/12.045 目 录 向 \TU/CourierNew(0)/m/n/12.045 leveldb/util/kick_hash/
  []
@@ -1890,29 +1890,29 @@ Overfull \hbox (46.73442pt too wide) in paragraph at lines 1745--1753
  []
 
 [51] [52]
-Overfull \hbox (1.9442pt too wide) in paragraph at lines 1791--1791
+Overfull \hbox (1.9442pt too wide) in paragraph at lines 1789--1789
 []\TU/TimesNewRoman(0)/m/n/12.045 GHEMAWAT S, DEAN J. LevelDB: A Fast and Lightweight Key/Value Database
  []
 
 
-Overfull \hbox (17.1294pt too wide) in paragraph at lines 1791--1791
+Overfull \hbox (17.1294pt too wide) in paragraph at lines 1789--1789
 \TU/TimesNewRoman(0)/m/n/12.045 Time/Space Tradeoff for Hash Tables[J]. ArXiv preprint, 2022, arXiv:2111.00602v2.
  []
 
 
-Overfull \hbox (0.4775pt too wide) in paragraph at lines 1791--1791
+Overfull \hbox (0.4775pt too wide) in paragraph at lines 1789--1789
 \TU/TimesNewRoman(0)/m/n/12.045 Languages and Programming (ICALP): vol. 5555. Springer, 2009: 107-118. DOI:
  []
 
 [53
 
 ]
-Overfull \hbox (5.8154pt too wide) in paragraph at lines 1791--1791
+Overfull \hbox (5.8154pt too wide) in paragraph at lines 1789--1789
 []\TU/TimesNewRoman(0)/m/n/12.045 LIU M, YIN Y, YU H. Succinct filters for sets of unknown sizes[C]\TU/CourierNew(0)/m/n/12.045 //\TU/TimesNewRoman(0)/m/n/12.045 Proceedings
  []
 
 
-Overfull \hbox (3.07336pt too wide) in paragraph at lines 1791--1791
+Overfull \hbox (3.07336pt too wide) in paragraph at lines 1789--1789
 \TU/TimesNewRoman(0)/m/n/12.045 of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (STOC).
  []
 
@@ -1928,20 +1928,8 @@ Overfull \hbox (3.07336pt too wide) in paragraph at lines 1791--1791
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
-
-Package rerunfilecheck Warning: File `article.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `article.out':
-(rerunfilecheck)             Before: AD2047611C0720372C37D2A2F329F249;12639
-(rerunfilecheck)             After:  9ABBC82A6AC78122B97C5F4734D73782;12717.
-
-Package biblatex Warning: Please rerun LaTeX.
-
+Package rerunfilecheck Info: File `article.out' has not changed.
+(rerunfilecheck)             Checksum: 9ABBC82A6AC78122B97C5F4734D73782;12717.
 Package logreq Info: Writing requests to 'article.run.xml'.
 \openout1 = `article.run.xml'.
 
@@ -1949,7 +1937,7 @@ Package logreq Info: Writing requests to 'article.run.xml'.
 Here is how much of TeX's memory you used:
  36678 strings out of 476179
  761409 string characters out of 5807780
- 1767441 words of memory out of 5000000
+ 1768066 words of memory out of 5000000
  56892 multiletter control sequences out of 15000+600000
  475665 words of font info for 166 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
