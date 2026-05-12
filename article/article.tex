@@ -13,9 +13,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{hyperref}
-\usepackage{cite}
 \usepackage{listings}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -457,15 +455,15 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$。插入时按以下规则操作：
 \centering
 \begin{verbatim}
 Facility (全局分层管理器)
-├── cubby_router_: LocalQueryRouter       key → cubby 索引
+├── cubby_router_: LocalQueryRouter       将 key 映射至 cubby 索引
 ├── cubbies_: vector<Cubby>
-│   ├── [tail]  tier-1  cap=1024           ← 新数据入口
-│   ├── [0]     tier-1  cap=1024           ← 已满子表
-│   ├── [1]     tier-2                     ← 合并产物（动态容量）
+│   ├── [tail]  tier-1  cap=1024           [新数据入口]
+│   ├── [0]     tier-1  cap=1024           [已满子表]
+│   ├── [1]     tier-2                     [合并产物，动态容量]
 │   └── ...
 │
 └── 每个 Cubby:
-    ├── route_: LocalQueryRouter           key → slot 索引
+    ├── route_: LocalQueryRouter           将 key 映射至 slot 索引
     ├── slot_meta_: MiniArray (4b/slot)    槽元数据
     ├── free_bitmap_: MiniArray (1b/slot)  空闲槽位图
     ├── keys_[], values_[]                 键/值存储
@@ -548,9 +546,9 @@ Non-uniform & 元素宽度不等 & insert/erase $O(n)$ \\
     默认44位）。
   \item \textbf{查询}（\texttt{walk\_down}）：沿键的 LSB 方向哈希位遍历 Trie，
     遇叶节点用指纹验证后返回 f\_value。
-  \item \textbf{插入}（\texttt{insert + do\_split}）：沿路径 walk → 遇异键叶时分裂
-    （找两键哈希分叉位 → 创建内部节点链 → 两新叶）→ 遇 NO\_CHILD 空方向时链接新叶。
-  \item \textbf{删除}（\texttt{remove}）：walk\_down 找到叶 → 标记为空叶（hash=0, fval=0）。
+  \item \textbf{插入}（\texttt{insert + do\_split}）：沿路径 walk 遍历，遇异键叶时分裂
+    （找两键哈希分叉位，然后创建内部节点链，最后在分叉处创建两新叶）；遇 NO\_CHILD 空方向时链接新叶。
+  \item \textbf{删除}（\texttt{remove}）：walk\_down 找到叶，标记为空叶（hash=0, fval=0）。
 \end{itemize}
 整体空间 $= |\texttt{nodes\_}| \times w$ bits，其中 $|\texttt{nodes\_}| \approx 2|S|$，
 $w \le 62$ bits。紧凑编码实现了每节点 $\sim$5-8 bytes 的空间占用。
@@ -711,12 +709,12 @@ Cubby索引映射——这正是合并操作的主要时间开销来源。
 
 \subsection{插入/查询/删除流程}
 
-\textbf{插入}：cubby\_router\_查重 → tail满时promote + rebalance →
-Cubby::insert\_new（含kick链）→ 更新两级路由。
+\textbf{插入}：cubby\_router\_查重；若tail满则执行promote和rebalance；
+然后调用Cubby::insert\_new（含kick链）；最后更新两级路由。
 
-\textbf{查询}：cubby\_router\_定位cubby → Cubby::route\_定位槽 → lookup\_at验证。
+\textbf{查询}：cubby\_router\_定位cubby，再通过Cubby::route\_定位槽，最后调用lookup\_at验证。
 
-\textbf{删除}：cubby\_router\_定位 → Cubby::remove\_at → cubby\_router\_.remove。
+\textbf{删除}：cubby\_router\_定位cubby，执行Cubby::remove\_at，然后清理cubby\_router\_.remove。
 
 %=====================================================================
 \chapter{算法实现}
@@ -772,27 +770,20 @@ Non-uniform并平铺写入。
 
 \subsection{紧凑节点编码}
 
-\begin{figure}[H]
-\centering
-\begin{verbatim}
-每节点固定 entry_bits_ 位，MiniArray Uniform 模式存储：
-  ┌──────┬────────────────────────────────────────────────────┐
-  │1 bit │             entry_bits_ - 1  bits                   │
-  ├──────┼────────────────────────────────────────────────────┤
-  │ type │                 数据字段                            │
-  └──────┴────────────────────────────────────────────────────┘
+每个Trie节点在MiniArray中以固定的\texttt{entry\_bits\_}位宽（不超过62位）
+存储，最高位为类型标志位：该位为0时表示内部节点，为1时表示叶节点。内部
+节点将剩余位平均划分为左右两个子指针字段（各占\texttt{child\_bits\_}位），
+分别指向左子树和右子树的根节点在MiniArray中的序号。叶节点则将剩余位划分
+为功能值字段（\texttt{fval\_bits\_}位，高位部分）和键哈希指纹字段
+（\texttt{kh\_bits\_}位，默认为44位，低位部分）。功能值存储该键在所属Cubby
+中的槽位索引，键哈希指纹取值为\texttt{splitmix64(hash(key)) \& ((1<<44)-1)}，
+用于在查询时快速验证叶节点与查询键的匹配关系。
 
-内部节点: type=0, 数据=[left_child(高位)][right_child(低位)]
-叶节点:   type=1, 数据=[f_value(高位)][key_hash(低位)]
-          key_hash = splitmix64(hash(key)) & ((1<<44)-1)
-  child_bits_ = bits_to_represent(cap*3 + NODE_PAD)
-  fval_bits_  = 由使用场景决定
-  kh_bits_    = 44 (默认)
-  entry_bits_ = 1 + max(2*child_bits_, fval_bits_+kh_bits_) ≤ 62
-\end{verbatim}
-\caption{紧凑节点编码方案}
-\label{fig:compact_node}
-\end{figure}
+子指针的位宽由公式$\texttt{child\_bits\_} = \texttt{bits\_to\_represent}
+(\texttt{cap} \times 3 + \texttt{NODE\_PAD})$确定，随路由器的容量参数动态
+调整；功能值的位宽则取决于具体的使用场景（Cubby级路由中为槽位索引的位宽，
+Facility级路由中为Cubby编号的位宽）。将类型位、子指针（或功能值及哈希指纹）
+三部分拼接后即得到完整的节点编码，由MiniArray以Uniform模式进行紧凑存储。
 
 \subsection{核心算法}
 
@@ -802,12 +793,12 @@ Non-uniform并平铺写入。
 
 \textbf{插入 (insert)}：沿 key 的 LSB 哈希位遍历 Trie。五种情况：
 \begin{enumerate}
-  \item 遇叶节点且指纹匹配 → 更新 f\_value
-  \item 遇叶节点且指纹为0（空叶，首次使用）→ 覆盖为新键数据
-  \item 遇叶节点但指纹不匹配 → \texttt{do\_split()} 分裂：
-    找分叉深度 → 创建内部节点链 → 在分叉处创建两新叶
-  \item 遇内部节点但方向为 NO\_CHILD → 创建新叶并链接
-  \item 路径走到头 → 追加新叶节点
+  \item 遇叶节点且指纹匹配：更新 f\_value
+  \item 遇叶节点且指纹为0（空叶，首次使用）：覆盖为新键数据
+  \item 遇叶节点但指纹不匹配：执行 \texttt{do\_split()} 分裂。
+    找分叉深度，创建内部节点链，在分叉处创建两新叶
+  \item 遇内部节点但方向为 NO\_CHILD：创建新叶并链接
+  \item 路径走到头：追加新叶节点
 \end{enumerate}
 插入结束后若 \texttt{nodes\_.size()} 变化则失效 LUT。
 
@@ -820,7 +811,7 @@ Non-uniform并平铺写入。
   \item 设置最后一个内部节点的左右子节点为两叶
 \end{enumerate}
 
-\textbf{删除 (remove)}：沿 Trie walk 找到匹配叶节点 → 写入空叶标记
+\textbf{删除 (remove)}：沿 Trie walk 找到匹配叶节点，写入空叶标记
 （fval=0, hash=0），n\_entries\_--。
 
 \subsection{显式双指针与LUT协同}
@@ -869,17 +860,17 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$ 计算阈值，从$k$到0逐层比较并返
 
 \texttt{lookup(key)}：
 \begin{enumerate}
-  \item \texttt{cubby\_router\_.probe\_index(key)} → cubby索引$ci$
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_slot}(key)$ → 槽索引$slot$
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_at}(slot, key)$ → 返回值
+  \item \texttt{cubby\_router\_.probe\_index(key)} 获取 cubby索引$ci$
+  \item $\text{cubbies\_}[ci].\texttt{lookup\_slot}(key)$ 获取槽索引$slot$
+  \item $\text{cubbies\_}[ci].\texttt{lookup\_at}(slot, key)$ 获取返回值
 \end{enumerate}
 
 \subsection{合并与路由更新}
 
-\texttt{merge\_two\_of\_tier(tier)}：选取两个候选Cubby → 提取全部元素 →
-按实际数据量计算动态容量 → \texttt{alloc\_cubby\_slot}获得新Cubby →
-逐元素插入新Cubby并逐一更新\texttt{cubby\_router\_}中键到cubby索引的映射
-→ \texttt{deactivate()}原Cubby。使用\texttt{deactivate()}停用避免
+\texttt{merge\_two\_of\_tier(tier)}：选取两个候选Cubby，提取全部元素，
+按实际数据量计算动态容量，通过\texttt{alloc\_cubby\_slot}获得新Cubby，
+逐元素插入新Cubby并逐一更新\texttt{cubby\_router\_}中键到cubby索引的映射，
+最后\texttt{deactivate()}原Cubby。使用\texttt{deactivate()}停用避免
 \texttt{vector::erase}带来的索引偏移。
 
 \section{复杂度分析}
@@ -953,8 +944,8 @@ $\log_2|S| - 8$层。在本文覆盖的$n \leq 10^6$的实验条件下，这一�
     不重复的随机键值对。对每个规模独立进行3次完整试验，报告平均值以过滤单次
     实验中的偶然波动。
 
-  \item \textbf{测试流程}：每组实验严格按照``插入全部$n$个元素 → 查询全部$n$个
-    元素 → 删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
+  \item \textbf{测试流程}：每组实验严格按照``插入全部$n$个元素，随后查询全部$n$个
+    元素，最后删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
     \texttt{std::chrono::high\_resolution\_clock}以纳秒精度测量，随后转换为
     微秒（us）进行报告。在相邻阶段之间不进行任何垃圾回收或显式内存释放操作，
     以求反映连续工作负载下的真实性能。
@@ -1243,18 +1234,18 @@ k-kick哈希方案借助紧凑二叉Trie路由和8-bit LUT加速实现了期望$
 \centering
 \begin{verbatim}
 leveldb/
-├── util/kick_hash/                ← 从 ../code/ 复制的哈希方案头文件
-│   ├── facility.hpp               ← Facility: 分层管理器 + deactivate合并
-│   ├── cubby.hpp                  ← Cubby: 弹性哈希 + free_bitmap + 动态容量
-│   ├── miniarray.hpp              ← MiniArray: 位压缩数组
-│   └── local_query_router.hpp     ← LocalQueryRouter: 紧凑Trie + LUT
+├── util/kick_hash/                [从 ../code/ 复制的哈希方案头文件]
+│   ├── facility.hpp               [Facility: 分层管理器 + deactivate合并]
+│   ├── cubby.hpp                  [Cubby: 弹性哈希 + free_bitmap + 动态容量]
+│   ├── miniarray.hpp              [MiniArray: 位压缩数组]
+│   └── local_query_router.hpp     [LocalQueryRouter: 紧凑Trie + LUT]
 │
-├── util/kick_hash.h               ← 适配器 (wrapper)
+├── util/kick_hash.h               [适配器 (wrapper)]
 │
-├── db/memtable.h                  ← 修改: #ifdef USE_KICK_HASH
-├── db/memtable.cc                 ← 修改: Add()双写, Get()优先查询
+├── db/memtable.h                  [修改: #ifdef USE_KICK_HASH]
+├── db/memtable.cc                 [修改: Add()双写, Get()优先查询]
 │
-└── CMakeLists.txt                 ← option(USE_KICK_HASH ...) + 编译开关
+└── CMakeLists.txt                 [option(USE_KICK_HASH ...) + 编译开关]
 \end{verbatim}
 \caption{集成后的LevelDB目录结构}
 \label{fig:integration_structure}
@@ -1283,7 +1274,7 @@ leveldb/
 键映射 & Slice $\xrightarrow{\text{KickHash64}}$ uint64\_t \\
 值映射 & Arena指针 $\xrightarrow{\text{reinterpret\_cast}}$ uint64\_t \\
 存储引擎 & Facility<uint64\_t, uint64\_t>（两级LUT路由） \\
-碰撞防护 & 取回Arena指针 → 解析LevelDB编码 → 原始Slice比对 \\
+碰撞防护 & 取回Arena指针，解析LevelDB编码，然后与原始Slice比对 \\
 \bottomrule
 \end{tabular}
 \caption{适配层类型转换方案}
@@ -1337,7 +1328,7 @@ class MemTable {
 
 \begin{lstlisting}
 void MemTable::Add(seq, type, key, value) {
-  // 原有: Arena 编码 → SkipList::Insert
+  // 原有: Arena 编码后 SkipList::Insert
   char* buf = arena_.Allocate(encoded_len);
   // ... 编码 key/value/tag ...
   table_.Insert(buf);
@@ -1373,11 +1364,11 @@ bool MemTable::Get(const LookupKey& key, ...) {
         // 提取value（处理kTypeValue/kTypeDeletion）
         return true;
       }
-      // 哈希碰撞 → 回退SkipList
+      // 哈希碰撞，回退至SkipList
     }
   }
 #endif
-  // 原有: SkipList::Seek → 解析
+  // 原有: SkipList::Seek 后解析
 }
 \end{lstlisting}
 
@@ -1446,19 +1437,18 @@ bool enabled = memtable->GetUseKickHash();
 
 \begin{figure}[H]
 \centering
-\begin{verbatim}
-数据流向:
+\begin{enumerate}
+  \item \textbf{写入路径}：\texttt{Put(key, value)}经过Arena编码后，数据被同时写入
+    SkipList（通过\texttt{Table::Insert}，始终执行）和KickHashTable（通过
+    \texttt{kick\_table\_.Insert}，仅当编译期和运行时开关均开启时执行）。
 
-Put(key, value) → MemTable::Add
-  ├── Arena 编码 → SkipList::Insert         (总是执行)
-  └── kick_table_.Insert(key, buf)          [编译ON + 运行ON]
+  \item \textbf{读取路径}：\texttt{Get(key)}首先尝试通过KickHashTable的
+    \texttt{Get}方法以$O(1)$期望时间获取结果（当双开关均开启时）；若未命中或
+    哈希碰撞，则回退至SkipList的\texttt{Seek}方法以$O(\log n)$时间完成查询。
 
-Get(key) → MemTable::Get
-  ├── kick_table_.Get(key) → O(1) 返回      [编译ON + 运行ON]
-  └── SkipList::Seek → O(log N) 返回        [回退路径]
-
-NewIterator() → SkipList::Iterator           [不受影响，始终SkipList]
-\end{verbatim}
+  \item \textbf{迭代路径}：\texttt{NewIterator()}始终基于SkipList的有序遍历
+    能力，不受哈希加速层的任何影响。
+\end{enumerate}
 \caption{双路径数据流}
 \label{fig:dual_path}
 \end{figure}
@@ -1475,9 +1465,9 @@ NewIterator() → SkipList::Iterator           [不受影响，始终SkipList]
   \item \textbf{对比对象}：\texttt{std::unordered\_map}（$O(1)$期望，开放寻址法）
   \item \textbf{数据规模}：$n \in \{10^3, 5\times10^3, 10^4, 5\times10^4,
     10^5, 2\times10^5, 5\times10^5, 7.5\times10^5, 10^6\}$
-  \item \textbf{数据类型}：16字节随机字符串键 → KickHash64 → uint64\_t哈希键，
+  \item \textbf{数据类型}：16字节随机字符串键，经KickHash64转换为uint64\_t哈希键，
     uint64\_t值存储索引
-  \item \textbf{操作流程}：插入全部$n$个键 → 查询全部$n$个键 → 删除全部$n$个键
+  \item \textbf{操作流程}：插入全部$n$个键，然后查询全部$n$个键，最后删除全部$n$个键
   \item \textbf{硬件}：Intel Core i7，16 GB RAM，Windows 11
   \item \textbf{编译器}：GCC 15.2.0，\texttt{-std=c++20 -O3 -DUSE\_KICK\_HASH=1}
   \item \textbf{试验次数}：每个数据规模3次独立试验

@@ -42,14 +42,14 @@
 \contentsline {subsection}{\numberline {4.2.2}模式切换}{22}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}LocalQueryRouter实现（紧凑MiniArray Trie + LUT）}{22}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}紧凑节点编码}{22}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}核心算法}{23}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.2}核心算法}{22}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}显式双指针与LUT协同}{23}{subsection.4.3.3}%
 \contentsline {section}{\numberline {4.4}Cubby实现}{24}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}bin参数计算}{24}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}深度分配}{24}{subsection.4.4.2}%
 \contentsline {subsection}{\numberline {4.4.3}空闲槽查找}{24}{subsection.4.4.3}%
-\contentsline {section}{\numberline {4.5}Facility实现}{25}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{25}{subsection.4.5.1}%
+\contentsline {section}{\numberline {4.5}Facility实现}{24}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}两级路由查询}{24}{subsection.4.5.1}%
 \contentsline {subsection}{\numberline {4.5.2}合并与路由更新}{25}{subsection.4.5.2}%
 \contentsline {section}{\numberline {4.6}复杂度分析}{25}{section.4.6}%
 \contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第五章}实验与分析}{27}{chapter.5}%
@@ -85,4 +85,5 @@
 \contentsline {chapter}{\bigger \normalfont \sffamily \numberline {第七章}总结与展望}{49}{chapter.7}%
 \contentsline {section}{\numberline {7.1}工作总结}{49}{section.7.1}%
 \contentsline {section}{\numberline {7.2}不足与展望}{50}{section.7.2}%
-\contentsline {chapter}{\bigger \normalfont \sffamily 致\hskip 2em\relax {}谢}{53}{chapter*.32}%
+\contentsline {chapter}{\bigger \normalfont \sffamily 参考文献}{53}{chapter*.31}%
+\contentsline {chapter}{\bigger \normalfont \sffamily 致\hskip 2em\relax {}谢}{55}{chapter*.32}%

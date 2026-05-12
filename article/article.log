@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 00:43
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  12 MAY 2026 16:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -829,71 +829,6 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box66
 \@float@everytoks=\toks46
 \@floatcapt=\box67
-)
-
-Package njuthesis Warning: The "amssymb" package is incompatible with
-(njuthesis)                "unicode-math".
-(njuthesis)                I have loaded "unicode-math" by default. Maybe You
-(njuthesis)                should refer to section 4 of the documentation.
-
-(d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty
-Package: amssymb 2013/01/14 v3.01 AMS font symbols
-
-
-Package njuthesis Warning: The "amsfonts" package is incompatible with
-(njuthesis)                "unicode-math".
-(njuthesis)                I have loaded "unicode-math" by default. Maybe You
-(njuthesis)                should refer to section 4 of the documentation.
-
-(d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/amsfonts.sty
-Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\symAMSa=\mathgroup4
-\symAMSb=\mathgroup5
-LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
-)
-
-d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty:240: LaTeX Error: Command `\eth' already defined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.240 ...ol{\eth}            {\mathord}{AMSb}{"67}
-                                                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty:259: LaTeX Error: Command `\digamma' already defined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.259 ...ol{\digamma}        {\mathord}{AMSb}{"7A}
-                                                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty:265: LaTeX Error: Command `\backepsilon' already defined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.265 ...ol{\backepsilon}    {\mathrel}{AMSb}{"7F}
-                                                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-) (d:/environment/texlive/2022/texmf-dist/tex/latex/cite/cite.sty
-LaTeX Info: Redefining \cite on input line 302.
-LaTeX Info: Redefining \nocite on input line 332.
-Package: cite 2015/02/27  v 5.5
 ) (d:/environment/texlive/2022/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count337
 \lst@gtempboxa=\box68
@@ -978,17 +913,6 @@ Package: logreq 2010/08/04 v1.0 xml request logger
  (d:/environment/texlive/2022/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-
-d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/biblatex.sty:204: Package biblatex Error: Incompatible package 'cite'.
-
-See the biblatex package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.204 \blx@packageincompatibility
-                                 
-The 'cite' package and biblatex are incompatible.
-
 \c@tabx@nest=\count359
 \c@listtotal=\count360
 \c@listcount=\count361
@@ -1047,7 +971,7 @@ The 'cite' package and biblatex are incompatible.
 \c@mincompwidth=\count403
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
-(d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/blx-dm.def
+ (d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/blx-dm.def
 File: blx-dm.def 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
@@ -1242,30 +1166,29 @@ Package: blx-case-expl3 2022/02/02 v3.17 expl3 case changing code for biblatex
 ))
 \@quotelevel=\count494
 \@quotereset=\count495
-
-No file article.aux.
+ (./article.aux)
 \openout1 = `article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
 
 Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             'latinmodern-math.otf' with options
@@ -1297,13 +1220,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 35.
+(Font)              `operators' in the math version `normal' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 35.
+(Font)                  OT1/cmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 33.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 35.
+(Font)              `operators' in the math version `bold' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 35.
+(Font)                  OT1/cmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 33.
 
 Package fontspec Info: latinmodern-math scale = 1.0001.
 
@@ -1367,13 +1290,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 35.
+(Font)              `symbols' in the math version `normal' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 35.
+(Font)                  OMS/cmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 33.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 35.
+(Font)              `symbols' in the math version `bold' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 35.
+(Font)                  OMS/cmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 33.
 
 Package fontspec Info: latinmodern-math scale = 0.9999.
 
@@ -1419,13 +1342,14 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =7.227pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 35.
+(Font)              `largesymbols' in the math version `normal' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 35.
+(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 33.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 35.
+(Font)              `largesymbols' in the math version `bold' on input line 33.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 35.
+(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 33.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1469,7 +1393,7 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 35.
+Package hyperref Info: Link coloring OFF on input line 33.
  (d:/environment/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (d:/environment/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1479,20 +1403,17 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count496
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
+LaTeX Info: Redefining \nameref on input line 33.
+ (./article.out) (./article.out)
 \@outlinefile=\write4
 \openout4 = `article.out'.
-
-
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
 
 \c@lstlisting=\count497
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
-(d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+ (d:/environment/texlive/2022/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2022/02/02 v3.17 biblatex localization (PK/MW)
 )
 Package biblatex Info: XeTeX detected.
@@ -1502,11 +1423,10 @@ Package biblatex Info: Automatic encoding selection.
 \openout3 = `article.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'article.bbl' not found.
-
-No file article.bbl.
-Package biblatex Info: Reference section=0 on input line 35.
-Package biblatex Info: Reference segment=0 on input line 35.
+Package biblatex Info: ... file 'article.bbl' found.
+ (./article.bbl)
+Package biblatex Info: Reference section=0 on input line 33.
+Package biblatex Info: Reference segment=0 on input line 33.
 
 Package fontspec Info: Font family 'XITSMath-Regular(0)' created for font
 (fontspec)             'XITSMath-Regular' with options
@@ -1538,9 +1458,9 @@ Package fontspec Info: Font family 'XITSMath-Regular(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/XITSMath-Regular(1)/m/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/XITSMath-Regular(1)/m/n on input line 33.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/latinmodern-math.otf(1)/b/n --> TU/XITSMath-Regular(1)/b/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(1)/b/n --> TU/XITSMath-Regular(1)/b/n on input line 33.
 
 Package fontspec Info: XITSMath-Regular scale = 1.0001.
 
@@ -1604,9 +1524,9 @@ Package fontspec Info: Font family 'XITSMath-Regular(2)' created for font
 (fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  TU/latinmodern-math.otf(2)/m/n --> TU/XITSMath-Regular(2)/m/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(2)/m/n --> TU/XITSMath-Regular(2)/m/n on input line 33.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  TU/latinmodern-math.otf(2)/b/n --> TU/XITSMath-Regular(2)/b/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(2)/b/n --> TU/XITSMath-Regular(2)/b/n on input line 33.
 
 Package fontspec Info: XITSMath-Regular scale = 0.9999.
 
@@ -1652,9 +1572,9 @@ Package fontspec Info: Font family 'XITSMath-Regular(3)' created for font
 (fontspec)             =7.227pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  TU/latinmodern-math.otf(3)/m/n --> TU/XITSMath-Regular(3)/m/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(3)/m/n --> TU/XITSMath-Regular(3)/m/n on input line 33.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  TU/latinmodern-math.otf(3)/b/n --> TU/XITSMath-Regular(3)/b/n on input line 35.
+(Font)                  TU/latinmodern-math.otf(3)/b/n --> TU/XITSMath-Regular(3)/b/n on input line 33.
 
 Package fontspec Info: Font family 'XITSMath-Regular(4)' created for font
 (fontspec)             'XITSMath-Regular' with options
@@ -1667,11 +1587,11 @@ Package fontspec Info: Font family 'XITSMath-Regular(4)' created for font
 (fontspec)             <10.539375->"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<8.130375-10.539375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-8.130375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
-\sym__um_fam1=\mathgroup6
+\sym__um_fam1=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
-(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/m/n on input line 35.
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/m/n on input line 33.
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
-(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/b/n on input line 35.
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/b/n on input line 33.
 File: nju-emblem.pdf Graphic file (type pdf)
 <use nju-emblem.pdf>
 File: nju-name.pdf Graphic file (type pdf)
@@ -1702,32 +1622,24 @@ Package fontspec Info: Font family 'KaiTi(0)' created for font 'KaiTi' with
 (fontspec)             <->"KaiTi/OT:script=hani;language=dflt;embolden=2.17;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
-[1
+ [1
 
 
 ] [2
 
 ]
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 12.04628pt on input line 58.
+(Font)              scaled to size 12.04628pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 9.03471pt on input line 58.
+(Font)              scaled to size 9.03471pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 7.22777pt on input line 58.
+(Font)              scaled to size 7.22777pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 12.0437pt on input line 58.
+(Font)              scaled to size 12.0437pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 9.03278pt on input line 58.
+(Font)              scaled to size 9.03278pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 7.22623pt on input line 58.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 58.
- (d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 58.
- (d:/environment/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+(Font)              scaled to size 7.22623pt on input line 56.
 
 Package fontspec Info: Could not resolve font "FangSong/I" (it probably
 (fontspec)             doesn't exist).
@@ -1741,7 +1653,7 @@ Package fontspec Info: Could not resolve font "FangSong/I" (it probably
 (fontspec)             doesn't exist).
 
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
-(Font)              scaled to size 12.74046pt on input line 58.
+(Font)              scaled to size 12.74046pt on input line 56.
 
 Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             with options [Script={CJK},AutoFakeBold={2.17}].
@@ -1762,14 +1674,7 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 
 ] [3] [4
 
-]
-\tf@toc=\write5
-\openout5 = `article.toc'.
-
- [5] [6
-
-]
-第一章
+] (./article.toc
 
 Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
 (fontspec)             exist).
@@ -1796,405 +1701,182 @@ Package fontspec Info: Font family 'SimHei(0)' created for font 'SimHei' with
 (fontspec)             <->"SimHei/OT:script=hani;language=dflt;embolden=2.17;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
+ [5] [6] [7])
+\tf@toc=\write5
+\openout5 = `article.toc'.
 
-LaTeX Warning: Citation '2' on page 1 undefined on input line 105.
+ [8]
+第一章
 
-
-LaTeX Warning: Citation '13' on page 1 undefined on input line 108.
-
-
-LaTeX Warning: Citation '13' on page 1 undefined on input line 110.
-
-
-LaTeX Warning: Citation '14' on page 1 undefined on input line 111.
-
-
-LaTeX Warning: Citation '3' on page 1 undefined on input line 117.
-
-
-LaTeX Warning: Citation '10' on page 1 undefined on input line 117.
-
-
-LaTeX Warning: Citation '10' on page 1 undefined on input line 120.
+Overfull \hbox (2.1256pt too wide) in paragraph at lines 102--113
+\TU/SimSun(0)/m/n/12.045 统 在 工 业 界 和 学 术 界 均 受 到 了 广 泛 关 注。|  以 \TU/TimesNewRoman(0)/m/n/12.045 Google LevelDB$[]$\TU/SimSun(0)/m/n/12.045 、| \TU/TimesNewRoman(0)/m/n/12.045 Facebook RocksDB
+ []
 
 [1
 
-]
 
-LaTeX Warning: Citation '1' on page 2 undefined on input line 125.
-
-
-LaTeX Warning: Citation '15' on page 2 undefined on input line 137.
-
-
-LaTeX Warning: Citation '18' on page 2 undefined on input line 157.
-
-
-LaTeX Warning: Citation '18' on page 2 undefined on input line 159.
-
-[2] [3]
-
-LaTeX Warning: Citation '4' on page 4 undefined on input line 191.
-
-
-LaTeX Warning: Citation '17' on page 4 undefined on input line 202.
-
-
-LaTeX Warning: Citation '8' on page 4 undefined on input line 209.
-
-
-LaTeX Warning: Citation '1' on page 4 undefined on input line 219.
-
-[4]
-
-LaTeX Warning: Citation '1' on page 5 undefined on input line 229.
-
-
-LaTeX Warning: Citation '12' on page 5 undefined on input line 239.
-
-
-LaTeX Warning: Citation '11' on page 5 undefined on input line 242.
-
-
-LaTeX Warning: Citation '1' on page 5 undefined on input line 247.
-
-[5]
-
-LaTeX Warning: Citation '1' on page 6 undefined on input line 255.
-
-
-LaTeX Warning: Citation '2' on page 6 undefined on input line 255.
-
-
-LaTeX Warning: Citation '1' on page 6 undefined on input line 260.
-
-[6]
-Overfull \hbox (49.63034pt too wide) in paragraph at lines 282--288
+] [2] [3] [4] [5] [6]
+Overfull \hbox (49.63034pt too wide) in paragraph at lines 280--286
 []\TU/SimSun(0)/b/n/12.045 全 面 的 性 能 对 比 实 验 与 集 成 效 果 评 估\TU/SimSun(0)/m/n/12.045 。|  以 \TU/TimesNewRoman(0)/m/n/12.045 C++ \TU/SimSun(0)/m/n/12.045 标 准 库 中 的 \TU/CourierNew(0)/m/n/12.045 std::unordered_map
  []
-
-
-LaTeX Warning: Citation '2' on page 7 undefined on input line 302.
 
 [7] [8
 
 ]
 第二章
-[9]
-
-LaTeX Warning: Citation '9' on page 10 undefined on input line 347.
-
-
-LaTeX Warning: Citation '9' on page 10 undefined on input line 351.
-
-
-LaTeX Warning: Citation '5' on page 10 undefined on input line 354.
-
-
-LaTeX Warning: Citation '9' on page 10 undefined on input line 357.
-
-
-LaTeX Warning: Citation '6' on page 10 undefined on input line 357.
-
-
-LaTeX Warning: Citation '6' on page 10 undefined on input line 359.
-
-
-LaTeX Warning: Citation '12' on page 10 undefined on input line 371.
-
-
-LaTeX Warning: Citation '16' on page 10 undefined on input line 373.
-
-
-LaTeX Warning: Citation '1' on page 10 undefined on input line 375.
-
-[10]
-
-LaTeX Warning: Citation '4' on page 11 undefined on input line 381.
-
-
-LaTeX Warning: Citation '8' on page 11 undefined on input line 393.
-
-
-LaTeX Warning: Citation '9' on page 11 undefined on input line 395.
-
-
-LaTeX Warning: Citation '1' on page 11 undefined on input line 400.
-
-
-LaTeX Warning: Citation '1' on page 11 undefined on input line 412.
-
-[11]
-
-LaTeX Warning: Citation '1' on page 12 undefined on input line 428.
-
-[12]
+[9] [10] [11] [12]
 第三章
 
-LaTeX Warning: Citation '1' on page 13 undefined on input line 441.
+Overfull \hbox (54.92508pt too wide) in paragraph at lines 471--471
+[]\TU/CourierNew(0)/m/n/12.045 ├── cubby_router_: LocalQueryRouter        \TU/FangSong(0)/m/n/12.045 将  \TU/CourierNew(0)/m/n/12.045 key  \TU/FangSong(0)/m/n/12.045 映 射 至  \TU/CourierNew(0)/m/n/12.045 cubby  \TU/FangSong(0)/m/n/12.045 索 引 [] 
+ []
 
 
-LaTeX Warning: Reference `fig:arch' on page 13 undefined on input line 450.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 473--473
-[]\TU/CourierNew(0)/m/n/12.045 │   ├── [1]     tier-
+Overfull \hbox (34.53703pt too wide) in paragraph at lines 471--471
+[]    \TU/CourierNew(0)/m/n/12.045 ├── route_: LocalQueryRouter            \TU/FangSong(0)/m/n/12.045 将  \TU/CourierNew(0)/m/n/12.045 key  \TU/FangSong(0)/m/n/12.045 映 射 至  \TU/CourierNew(0)/m/n/12.045 slot  \TU/FangSong(0)/m/n/12.045 索 引 [] 
  []
 
 [13
 
 ] [14]
-
-LaTeX Warning: Citation '1' on page 15 undefined on input line 502.
-
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 10.54048pt on input line 508.
+(Font)              scaled to size 10.54048pt on input line 506.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 7.00075pt on input line 508.
+(Font)              scaled to size 7.00075pt on input line 506.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 508.
+(Font)              scaled to size 5.00053pt on input line 506.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 10.53824pt on input line 508.
+(Font)              scaled to size 10.53824pt on input line 506.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 508.
+(Font)              scaled to size 6.99925pt on input line 506.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 508.
+(Font)              scaled to size 4.99947pt on input line 506.
+ [15] [16] [17]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 621.
+ [18] [19]
+Overfull \hbox (53.34836pt too wide) in paragraph at lines 717--718
+[]\TU/SimSun(0)/b/n/12.045 删 除\TU/SimSun(0)/m/n/12.045 ：| \TU/TimesNewRoman(0)/m/n/12.045 cubby_router_ \TU/SimSun(0)/m/n/12.045 定 位 \TU/TimesNewRoman(0)/m/n/12.045 cubby\TU/SimSun(0)/m/n/12.045 ，|  执 行 \TU/TimesNewRoman(0)/m/n/12.045 Cubby::remove_at\TU/SimSun(0)/m/n/12.045 ，|  然 后 清 理 \TU/TimesNewRoman(0)/m/n/12.045 cubby_router_.remove\TU/SimSun(0)/m/n/12.045 。| 
+ []
 
-LaTeX Warning: Citation '1' on page 15 undefined on input line 532.
-
-[15]
-
-LaTeX Warning: Citation '1' on page 16 undefined on input line 560.
-
-
-LaTeX Warning: Citation '7' on page 16 undefined on input line 560.
-
-[16]
-
-LaTeX Warning: Citation '1' on page 17 undefined on input line 594.
-
-[17]
-
-LaTeX Warning: Citation '1' on page 18 undefined on input line 620.
-
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 623.
-[18]
-
-LaTeX Warning: Citation '1' on page 19 undefined on input line 652.
-
-
-LaTeX Warning: Citation '1' on page 19 undefined on input line 676.
-
-[19] [20]
+[20]
 第四章
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
-(Font)              scaled to size 11.14789pt on input line 738.
+(Font)              scaled to size 11.14789pt on input line 736.
 
-Overfull \hbox (15.08705pt too wide) in paragraph at lines 734--744
+Overfull \hbox (15.08705pt too wide) in paragraph at lines 732--742
  [][] 
  []
 
 
-Overfull \hbox (5.5494pt too wide) in paragraph at lines 748--753
+Overfull \hbox (5.5494pt too wide) in paragraph at lines 746--751
 \TU/SimSun(0)/m/n/12.045 者 所 依 赖；| \TU/CourierNew(0)/m/n/12.045 local_query_router.hpp \TU/SimSun(0)/m/n/12.045 依 赖 \TU/CourierNew(0)/m/n/12.045 miniarray.hpp\TU/SimSun(0)/m/n/12.045 ；| \TU/CourierNew(0)/m/n/12.045 cubby.hpp
  []
 
 [21
 
-]
-Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
-[]  \TU/CourierNew(0)/m/n/12.045 ┌──────┬────────────────────────────────────────────────────┐[] 
- []
-
-
-Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
-[]  \TU/CourierNew(0)/m/n/12.045 ├──────┼────────────────────────────────────────────────────┤[] 
- []
-
-
-Overfull \hbox (60.02213pt too wide) in paragraph at lines 792--792
-[]  \TU/CourierNew(0)/m/n/12.045 └──────┴────────────────────────────────────────────────────┘[] 
- []
-
-
-Overfull \hbox (37.08551pt too wide) in paragraph at lines 792--792
-[] \TU/FangSong(0)/m/n/12.045 内 部 节 点 \TU/CourierNew(0)/m/n/12.045 : type=0,  \TU/FangSong(0)/m/n/12.045 数 据 \TU/CourierNew(0)/m/n/12.045 =[left_child( \TU/FangSong(0)/m/n/12.045 高 位 \TU/CourierNew(0)/m/n/12.045 )][right_child( \TU/FangSong(0)/m/n/12.045 低 位 \TU/CourierNew(0)/m/n/12.045 )][] 
- []
-
-
-Overfull \hbox (49.82811pt too wide) in paragraph at lines 792--792
-[]  \TU/CourierNew(0)/m/n/12.045 entry_bits_ = 1 + max(2*child_bits_, fval_bits_+kh_bits_) ≤ 62[] 
- []
-
-[22]
-Overfull \hbox (5.53967pt too wide) in paragraph at lines 823--825
-[]\TU/SimSun(0)/b/n/12.045 删 除 \TU/TimesNewRoman(0)/b/n/12.045 (remove)\TU/SimSun(0)/m/n/12.045 ：|  沿 \TU/TimesNewRoman(0)/m/n/12.045 Trie walk \TU/SimSun(0)/m/n/12.045 找 到 匹 配 叶 节 点 \TU/TimesNewRoman(0)/m/n/12.045 → \TU/SimSun(0)/m/n/12.045 写 入 空 叶 标 记  |（\TU/TimesNewRoman(0)/m/n/12.045 fval=0, hash=0\TU/SimSun(0)/m/n/12.045 ） ，|
- []
-
-[23]
-
-LaTeX Warning: Citation '1' on page 24 undefined on input line 857.
-
-
-Overfull \hbox (16.64272pt too wide) in paragraph at lines 855--858
+] [22] [23]
+Overfull \hbox (16.64272pt too wide) in paragraph at lines 846--849
 []\TU/CourierNew(0)/m/n/12.045 max_depth_for(key)\TU/SimSun(0)/m/n/12.045 ：|  对 键 做 \TU/TimesNewRoman(0)/m/n/12.045 hash\TU/SimSun(0)/m/n/12.045 ，|  使 用 概 率 公 式 $[][][][][][] [] [][] [] [][][][][] [][][]$
  []
 
 
-Overfull \hbox (9.12465pt too wide) in paragraph at lines 861--865
+Overfull \hbox (9.12465pt too wide) in paragraph at lines 852--856
 []\TU/CourierNew(0)/m/n/12.045 free_bitmap_ |\TU/SimSun(0)/m/n/12.045 （\TU/TimesNewRoman(0)/m/n/12.045 MiniArray, 1 bit/slot, 0= \TU/SimSun(0)/m/n/12.045 占 用\TU/TimesNewRoman(0)/m/n/12.045 , 1= \TU/SimSun(0)/m/n/12.045 空 闲）|  配 合 \TU/CourierNew(0)/m/n/12.045 first_free_
  []
 
 [24]
-
-LaTeX Warning: Reference `tab:complexity' on page 25 undefined on input line 887.
-
-
-Overfull \hbox (45.66318pt too wide) in paragraph at lines 892--903
+Overfull \hbox (45.66318pt too wide) in paragraph at lines 883--894
  [][] 
  []
 
-[25] [26]
-第五章
-[27
+[25] [26
 
 ]
+第五章
+[27]
 File: src/benchmark_insert.png Graphic file (type bmp)
 <src/benchmark_insert.png>
  [28]
-
-LaTeX Warning: Citation '1' on page 29 undefined on input line 999.
-
 File: src/benchmark_query.png Graphic file (type bmp)
 <src/benchmark_query.png>
-[29] [30]
-
-LaTeX Warning: Citation '7' on page 31 undefined on input line 1055.
-
+ [29] [30]
 File: src/benchmark_delete.png Graphic file (type bmp)
 <src/benchmark_delete.png>
-[31]
+ [31]
 File: src/benchmark_memory.png Graphic file (type bmp)
 <src/benchmark_memory.png>
-
-
-LaTeX Warning: Reference `fig:mem' on page 32 undefined on input line 1130.
-
-
-LaTeX Warning: Reference `tab:mem' on page 32 undefined on input line 1130.
-
-
-LaTeX Warning: Citation '1' on page 32 undefined on input line 1134.
-
-[32]
+ [32]
 File: src/benchmark_all_operations.png Graphic file (type bmp)
 <src/benchmark_all_operations.png>
 File: src/benchmark_throughput.png Graphic file (type bmp)
 <src/benchmark_throughput.png>
-
-
-LaTeX Warning: Citation '1' on page 33 undefined on input line 1175.
-
-[33] [34]
+ [33] [34]
 第六章
-
-LaTeX Warning: Citation '2' on page 35 undefined on input line 1198.
-
-
-Overfull \hbox (25.87762pt too wide) in paragraph at lines 1198--1200
-[]\TU/SimSun(0)/m/n/12.045 本 章 描 述 将 实 现 的 \TU/TimesNewRoman(0)/m/n/12.045 k-kick \TU/SimSun(0)/m/n/12.045 树 哈 希 方 案 集 成 到 \TU/TimesNewRoman(0)/m/n/12.045 Google LevelDB$[]$\TU/SimSun(0)/m/n/12.045 数 据 库 的 \TU/TimesNewRoman(0)/m/n/12.045 MemTable
- []
-
-
-LaTeX Warning: Citation '2' on page 35 undefined on input line 1205.
-
-
-LaTeX Warning: Citation '1' on page 35 undefined on input line 1212.
-
 [35
 
 ]
-Overfull \hbox (60.02213pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 ├── util/kick_hash/                ←  \TU/FangSong(0)/m/n/12.045 从  \TU/CourierNew(0)/m/n/12.045 ../code/  \TU/FangSong(0)/m/n/12.045 复 制 的 哈 希 方 案 头 文 件 [] 
+Overfull \hbox (62.57063pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 ├── util/kick_hash/                [ \TU/FangSong(0)/m/n/12.045 从  \TU/CourierNew(0)/m/n/12.045 ../code/  \TU/FangSong(0)/m/n/12.045 复 制 的 哈 希 方 案 头 文 件 \TU/CourierNew(0)/m/n/12.045 ][] 
  []
 
 
-Overfull \hbox (90.60423pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 │   ├── facility.hpp               ← Facility:  \TU/FangSong(0)/m/n/12.045 分 层 管 理 器  \TU/CourierNew(0)/m/n/12.045 + deactivate \TU/FangSong(0)/m/n/12.045 合 并 [] 
+Overfull \hbox (93.15274pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 │   ├── facility.hpp               [Facility:  \TU/FangSong(0)/m/n/12.045 分 层 管 理 器  \TU/CourierNew(0)/m/n/12.045 + deactivate \TU/FangSong(0)/m/n/12.045 合 并 \TU/CourierNew(0)/m/n/12.045 ][] 
  []
 
 
-Overfull \hbox (100.79826pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 │   ├── cubby.hpp                  ← Cubby:  \TU/FangSong(0)/m/n/12.045 弹 性 哈 希  \TU/CourierNew(0)/m/n/12.045 + free_bitmap +  \TU/FangSong(0)/m/n/12.045 动 态 容 量 [] 
+Overfull \hbox (103.34677pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 │   ├── cubby.hpp                  [Cubby:  \TU/FangSong(0)/m/n/12.045 弹 性 哈 希  \TU/CourierNew(0)/m/n/12.045 + free_bitmap +  \TU/FangSong(0)/m/n/12.045 动 态 容 量 \TU/CourierNew(0)/m/n/12.045 ][] 
  []
 
 
-Overfull \hbox (77.86168pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 │   └── local_query_router.hpp     ← LocalQueryRouter:  \TU/FangSong(0)/m/n/12.045 紧 凑 \TU/CourierNew(0)/m/n/12.045 Trie + LUT[] 
+Overfull \hbox (80.41019pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 │   └── local_query_router.hpp     [LocalQueryRouter:  \TU/FangSong(0)/m/n/12.045 紧 凑 \TU/CourierNew(0)/m/n/12.045 Trie + LUT][] 
  []
 
 
-Overfull \hbox (9.05197pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.h                  ←  \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : #ifdef USE_KICK_HASH[] 
+Overfull \hbox (11.60048pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.h                  [ \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : #ifdef USE_KICK_HASH][] 
  []
 
 
-Overfull \hbox (42.18256pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.cc                 ←  \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : Add() \TU/FangSong(0)/m/n/12.045 双 写 \TU/CourierNew(0)/m/n/12.045 , Get() \TU/FangSong(0)/m/n/12.045 优 先 查 询 [] 
+Overfull \hbox (44.73106pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 ├── db/memtable.cc                 [ \TU/FangSong(0)/m/n/12.045 修 改 \TU/CourierNew(0)/m/n/12.045 : Add() \TU/FangSong(0)/m/n/12.045 双 写 \TU/CourierNew(0)/m/n/12.045 , Get() \TU/FangSong(0)/m/n/12.045 优 先 查 询 \TU/CourierNew(0)/m/n/12.045 ][] 
  []
 
 
-Overfull \hbox (85.5072pt too wide) in paragraph at lines 1258--1258
-[]\TU/CourierNew(0)/m/n/12.045 └── CMakeLists.txt                 ← option(USE_KICK_HASH ...) +  \TU/FangSong(0)/m/n/12.045 编 译 开 关 [] 
+Overfull \hbox (88.05571pt too wide) in paragraph at lines 1249--1249
+[]\TU/CourierNew(0)/m/n/12.045 └── CMakeLists.txt                 [option(USE_KICK_HASH ...) +  \TU/FangSong(0)/m/n/12.045 编 译 开 关 \TU/CourierNew(0)/m/n/12.045 ][] 
  []
 
-[36]
-
-LaTeX Warning: Citation '6' on page 37 undefined on input line 1274.
-
-[37]
+[36] [37]
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/b/n' will be
-(Font)              scaled to size 10.63216pt on input line 1298.
+(Font)              scaled to size 10.63216pt on input line 1289.
  [38]
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/it' will be
-(Font)              scaled to size 11.14789pt on input line 1326.
+(Font)              scaled to size 11.14789pt on input line 1317.
 
 
 LaTeX Font Warning: Font shape `TU/FangSong(0)/m/it' undefined
-(Font)              using `TU/FangSong(0)/m/n' instead on input line 1326.
+(Font)              using `TU/FangSong(0)/m/n' instead on input line 1317.
 
 [39] (d:/environment/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) (d:/environment/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
-) [40] [41]
-Overfull \hbox (9.05197pt too wide) in paragraph at lines 1461--1461
-[]  \TU/CourierNew(0)/m/n/12.045 └── kick_table_.Insert(key, buf)          [ \TU/FangSong(0)/m/n/12.045 编 译 \TU/CourierNew(0)/m/n/12.045 ON +  \TU/FangSong(0)/m/n/12.045 运 行 \TU/CourierNew(0)/m/n/12.045 ON][] 
- []
-
-
-Overfull \hbox (14.14897pt too wide) in paragraph at lines 1461--1461
-[]  \TU/CourierNew(0)/m/n/12.045 ├── kick_table_.Get(key) → O(1)  \TU/FangSong(0)/m/n/12.045 返 回       \TU/CourierNew(0)/m/n/12.045 [ \TU/FangSong(0)/m/n/12.045 编 译 \TU/CourierNew(0)/m/n/12.045 ON +  \TU/FangSong(0)/m/n/12.045 运 行 \TU/CourierNew(0)/m/n/12.045 ON][] 
- []
-
-
-Overfull \hbox (77.86168pt too wide) in paragraph at lines 1461--1461
-[]\TU/CourierNew(0)/m/n/12.045 NewIterator() → SkipList::Iterator           [ \TU/FangSong(0)/m/n/12.045 不 受 影 响 ， 始 终 \TU/CourierNew(0)/m/n/12.045 SkipList][] 
- []
-
-[42]
+) [40] [41] [42]
 File: src/benchmark_insert.png Graphic file (type bmp)
 <src/benchmark_insert.png>
  [43]
 File: src/benchmark_query.png Graphic file (type bmp)
 <src/benchmark_query.png>
  [44]
-Overfull \hbox (14.52684pt too wide) in paragraph at lines 1616--1629
+Overfull \hbox (14.52684pt too wide) in paragraph at lines 1606--1619
  [][] 
  []
 
 [45]
-Overfull \hbox (4.78903pt too wide) in paragraph at lines 1640--1647
+Overfull \hbox (4.78903pt too wide) in paragraph at lines 1630--1637
 []\TU/SimSun(0)/b/n/12.045 代 码 复 用 的 工 程 实 现\TU/SimSun(0)/m/n/12.045 。|  从\TU/CourierNew(0)/m/n/12.045 ./code \TU/SimSun(0)/m/n/12.045 目 录 向 \TU/CourierNew(0)/m/n/12.045 leveldb/util/kick_hash/
  []
 
@@ -2202,63 +1884,41 @@ Overfull \hbox (4.78903pt too wide) in paragraph at lines 1640--1647
 
 ]
 第七章
-
-LaTeX Warning: Citation '1' on page 49 undefined on input line 1685.
-
-
-LaTeX Warning: Citation '1' on page 49 undefined on input line 1690.
-
-
-LaTeX Warning: Citation '7' on page 49 undefined on input line 1696.
-
-
-LaTeX Warning: Citation '1' on page 49 undefined on input line 1702.
-
-
-LaTeX Warning: Citation '1' on page 49 undefined on input line 1712.
-
-[49]
-
-LaTeX Warning: Citation '1' on page 50 undefined on input line 1722.
-
-
-LaTeX Warning: Citation '2' on page 50 undefined on input line 1730.
-
-
-LaTeX Warning: Citation '1' on page 50 undefined on input line 1749.
-
-[50]
-
-LaTeX Warning: Citation '1' on page 51 undefined on input line 1757.
-
-
-Overfull \hbox (46.73442pt too wide) in paragraph at lines 1755--1763
+[49] [50]
+Overfull \hbox (46.73442pt too wide) in paragraph at lines 1745--1753
 []\TU/SimSun(0)/b/n/12.045 容 量 模 型 的 进 一 步 精 细 化\TU/SimSun(0)/m/n/12.045 。|  当 前 的 动 态 容 量 计 算 采 用 了 $[][][][]  [] []
  []
 
-
-LaTeX Warning: Citation '1' on page 51 undefined on input line 1766.
-
-
-LaTeX Warning: Citation '18' on page 51 undefined on input line 1776.
-
-
-LaTeX Warning: Citation '7' on page 51 undefined on input line 1783.
-
-[51]
-
-LaTeX Warning: Empty bibliography on input line 1800.
-
-[52]
-
-LaTeX Warning: Citation '1' on page 53 undefined on input line 1823.
+[51] [52]
+Overfull \hbox (1.9442pt too wide) in paragraph at lines 1791--1791
+[]\TU/TimesNewRoman(0)/m/n/12.045 GHEMAWAT S, DEAN J. LevelDB: A Fast and Lightweight Key/Value Database
+ []
 
 
-LaTeX Warning: Citation '2' on page 53 undefined on input line 1823.
+Overfull \hbox (17.1294pt too wide) in paragraph at lines 1791--1791
+\TU/TimesNewRoman(0)/m/n/12.045 Time/Space Tradeoff for Hash Tables[J]. ArXiv preprint, 2022, arXiv:2111.00602v2.
+ []
+
+
+Overfull \hbox (0.4775pt too wide) in paragraph at lines 1791--1791
+\TU/TimesNewRoman(0)/m/n/12.045 Languages and Programming (ICALP): vol. 5555. Springer, 2009: 107-118. DOI:
+ []
 
 [53
 
-] [54
+]
+Overfull \hbox (5.8154pt too wide) in paragraph at lines 1791--1791
+[]\TU/TimesNewRoman(0)/m/n/12.045 LIU M, YIN Y, YU H. Succinct filters for sets of unknown sizes[C]\TU/CourierNew(0)/m/n/12.045 //\TU/TimesNewRoman(0)/m/n/12.045 Proceedings
+ []
+
+
+Overfull \hbox (3.07336pt too wide) in paragraph at lines 1791--1791
+\TU/TimesNewRoman(0)/m/n/12.045 of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (STOC).
+ []
+
+[54] [55
+
+] [56
 
 ]
 \tf@thm=\write6
@@ -2272,32 +1932,27 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
 Package rerunfilecheck Warning: File `article.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `article.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  CE4A50F074BF582C97A33F345024C8C8;12639.
+(rerunfilecheck)             Before: AD2047611C0720372C37D2A2F329F249;12639
+(rerunfilecheck)             After:  9ABBC82A6AC78122B97C5F4734D73782;12717.
 
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                article
-(biblatex)                and rerun LaTeX afterwards.
+Package biblatex Warning: Please rerun LaTeX.
 
 Package logreq Info: Writing requests to 'article.run.xml'.
 \openout1 = `article.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36962 strings out of 476179
- 764089 string characters out of 5807780
- 1752236 words of memory out of 5000000
- 57163 multiletter control sequences out of 15000+600000
- 478153 words of font info for 179 fonts, out of 8000000 for 9000
+ 36678 strings out of 476179
+ 761409 string characters out of 5807780
+ 1767441 words of memory out of 5000000
+ 56892 multiletter control sequences out of 15000+600000
+ 475665 words of font info for 166 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,20n,131p,3358b,4948s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,20n,131p,3358b,6565s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on article.pdf (62 pages).
+Output written on article.pdf (66 pages).
