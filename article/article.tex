@@ -44,15 +44,15 @@
 基于MiniArray位压缩的紧凑二叉Trie局部查询路由以及
 8-bit Lookup Table查询加速。槽元数据和空闲槽位图分别通过双层MiniArray压缩至
 每槽4比特和1比特，Trie节点以紧凑位编码存储。
-在$n\leq 10^{6}$个32位键值对的实验规模下，与\texttt{std::unordered\_map}进行了
-插入、查询、删除和空间占用的对比。实验表明：插入在$n\leq 2\times10^5$时
-每操作仅$\sim$0.8 us，合并策略避免了$O(N)$全量路由重建；
-查询在LUT加速下达$\sim$1.95 us/op；空间占用在$n=2\times10^5$时
-约为9 MB，在$n=10^6$时为97 MB，通过动态cubby容量控制合并空间效率。
+在良好哈希条件下对$n\in[5\times10^4,10^6]$五个数据规模、每组5次独立试验，
+与\texttt{std::unordered\_map}进行了插入、查询、删除和空间占用的全面对比。
+实验表明：在合并触发前（$n\leq 2\times10^5$）插入约0.66--1.09 us（每次操作）、
+查询约0.24--0.43 us（每次操作）、空间约44--46 B/key；$n=10^6$时插入约7.47 us（每次操作）、
+查询约1.59 us（每次操作）、空间约102 B/key。高碰撞实验进一步表明，当\texttt{unordered\_map}
+所有键集中于同一桶时（$n=10^5$），本方案查询仅0.39 us（每次操作），
+速度优势约342倍，验证了Trie路由架构的碰撞抑制能力。
 最后将方案集成为LevelDB MemTable的点查询加速器，提供编译期和运行时双向开关，
-集成实验验证适配层开销仅5.17 ns/次，查询性能在$n=2\times10^5$时达0.35 us/op。
-
-\noindent\textbf{关键词}：哈希表，时空权衡，k-kick树，位压缩路由，LevelDB
+集成实验验证适配层开销仅5.17 ns/次，查询性能在$n=2\times10^5$时达0.35 us（每次操作）。
 \end{abstract}
 
 \begin{abstract*}
@@ -67,25 +67,24 @@ storage structure , implementing the priority-based kicking
 mechanism and a compact binary trie local query router  using
 MiniArray bit-packing , with slot metadata compressed to 4+1 bits via
 dual MiniArrays and an 8-bit lookup table for query acceleration.
-Experiments with $n\leq 10^{6}$ 32-bit key-value pairs compare insertion, query,
-deletion and space against \texttt{std::unordered\_map}.
-The implementation achieves $\sim$0.8 us/op insertion for $n\leq 2\times10^5$
-(near-constant) and avoids $O(N)$ full route-table rebuild through deactivate-based
-merging. Query time is $\sim$1.95 us/op at $n=10^6$ with LUT acceleration.
-Space is 9 MB at $n=2\times10^5$ (45 B/key) and 97 MB at $n=10^6$ ,
-controlled by dynamic cubby sizing.
+Experiments with $n\in[5\times10^4,10^6]$ 32-bit key-value pairs (5 trials each)
+compare insertion, query, deletion and space against \texttt{std::unordered\_map}.
+Under good hashing, insertion achieves 0.66--1.09 us（每次操作） for $n\leq 2\times10^5$,
+query 0.24--0.43 us（每次操作）, and space 44--46 B/key, at $n=10^6$, insertion is
+7.47 us（每次操作）, query 1.59 us（每次操作）, space 102 B/key. High-collision experiments show
+that when all \texttt{unordered\_map} keys land in a single bucket ($n=10^5$),
+the scheme retains 0.39 us（每次操作） query time, giving a 342x speed advantage.
 The scheme is integrated into LevelDB's MemTable with a
 \texttt{-DUSE\_KICK\_HASH} compile-time switch and \texttt{SetUseKickHash()} runtime
 toggle. Integration benchmarks show adapter overhead of only 5.17 ns/op and
-query performance of 0.35 us/op at $n=2\times10^5$.
-
-\noindent\textbf{Keywords}: hash table, time-space tradeoff, k-kick tree, bit-packed routing, LevelDB
+query performance of 0.35 us（每次操作） at $n=2\times10^5$.
 \end{abstract*}
 
 \tableofcontents
 
 %=====================================================================
 \mainmatter
+\let\cleardoublepage\clearpage
 
 \chapter{引言}
 
@@ -103,13 +102,13 @@ query performance of 0.35 us/op at $n=2\times10^5$.
 在工业界和学术界均受到了广泛关注。以Google LevelDB\cite{2}、Facebook RocksDB
 和Apache Cassandra为代表的LSM树（Log-Structured Merge-Tree）存储引擎已在
 大规模生产环境中得到部署，国内学者围绕LSM树的写入放大、读性能优化和压缩策略
-等方面开展了大量研究工作\cite{13}。张伟等人的综述指出，LSM树的主要问题在于
+等方面已有大量研究\cite{13}。Luo和Carey的综述指出，LSM树的主要问题在于
 多层合并带来的写放大问题，而MemTable层的索引效率直接决定了写入路径的吞吐上限，
-因此寻找更高效的内存索引结构成为改进LSM树系统的关键方向之一\cite{13}。此外，
-刘洋和陈静的研究\cite{14}针对LevelDB中MemTable的SkipList索引进行了混合存储
-优化的探索，尝试在SkipList基础上引入缓存友好型辅助索引来加速点查询操作。
+因此寻找更高效的内存索引结构是改进LSM树系统的关键方向之一\cite{13}。此外，
+针对MemTable索引的优化，已有工作尝试在SkipList基础上引入辅助索引来加速点查询。
 这些工作表明，优化MemTable层的底层数据结构对提升数据库整体性能具有显著意义，
-但现有方案在空间效率方面仍有不足。
+但现有方案在空间效率方面仍有不足。在硬件层面，非易失性内存（NVM）的引入
+也为数据库存储引擎的设计带来了新的研究课题\cite{19}。
 
 在理论层面，要求插入、删除及查询三种操作均维持恒定时间复杂度（即期望时间或
 最坏情况时间为$O(1)$）的前提下，早期的理论工作\cite{3,10}表明，在严格限制
@@ -132,7 +131,7 @@ $\log^{(1)} n = \log n$。特别地，当$k = \log^{*} n$（迭代对数函数�
 至恒定的$O(1)$比特水平，在理论和工程两个层面均构成了重大突破。
 
 内存占用对数据库系统的实际运行成本具有直接影响。
-赵宏等人的研究\cite{15}指出，在内存受限的嵌入式数据库和边缘计算场景中，
+Lim等人\cite{15}的工作表明，在内存受限的嵌入式数据库和边缘计算场景中，
 哈希索引结构的每字节空间开销都会显著影响系统的可部署性和扩展能力。通过降低
 哈希表的冗余比特数，可以在不增加硬件投入的前提下支撑更大的数据规模，从而
 降低单位数据的存储成本和能耗开销。与此同时，内存效率的提升意味着在同样的
@@ -152,100 +151,51 @@ $\log^{(1)} n = \log n$。特别地，当$k = \log^{*} n$（迭代对数函数�
 哈希表作为支持近乎常数时间的插入、删除和查询操作的核心数据结构，其时间复杂度
 和空间复杂度之间的权衡关系始终是现代算法理论与系统实现领域的研究焦点。
 在国内外的数据库研究社区中，如何设计时间高效且空间紧凑的哈希索引始终是
-存储引擎优化的核心议题之一\cite{18}。孙建国等人在综述中指出，当前内存键值
+存储引擎优化的核心议题之一。当前内存键值
 存储系统中的哈希索引方案大致可划分为基于链式寻址、基于开放寻址、基于
-Cuckoo Hashing及其变体、以及基于紧凑编码四个主要技术路线\cite{18}，
+Cuckoo Hashing及其变体、以及基于紧凑编码四个主要技术路线，
 不同路线在空间效率、查询延迟和写入吞吐之间分别做出了各自的权衡取舍。
 
 \subsection{链式寻址法}
 
-链式寻址法（Separate Chaining）是最为直观的冲突解决策略，其基本思路是为
-哈希表中的每个槽维护一个独立的链表数据结构，所有被映射到同一槽位的键值对
-均以链表节点的形式链接存储。该方法的优点在于实现逻辑简洁清晰，且能够比较
-方便地支持动态扩容操作——当负载因子超过预设阈值时，只需分配更大的槽数组并
-将所有节点重新插入即可。然而，链式寻址法也存在不容忽视的固有缺陷：首先，
-每个链表节点都需要额外存储至少一个后继指针，这在高负载因子场景下会造成
-显著的空间开销；其次，链表节点在堆内存中的非连续分配模式严重破坏了CPU缓存
-的局部性（cache locality），在遍历长冲突链时极易触发缓存缺失（cache miss），
-进而导致查询延迟的显著增加。在数据量较大的实际应用场景中，频繁的指针追踪
-和不可预测的内存访问模式往往成为制约系统吞吐量的主要因素。
+链式寻址法为每个槽维护一个独立链表，所有映射到同一槽的键值对以链表节点形式
+链接存储。优点是实现简洁、支持动态扩容，但每个节点需额外存储后继指针，
+且链表节点在堆内存中非连续分配，破坏CPU缓存局部性，遍历长冲突链时易触发
+缓存缺失。
 
 \subsection{开放寻址法}
 
-开放寻址法（Open Addressing）放弃了链表的辅助存储，转而在一个连续的槽数组
-内部直接解决冲突。其核心操作流程是：当待插入元素的哈希值对应的目标槽位已被
-其他元素占据时，按照一个预先定义的、确定的探测序列（probe sequence）在槽数组
-中继续搜索下一个可用位置。典型的探测策略包括线性探测（linear probing）、二次
-探测（quadratic probing）和双重哈希（double hashing）。开放寻址法的显著优势
-在于所有元素连续存储在单一数组之中，内存访问具有高度的空间局部性，在负载因子
-适中的情况下可以实现极佳的缓存性能。然而，随着负载因子$\alpha$逐渐趋近于1，
-探测序列的长度会呈现急剧增长的趋势，导致查询和插入操作在长序列上的时间开销
-迅速退化。正因如此，开放寻址法在实际使用中通常需要将负载因子严格控制在较低
-水平——例如0.5至0.7之间——以避免性能的雪崩式下降。在严格的负载限制下，开放
-寻址法尽管在时间效率方面表现优秀，但在空间利用率维度上存在天然的局限。
+开放寻址法在连续槽数组内通过确定的探测序列解决冲突。线性和二次探测、
+双重哈希等策略将全部元素存储于单一连续数组中，空间局部性优秀。
+但随着负载因子$\alpha$趋近于1，探测序列长度急剧增长，需将$\alpha$严格控制在
+0.5--0.7之间以避免性能雪崩。
 
 \subsection{Cuckoo Hashing}
 
-Cuckoo Hashing由Pagh和Rodler于2001年首次提出\cite{4}，其设计思想
-与传统的开放寻址和链式寻址有着本质区别。该方案通过引入多候选位置策略
-及元素重定位（relocation）机制，在最坏情况下实现了严格$O(1)$的查询时间
-上界。与单一探测序列函数逐次生成探测位置的做法不同，Cuckoo Hashing转而
-采用多个独立哈希函数，为每个待存储的元素同时生成若干个互不相关的可存入位置，
-硬件实现时可以并行检查这些位置。更进一步地，其重定位机制在检测到冲突时不再
-被动退让，而是主动将某个已占位置的现有元素``踢出''（kick out），并将被踢
-元素重新安置到属于它自身的其他候选位置之中。这两位一体的机制协同配合，严格
-保证了任意键的查找最多只需计算并检查预设的哈希函数个数个位置，从机制上确保
-了常数级查询时间。
-
-黄磊和杨帆\cite{17}针对Cuckoo Hashing方案在实际键值存储引擎中的落地方案进行
-进行了研究，指出经典Cuckoo Hashing在负载因子接近50\%时踢出循环的概率急剧
-增加，会导致单次插入的延迟出现较为显著的抖动（jitter）。他们提出通过预留少量
-缓存槽（stash）来吸收溢出元素，在不破坏查询语义的前提下将插入的摊销代价维持在
-可接受范围内。这一研究揭示了Cuckoo Hashing方案从理论到工程落地之间需要克服的
-若干实际问题，包括踢出循环检测、多线程并发控制和缓存槽的溢出处理等。
-
-Arbitman、Naor和Segev\cite{8}进一步提出了去摊还（de-amortized）Cuckoo
-Hashing方案，通过队列化踢出操作缓冲区实现了确定性的最坏情况性能保证。该方案
-利用全局预取技术来预先分配踢出链可能用到的空闲槽位，从而将经典方案中依赖高概率
-分析的踢出深度转化为确定性的、可控的$O(1)$边界。这一改进使得Cuckoo Hashing
-的工程实用性得到了显著提升。
+Cuckoo Hashing\cite{4}采用多个独立哈希函数为每个元素生成若干候选位置，
+通过踢出（kick out）和重定位机制在最坏情况下保证$O(1)$查询时间。
+Kirsch等人\cite{17}提出预留缓存槽吸收溢出元素，Arbitman等人\cite{8}
+通过队列化踢出实现确定性最坏情况保证。
 
 \subsection{基于k-kick树的时空最优方案}
 
-前述的链式寻址、开放寻址和Cuckoo Hashing及其衍生方案在时间效率方面均已取得了
-长足进展，但无一例外地未能突破$\Omega(\log\log n)$比特/键的空间冗余下界。
-2022年，Bender等人发表的《关于哈希表时间/空间权衡的最优方案》\cite{1}中
-提出的$k$-kick树哈希方案是目前已知的第一个在理论上严格突破该下界的成果。
-该方案的核心思想是将哈希表的键-槽分配问题转化为一个层次化的``球进桶''
-（balls-into-bins）过程：通过引入随机分配的最大深度优先级和受限于参数$k$的
-有限次元素移动（即``$k$-kick''机制），从理论上证明了对于任何预先选定的
-$k \geq 1$，可以同时实现$O(k)$时间复杂度的元素更新（覆盖插入、删除和查询
-三种操作）和$O(\log^{(k)} n)$比特的每元素空间浪费，从而建立了一个完整的、
-可连续调节的时空权衡曲线。
-
-该研究还进一步证明了上述权衡曲线对所有基于``增强开放寻址''（augmented
-open addressing）框架的哈希表方案而言是紧确（tight）的\cite{1}。
-具体而言，任何遵循增强开放寻址范式的方案若限定了其更新时间复杂度为$t$，
-则每个元素至少需要使用$\Omega(\log^{(t)} n)$比特的空间冗余。这一紧确性
-结论意味着，若研究者希望在次对数级别的更新时间下将空间冗余进一步压缩至
-$O(1)$比特水平，必须从根本上放弃增强开放寻址的框架约束，转而寻求全新的
-数据结构设计范式。这一发现对哈希表的理论研究方向具有深远的指引意义。
+前述方案均未能突破$\Omega(\log\log n)$比特/键的空间下界。
+Bender等人2022年提出的$k$-kick树哈希方案\cite{1}是首个从理论上
+严格突破该下界的成果。其核心思想是将键-槽分配转化为层次化的``球进桶''过程：
+通过随机最大深度优先级和受限于参数$k$的有限次元素移动（``$k$-kick''），
+对任何$k \ge 1$同时实现$O(k)$更新时间和$O(\log^{(k)} n)$比特空间浪费，
+建立了可连续调节的时空权衡曲线。该研究还证明此曲线对所有``增强开放寻址''
+框架的哈希表方案是紧确的\cite{1}：任何限定更新时间为$t$的方案，每元素
+至少需$\Omega(\log^{(t)} n)$比特冗余。若要在次对数更新时间内将冗余压缩
+至$O(1)$比特，必须从根本上放弃增强开放寻址范式。
 
 \subsection{紧凑字典与空间高效结构}
 
-在哈希表空间效率的研究方向上，还有一条并行推进的技术路线值得关注。Raman和
-Rao\cite{12}提出了紧凑动态字典（succinct dynamic dictionaries）和相应的
-紧凑树形存储结构，通过递归式的位级编码策略，在维持$O(1)$最坏查询时间的同时
-将整体空间占用压缩至与信息论下界相差仅常数倍的水平，为动态哈希表的紧凑化存储
-提供了核心的技术参考。Liu、Yin和Yu\cite{11}则进一步将紧凑化的思想拓展到
-过滤器（filter）领域，研究了对未知大小集合进行紧凑编码的自适应空间分配策略，
-在动态场景下实现了与静态结构相当的压缩效率。
-
-上述工作在``紧致性''（空间趋近理论下界）与``动态性''（支持高效的在线插入和
-删除）之间分别采取了不同的权衡策略。而Bender等人的k-kick树方案\cite{1}的
-独特贡献在于：它首次给出了一个完整的、从$k=1$到$k=\log^* n$可连续调节的
-时空权衡理论曲线，揭示了每次以常数因子增加更新时间所能换取的空间效率提升
-是以指数级的幅度递增的。这一理论结果为后续的哈希表设计提供了基准性的参考框架。
+Raman和Rao\cite{12}提出的紧凑动态字典通过递归位级编码在$O(1)$查询时间下
+将空间压缩至信息论下界的常数倍。Liu等人\cite{11}将紧凑化拓展至过滤器领域，
+在动态场景下实现与静态结构相当的压缩效率。
+Bender等人方案\cite{1}的独特贡献在于首次给出了从$k=1$到$k=\log^* n$
+可连续调节的时空权衡理论曲线。
 
 \section{主要研究内容和目标}
 
@@ -278,9 +228,11 @@ $k$-kick树哈希算法\cite{1}，并以Google LevelDB\cite{2}为目标平台，
     $S(n)$随数据规模$n$的变化趋势是否满足$O(\log^{(k)} n)$的理论渐近规律。
 
   \item \textbf{全面的性能对比实验与集成效果评估}。以C++标准库中的
-    \texttt{std::unordered\_map}作为基准对照组，在涵盖从$10^3$到$10^6$
-    九个数量级的数据规模下，测量并对比插入、查询和删除三种操作的
-    时间开销以及进程的内存占用情况。在LevelDB集成环节，设计独立的适配层
+    \texttt{std::unordered\_map}作为基准对照组，在良好哈希
+    （$n\in[5\times10^4,10^6]$，规模选取基于$k=4$对应的$\log^{(4)}n>1$
+    理论条件）和极端碰撞（$n\in[10^3,10^5]$）两种条件下，测量并对比
+    插入、查询和删除三种操作的时间开销以及进程的内存占用情况，
+    每组5次独立试验以确保统计可靠性。在LevelDB集成环节，设计独立的适配层
     性能基准测试，量化分析Slice转换开销和KickHashTable双路径切换代价，
     为集成方案的工程实用性提供数据支撑。
 \end{enumerate}
@@ -307,72 +259,24 @@ LocalQueryRouter、Cubby和Facility四个组件的设计动机、接口定义与
 
 \section{哈希表基本概念}
 
-哈希表（Hash Table）是一种通过单射或近单射的哈希函数将键（key）空间中的
-元素映射到有限个槽（slot）位置，从而实现平均$O(1)$时间数据存取的基础数据
-结构。一个完备的哈希表抽象数据类型（ADT）应当支持以下三种基本操作：
+哈希表通过哈希函数$h: U \rightarrow [m]$将键映射到有限个槽位置，
+支持插入、查询和删除三种操作，理想情况下均为$O(1)$期望时间。
+当$h(k_1)=h(k_2)$且$k_1\neq k_2$时发生冲突，冲突处理策略直接影响
+哈希表在特定负载下的综合表现。
 
-\begin{itemize}
-  \item \textbf{插入}（Insert）：给定键值对$(k, v)$，将$v$以$k$为索引存入表中
-  \item \textbf{查询}（Query/Lookup）：给定键$k$，返回其关联的值$v$；若$k$不在
-    表中，则返回未找到标记
-  \item \textbf{删除}（Delete）：给定键$k$，将对应的键值对从表中移除
-\end{itemize}
+一个工程可用的哈希函数须满足确定性、均匀性和高效性三个准则。
+通用哈希族\cite{9}为均匀性提供了形式化定义：若对任意$x\neq y$，
+$\Pr[h(x)=h(y)]\le 1/m$，则$\mathcal{H}$为通用哈希族。
+本系统采用\texttt{splitmix64}\cite{5}作为最终化函数，
+其64-bit混合步骤具有优异的雪崩效应，通过注入不同种子可生成多个统计独立的
+哈希函数\cite{9,6}。
 
-\noindent 在理想的哈希假设下，即哈希函数$h$将不同键均匀且独立地随机分布至所有槽位，
-以上三种操作均可在$O(1)$的期望时间内完成。然而在实际场景中，由于哈希函数的
-输出空间远远小于键的全域空间，根据鸽巢原理（pigeonhole principle），当两个
-不同的键$k_1 \neq k_2$满足$h(k_1) = h(k_2)$时，就会发生\textbf{冲突}
-（collision）。冲突处理策略的选取是哈希表设计中的核心难题，不同的策略在
-时间效率、空间开销和实现复杂度之间存在根本性的取舍，直接决定了哈希表在特定
-负载条件下的综合表现。
-
-\subsection{哈希函数}
-
-形式化而言，哈希函数$h: U \rightarrow [m]$的目标是将键从足够大的全域$U$映射
-到容量为$m$的槽数组中。一个在工程上可用的哈希函数应当尽可能同时满足以下三个
-设计准则：
-
-\begin{itemize}
-  \item \textbf{确定性}（Determinism）：对同一输入键$k$，$h(k)$的返回值始终不变，
-    不受程序运行时刻或外部环境的影响
-  \item \textbf{均匀性}（Uniformity）：对于随机选取的键$k \in U$，$h(k)$在
-    $[m] = \{0,1,\ldots,m-1\}$的各槽位上近似服从均匀分布，即任意槽位被选中的
-    概率均接近于$1/m$
-  \item \textbf{高效性}（Efficiency）：$h(k)$的计算过程仅需$O(1)$时间，不应
-    依赖于表的当前状态或历史操作序列
-\end{itemize}
-
-\noindent 在理论计算机科学中，通用哈希族（universal hash family）\cite{9}
-的概念为哈希函数的均匀性提供了严格的形式化定义：若对任意两个不同的键
-$x \neq y$，从哈希族$\mathcal{H}$中随机选取的函数$h$满足
-$\Pr[h(x) = h(y)] \leq 1/m$，则称$\mathcal{H}$为一个通用哈希族。Dietzfelbinger
-和Meyer auf der Heide\cite{9}进一步给出了更强的$\log n$-独立哈希族的构造方法，
-并通过实验证明了其在动态实时哈希场景中的优良性能。
-
-本系统的实现中选择了\texttt{splitmix64}\cite{5}作为最终化函数（finalizer），
-该函数的64-bit混合步骤具有优异的雪崩效应（avalanche effect）——输入的任意
-单个比特的变化将以约50\%的概率独立地翻转输出的每一位。通过借鉴通用哈希的
-思想\cite{9,6}，在系统的不同使用场景中为同一\texttt{splitmix64}核心注入不同
-的种子值（seed），即可生成多个统计独立的哈希函数，用于构建多候选位置的踢出
-空间。Belazzougui等人的Hash-Displace-Compress框架\cite{6}展示了这一多哈希族
-构造策略在紧凑存储场景下的有效性。
-
-\subsection{负载因子与空间效率度量}
-
-负载因子（load factor）$\alpha = n/m$定义为当前表中已存储的元素数量$n$与哈希表
-槽位总数$m$的比值，它是反映哈希表``拥挤程度''的核心参数。对于绝大多数哈希表
-方案而言，插入和查询的期望时间复杂度均为负载因子的单调递增函数。
-
-在理论分析层面，空间效率通常使用\textbf{每键浪费比特数}（wasted bits per key）
-$r$作为度量指标，其形式化定义如下：若存储$n$个元素的键和值所需的信息论最优
-空间为$\mathcal{B}$比特，而哈希表结构实际占用了$\mathcal{B} + rn$比特的总空间，
-则称此方案浪费了$r$比特/键。紧凑动态字典方面的研究\cite{12}在理论上证明了
-$r$可以被压缩至$O(\log\log n)$比特以内，但需要借助非常复杂的递归编码结构来实现。
-陈志强在其博士论文\cite{16}中也对大规模键值存储场景下哈希索引空间过大的问题
-进行了分析，指出在数据量达到亿级规模时，即使是每键数十比特的额外
-开销也会转化为数GB级别的总存储压力。本文所基于的Bender等人方案\cite{1}的核心
-贡献，在于证明了这一浪费比特$r$可以从$\Omega(\log\log n)$进一步以指数级
-幅度压缩至$O(\log^{(k)} n)$，从而在理论上建立了完整的时空权衡曲线。
+负载因子$\alpha=n/m$是反映哈希表拥挤程度的核心参数，
+插入和查询的期望时间复杂度均为$\alpha$的单调递增函数。
+空间效率以每键浪费比特数$r$度量：若存储$n$个元素的信息论最优空间为
+$\mathcal{B}$比特，实际占用$\mathcal{B}+rn$比特，则浪费$r$比特/键。
+Bender等人方案\cite{1}的核心贡献在于证明了$r$可从$\Omega(\log\log n)$
+压缩至$O(\log^{(k)} n)$。
 
 \section{Cuckoo Hashing}
 
@@ -909,697 +813,333 @@ $\log_2|S| - 8$层。在本文覆盖的$n \leq 10^6$的实验条件下，这一�
 %=====================================================================
 \chapter{实验与分析}
 
-本章对实现的k-kick哈希方案进行全面的实验评估，与C++标准库中的
-\texttt{std::unordered\_map}（$O(1)$期望，开放寻址法）进行对比。
+本章对实现的k-kick哈希方案进行全面的实验评估。实验分为两大部分：
+第一部分在随机均匀分布键（即``良好哈希''条件）下，对比本方案与
+\texttt{std::unordered\_map}的插入、查询、删除和内存四种维度的性能；
+第二部分在人为引入极端哈希碰撞的条件下，测试两类方案在冲突退化方面的
+表现差异。实验采用$k=4$的硬编码配置，数据规模根据$k$-kick树的理论模型
+进行选取。
 
 \section{实验设置}
 
-实验环境的搭建与测量方法的选择对结果的可靠性和可复现性具有直接影响。本节逐一
-说明本次实验的硬件平台、软件栈版本、数据集生成策略以及各指标的测量方式。
+\subsection{理论依据与规模选取}
+
+Bender等人的理论分析\cite{1}指出，对于参数$k$的$k$-kick树，每键空间浪费为
+$O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数：
+
+\begin{equation}
+\log^{(k)} n = \underbrace{\log_2 \log_2 \cdots \log_2}_{k\text{次}} n
+\end{equation}
+
+在本实现中，$k$被硬编码为$k_{\max}=4$。为使$k=4$对应的理论保证具有实际意义，
+需要$\log^{(4)} n > 1$，即$n > 2^{16} = 65536$。由此确定了本实验的规模下限：
+选取$n=5\times 10^4$作为基准点，向上拓展至$n=10^6$。对于碰撞实验，由于
+\texttt{unorderd\_map}在单桶冲突下退化为$O(n^2)$总耗时，无法在大规模下完成
+测试，因此碰撞测试的规模上限设为$n=10^5$。
+
+\subsection{硬件与软件环境}
 
 \begin{itemize}
-  \item \textbf{硬件平台}：所有实验均在单一物理机上完成。处理器为Intel Core i7
-    （第10代，4核8线程，基础频率2.8 GHz，最大睿频5.0 GHz），搭载16 GB DDR4
-    内存，操作系统为64位Windows 11专业版（版本23H2）。实验过程中关闭了非必要的
-    后台进程，但未使用实时优先级或CPU亲和性绑定，以反映常规使用环境下的性能表现。
+  \item \textbf{硬件平台}：Intel Core i7（第10代，4核8线程，2.8 GHz基础频率，
+    5.0 GHz最大睿频），16 GB DDR4内存，64位Windows 11专业版（版本23H2）。
+    实验过程中关闭非必要后台进程，未使用实时优先级或CPU亲和性绑定。
 
   \item \textbf{编译器与编译选项}：GCC 15.2.0（通过MSYS2 UCRT64环境安装），编译
-    参数为\texttt{-std=c++20 -O3 -DNDEBUG}。在LevelDB集成基准测试中额外添加
-    \texttt{-DUSE\_KICK\_HASH=1}和\texttt{-fexceptions}参数。优化级别-O3启用了
-    包括函数内联、循环展开和自动向量化在内的全部优化通道。
+    参数为\texttt{-std=c++20 -O3 -DNDEBUG}。
 
-  \item \textbf{数据规模选取}：测试覆盖了$n \in \{10^3, 5\times10^3, 10^4,
-    5\times10^4, 10^5, 2\times10^5, 5\times10^5, 7.5\times10^5, 10^6\}$共九个
-    数量级的数据规模。规模的选取遵循了几何递增的原则，确保能够同时覆盖合并前
-    （$n\leq 2\times10^5$）和合并后（$n\geq 5\times10^5$）两个特征阶段，以便
-    观察性能在跨越合并临界点前后的变化模式。
-
-  \item \textbf{数据类型}：独立基准测试使用32-bit无符号整数（\texttt{uint32\_t}）
-    作为键和值的类型；LevelDB集成测试则使用16字节的随机ASCII字符串（通过
-    \texttt{snprintf}以十六进制格式化\texttt{Random::Next()}的64-bit输出
-    生成）作为键，以充分模拟实际数据库使用场景中键的变长字符串特征。
+  \item \textbf{数据类型}：使用32-bit无符号整数（\texttt{uint32\_t}）作为键和
+    值的类型。对于碰撞实验，为\texttt{std::unordered\_map}指定自定义哈希函数
+    \texttt{BadHash}（固定返回0），使所有键集中于同一个桶内形成单一冲突链。
 
   \item \textbf{数据集与随机性}：所有测试数据通过\texttt{std::mt19937\_64}梅森
-    旋转算法（固定种子42以保证可复现性）预先生成。每个数据规模独立生成一组
-    不重复的随机键值对。对每个规模独立进行3次完整试验，报告平均值以过滤单次
-    实验中的偶然波动。
+    旋转算法预先生成。对每个数据规模使用5个不同的随机种子独立生成5组数据集，
+    报告5次试验的均值和标准差，以控制单次实验的偶然波动。
 
-  \item \textbf{测试流程}：每组实验严格按照``插入全部$n$个元素，随后查询全部$n$个
-    元素，最后删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
-    \texttt{std::chrono::high\_resolution\_clock}以纳秒精度测量，随后转换为
-    微秒（us）进行报告。在相邻阶段之间不进行任何垃圾回收或显式内存释放操作，
-    以求反映连续工作负载下的真实性能。
+  \item \textbf{测试流程}：每组实验按照``插入全部$n$个元素，查询全部$n$个元素，
+    删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
+    \texttt{std::chrono::high\_resolution\_clock}测量并转换为微秒。
+    报告的总时间为该阶段对所有$n$个元素操作的总耗时，均值除以$n$得到每操作时间。
 
   \item \textbf{内存测量}：进程内存占用通过Windows API函数
-    \texttt{GetProcessMemoryInfo}获取，具体取值为\texttt{WorkingSetSize}字段
-    （即操作系统为当前进程分配的物理内存工作集大小），以MB为单位报告。
-    内存测量的时间点为：每次试验开始前和全部三个阶段执行完毕之后各采集一次，
-    以其差值作为该次试验的内存增量。
+    \texttt{GetProcessMemoryInfo}获取\texttt{WorkingSetSize}字段，
+    在插入阶段前后各采集一次，以差值（MB）报告该次试验的内存增量。
 \end{itemize}
 
-\section{插入性能}
+\section{良好哈希条件下的综合性能}
+
+本节在随机均匀分布\texttt{uint32\_t}键的条件下，比较两类方案在插入、
+查询、删除和内存四个维度上的表现。每组试验重复5次，报告均值和标准差。
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_insert.png}
-\caption{插入时间对比}
-\label{fig:insert}
+\includegraphics[width=0.85\textwidth]{src/benchmark_time_good_hash.png}
+\caption{良好哈希条件下插入、查询、删除时间对比（双对数坐标）}
+\label{fig:time_good}
 \end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|r|r|r}
-\toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/umap} \\
-\midrule
-$10^3$ & 572 & 38 & 15.1 \\
-$10^4$ & $7.64\times 10^3$ & 526 & 14.5 \\
-$10^5$ & $7.55\times 10^4$ & 5,526 & 13.7 \\
-$2\times10^5$ & $1.58\times 10^5$ & 14,532 & 10.9 \\
-$5\times10^5$ & $1.03\times 10^6$ & 65,241 & 15.8 \\
-$7.5\times10^5$ & $7.22\times 10^6$ & 279,584 & 25.8 \\
-$10^6$ & $9.53\times 10^6$ & 457,619 & 20.8 \\
-\bottomrule
-\end{tabular}
-\caption{插入时间比较（单位：微秒）}
-\label{tab:insert}
-\end{table}
-
-插入操作在$n\leq 2\times10^5$区间内表现出\emph{近似常数}
-每操作时间特征，实测耗时稳定在0.7--0.8 us/op的狭窄区间内。这一行为与原始论文
-所断言的$O(k)$更新时间上界\cite{1}（在当前容量配置下$k\approx 4$）在趋势上是吻合的。
-当实验规模越过$n=5\times10^5$这一临界点后，tier-1层级的Cubby数量首次超过了
-200个的合并阈值，触发了全局合并流程。得益于deactivate-based的合并策略——即
-通过将旧Cubby标记为停用状态而非物理地从向量中删除——系统免于进行$O(N)$量级的
-全量路由表重建操作，合并的摊还成本仅与当次合并所涉及的被迁移键数量成比例。
-在$n=10^6$的全量规模下，插入总耗时约为9.53秒，折合每操作约9.5 us/op，这其中
-包含了在多个tier层级上触发的多次合并的累计分摊。紧凑Trie编码
-方案将每键路由器空间开销控制在了5--8字节的较低水平，对于降低大$n$场景下插入
-过程中的缓存压力起到了积极的作用。另外，在较小规模（$n\leq 10^4$）下Facility
-的插入绝对时间约为\texttt{unordered\_map}的14--15倍，这一差距主要是由Facility
-中相对复杂的两级路由查找和槽位分配逻辑带来的固定启动开销所导致的。
-
-\section{查询性能}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_query.png}
-\caption{查询时间对比}
-\label{fig:query}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|r|r|r}
-\toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/umap} \\
-\midrule
-$10^3$ & 175 & 8 & 21.9 \\
-$10^4$ & 2,039 & 148 & 13.8 \\
-$10^5$ & 25,905 & 1,375 & 18.8 \\
-$2\times10^5$ & 72,095 & 3,549 & 20.3 \\
-$5\times10^5$ & 256,691 & 12,008 & 21.4 \\
-$7.5\times10^5$ & $1.40\times 10^6$ & 54,707 & 25.6 \\
-$10^6$ & $1.95\times 10^6$ & 75,586 & 25.8 \\
-\bottomrule
-\end{tabular}
-\caption{查询时间比较（单位：微秒）}
-\label{tab:query}
-\end{table}
-
-查询性能测试数据显示了两阶段行为模式。在$n\leq 2\times10^5$
-的相对较小规模区间内，得益于8-bit查找表（LUT）对前8层Trie遍历的有效跳过，
-每操作的实际遍历深度仅为$\sim\log_2|S|-8$层，单次查询耗时稳定在0.3--0.4 us
-的相对低位水平。然而，当数据规模进一步扩展至$n\geq 5\times10^5$范围时，Trie
-树的绝对深度随着$\log_2 n$的增长而逐步加深，导致单次查询操作的时间成本逐渐
-攀升至约0.5--1.95 us/op。
-
-与\texttt{std::unordered\_map}的查询性能相比，本文的方案存在约15--25倍的
-延迟差距。这一差距的成因可以从以下几个方面加以解释：其一，
-\texttt{unordered\_map}的查询路径极为简短——仅需计算一次哈希值并检查至多
-数个相邻槽位，而本文方案需要完成一次Facility级的Trie探查和一次Cubby级的
-Trie探查，共涉及两次完整的紧凑Trie walk；其二，紧凑Trie的逐位（bit-by-bit）
-遍历模式使得每次比较仅能前进一个比特位，在处理效率上天生低于\texttt{unordered\_map}
-中基于字节或机器字的批量比较；其三，MiniArray中的跨字位读取操作引入了额外的
-位掩码和移位计算开销。
-
-尽管如此，LUT加速策略\cite{7}的效果依然值得肯定：它将查询过程中的前8层
-逐位遍历替换为单次$O(1)$的表查找跳转，使得$n\leq 10^5$区间内的每操作查询
-耗时保持在0.3 us以下，而即使在$n=10^6$的最不利条件下，查询也仅需约
-1.95 us/op即可完成，仍处于可接受的微秒级延迟范围之内。
-
-\section{删除性能}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_delete.png}
-\caption{删除时间对比}
-\label{fig:delete}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|r|r|r}
-\toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/umap} \\
-\midrule
-$10^3$ & 361 & 27 & 13.4 \\
-$10^4$ & 4,900 & 392 & 12.5 \\
-$10^5$ & 53,451 & 4,001 & 13.4 \\
-$2\times10^5$ & 130,929 & 10,346 & 12.7 \\
-$5\times10^5$ & 433,290 & 58,960 & 7.3 \\
-$7.5\times10^5$ & $2.31\times 10^6$ & 286,313 & 8.1 \\
-$10^6$ & $3.11\times 10^6$ & 395,585 & 7.9 \\
-\bottomrule
-\end{tabular}
-\caption{删除时间比较（单位：微秒）}
-\label{tab:delete}
-\end{table}
-
-删除操作在$n\leq 2\times10^5$区间内表现较为平稳，每操作耗时维持
-在约0.7 us的水平，其主要的时间消耗分布在两级紧凑Trie的walk-down查找（需依次
-在Facility级和Cubby级各完成一次完整的Trie遍历以定位目标槽）以及随后的标记式
-空叶写入操作（将叶节点的哈希指纹和功能值均置为零）。$n=10^6$规模下的总删除
-用时为3.11秒，折合每操作约3.1 us/op。与插入操作不同的是，删除操作并不触发
-合并机制，因此其每操作耗时随数据规模增长的幅度较为温和，主要由两级Trie深度的
-对数增长所贡献。
-
-本文的实现还额外承担了每一被删除元素的两级路由清理操作
-（\texttt{cubby\_router\_.remove}和\texttt{Cubby::route\_.remove}），即需要在
-两个独立的紧凑Trie中各完成一次walk-down查找和节点标记。这比仅在一个Trie中
-操作的代价大约增加了一倍。若未来实现per-cubby的独立路由器架构，删除操作只需
-更新被删除键所在Cubby的本地路由，有望将删除效率提升约一倍。
-
-\section{内存占用}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_memory.png}
-\caption{内存占用对比}
-\label{fig:mem}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|r|r|r}
-\toprule
-$n$ & \textbf{Facility (MB)} & \textbf{umap (MB)} & \textbf{F/umap} \\
-\midrule
-$10^3$ & 0 & 0 & — \\
-$10^4$ & 0 & 0 & — \\
-$10^5$ & 5 & 3 & 1.7 \\
-$2\times10^5$ & 9 & 6 & \textbf{1.5} \\
-$5\times10^5$ & 38 & 15 & 2.5 \\
-$7.5\times10^5$ & 69 & 23 & 3.0 \\
-$10^6$ & 97 & 30 & 3.2 \\
-\bottomrule
-\end{tabular}
-\caption{内存占用比较}
-\label{tab:mem}
-\end{table}
-
-图\ref{fig:mem}和表\ref{tab:mem}的内存占用数据体现了
-系统在两个不同运行阶段中的空间消耗模式。在$n\leq 2\times10^5$的合并前阶段，
-所有键值对均存储于单个tier-1的tail Cubby之中（容量固定为1024槽，不足时通过
-promote-tail机制分配新的tier-1 Cubby）。此阶段的空间效率主要受益于紧凑Trie
-编码\cite{1}的贡献：MiniArray以精确位宽（4位和1位分别用于槽元数据和空闲位图）
-取代了\texttt{std::vector<uint64\_t>}所带来的每槽8字节存储浪费。在$n=2\times10^5$
-处，系统总内存占用仅为9 MB，折合每键约45字节，与标准库参照对象\texttt{std::unordered\_map}
-维持在1.5倍的水平。每键45字节的构成可以大致拆分为：键向量（4 B/slot）+ 值向量
-（4 B/slot）+ 槽元数据（$\sim$1.5 B/slot分摊）+ 两级Trie路由（$\sim$5--8 B/key）
-+ 预分配未用槽位的空间摊分。
-
-在$n\geq 5\times10^5$的合并活跃阶段，多个tier层级的Cubby同时存在，系统开始
-面临预分配槽位利用率的问题。动态容量控制策略在这一阶段发挥了调节作用：每次
-合并时通过$\max(\text{论文公式},\ \text{merged\_size}\times 2)$的启发式规则
-为新的高层Cubby确定容量，取2的幂次以便于位操作优化。该策略在$n=10^6$时将
-总内存占用成功限定在97 MB（97 B/key），虽然与标准库参照对象的30 MB（30 B/key）
-相比仍有约3.2倍的差距，但若移除动态容量的约束而单纯使用论文原始固定公式，
-空间占用将进一步提高至远超100 MB的水平。
-
-从绝对数值来看，在$n\leq 10^4$的极小规模下，Facility和\texttt{unordered\_map}
-的内存占用均不足1 MB，差距无法在MB粒度下体现（表中显示为0 MB）。这一现象并非
-测量误差，而是GetProcessMemoryInfo的工作集粒度（通常为4 KB页）与小数据量
-下的实际内存分配量之间的分辨率不匹配所导致。
-
-\section{所有操作总览}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_all_operations.png}
-\caption{插入/查询/删除综合对比}
-\label{fig:all}
-\end{figure}
-
-\section{吞吐量分析}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_throughput.png}
-\caption{每秒操作数对比}
-\label{fig:tp}
-\end{figure}
-
-\textbf{讨论与总结}：综合以上四个维度的实验数据，可以对本次实现的k-kick哈希方案
-的性能特征做出以下整体性判断。在$n\leq 2\times10^5$这一规模区间内——对应于系统
-在首次触发全局合并之前的运行阶段——方案表现出了较为理想的综合性能：插入操作维持在
-每操作约0.7--0.8 us的近常数水平，与原始论文\cite{1}所断言的$O(k)$更新复杂度
-在趋势上相符；查询操作在LUT加速的支持下保持在每操作0.3--0.4 us的水平；空间
-开销约为45 B/key，与\texttt{std::unordered\_map}的差距控制在1.5倍以内。
-这一阶段的数据表现说明，在中小规模数据场景下，紧凑编码策略和查找表加速机制能够
-在保证合理时间性能的前提下有效地压缩空间占用。
-
-然而，当数据量增长至$n\geq 5\times10^5$后，合并操作的介入开始对整体性能产生
-可观测的负面影响。插入的每操作耗时在$n=10^6$时增长至约9.5 us/op，较之合并前
-阶段增大了约12倍。deactivate-based的合并策略将其成本有效
-地限制在了$O(\text{merged\_keys})$而非$O(N)$的量级，避免了最坏情况下的性能崩溃。
-在这一阶段，动态容量控制机制也发挥了预期的效果，将$n=10^6$时的总内存占用控制
-在97 MB（97 B/key），虽然仍约为标准库参照对象的3.2倍，但与完全不控制容量时的
-理论空间需求相比已经有了明显的改善。
-
-主要性能问题集中在以下三个方面：一是合并操作带来的摊还插入成本在
-高数据量下仍然显著，指向了per-cubby独立路由器的需求；二是紧凑Trie的逐位遍历
-在与基于全量比较的哈希表对比时天然处于劣势，这需要LUT位宽的进一步扩展来弥补；
-三是动态容量公式中的常数$K$在当前为固定值，未能根据全局$n$进行自适应调节，
-这限制了大$n$场景下空间利用率的进一步提升空间。
-
-%=====================================================================
-\chapter{LevelDB 集成}
-
-本章描述将实现的k-kick树哈希方案集成到Google LevelDB\cite{2}数据库的MemTable中，
-包括集成流程、适配层设计、双向开关机制，并通过实验验证集成效果。
-
-\section{集成动机}
-
-在实际数据库存储引擎的运行环境中，MemTable（内存表）作为LSM树架构中直接
-承接用户写入请求的第一层数据结构，其查询和写入效率直接决定了整个存储系统的
-前端口吞吐能力。LevelDB\cite{2}选择了SkipList（跳表）作为其MemTable的底层
-实现，SkipList以有序链表结合概率性多层索引的方式提供了$O(\log n)$的点查询、
-高效的有序遍历和天然的范围扫描能力。然而，在高读写混合的实际工作负载下，
-SkipList的逐节点键比较操作和跨层级的指针追逐往往会引入不可忽视的缓存缺失
-（cache miss）代价，当数据量不断增长时，查询延迟也随之提升。
-
-k-kick哈希方案借助紧凑二叉Trie路由和8-bit LUT加速实现了期望$O(1)$的点查询
-复杂度\cite{1}。本文的集成策略并非试图用KickHashTable取代SkipList——后者所
-具备的有序遍历和范围扫描能力是任何哈希类结构无法提供的——而是将其作为一种
-互补型的点查询加速层，通过少量额外的内存开销换取Get操作在多数情况下的快速
-响应。具体而言，用户在写入数据时同步更新SkipList和KickHashTable两份索引，
-在查询数据时优先走KickHashTable的$O(1)$快速路径：若命中目标则直接返回对应
-的Arena缓冲区指针并解析结果，若未命中或遭遇哈希碰撞（发生概率在$n=10^6$时
-约$10^{-7}$量级），则自动回退至SkipList的$O(\log n)$保底路径。迭代器遍历
-操作（NewIterator）不受此改动影响，始终沿用SkipList的顺序访问能力。
-
-\section{集成流程}
-
-整体集成分为以下四个步骤：
-
-\begin{enumerate}
-  \item \textbf{代码复制}：将\texttt{./code}目录中最新版本的四个头文件
-    （\texttt{facility.hpp}、\texttt{cubby.hpp}、\texttt{miniarray.hpp}、
-    \texttt{local\_query\_router.hpp}）复制至\texttt{leveldb/util/kick\_hash/}
-    目录，包含free\_bitmap\_空闲槽追踪、deactivate停用合并、动态容量分配、
-    8-bit Lookup Table加速等全部优化。
-  \item \textbf{适配层编写}：在\texttt{util/kick\_hash.h}中实现
-    \texttt{KickHash64}哈希函数和\texttt{KickHashTable}包装器类，
-    完成Slice键到Facility模板参数的映射转换。
-  \item \textbf{MemTable修改}：在\texttt{db/memtable.h}和\texttt{db/memtable.cc}中，
-    添加条件编译分支\texttt{\#ifdef USE\_KICK\_HASH}，在Add和Get中插入KickHashTable
-    的读写逻辑，同时新增运行时开关\texttt{use\_kick\_hash\_}。
-  \item \textbf{构建集成}：修改\texttt{CMakeLists.txt}，新增\texttt{USE\_KICK\_HASH}
-    选项（默认OFF），启用时传递\texttt{-DUSE\_KICK\_HASH=1}编译宏并恢复异常支持
-    （\texttt{-fexceptions}）。
-\end{enumerate}
-
-\begin{figure}[H]
-\centering
-\begin{verbatim}
-leveldb/
-├── util/kick_hash/                [从 ../code/ 复制的哈希方案头文件]
-│   ├── facility.hpp               [Facility: 分层管理器 + deactivate合并]
-│   ├── cubby.hpp                  [Cubby: 弹性哈希 + free_bitmap + 动态容量]
-│   ├── miniarray.hpp              [MiniArray: 位压缩数组]
-│   └── local_query_router.hpp     [LocalQueryRouter: 紧凑Trie + LUT]
-│
-├── util/kick_hash.h               [适配器 (wrapper)]
-│
-├── db/memtable.h                  [修改: #ifdef USE_KICK_HASH]
-├── db/memtable.cc                 [修改: Add()双写, Get()优先查询]
-│
-└── CMakeLists.txt                 [option(USE_KICK_HASH ...) + 编译开关]
-\end{verbatim}
-\caption{集成后的LevelDB目录结构}
-\label{fig:integration_structure}
-\end{figure}
-
-\section{适配器设计}
-
-\subsection{KickHash64哈希函数}
-
-适配器首先需要将LevelDB的任意字节串键（Slice）映射为64-bit哈希值，
-以适配Facility的\texttt{uint64\_t}键类型。
-
-\begin{itemize}
-  \item 调用两次LevelDB内置\texttt{Hash()}函数（种子分别为
-    \texttt{0xbc9f1d34}和\texttt{0x5c6b7a8e}），各得到32-bit哈希值
-  \item 将两值拼接为64-bit哈希：$\text{KickHash64}(d,n) = (H_2 \ll 32) \;|\; H_1$
-  \item 参考Belazzougui等人\cite{6}的多哈希族构造方法，两独立种子确保哈希均匀性
-\end{itemize}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|c}
-\toprule
-\textbf{转换层} & \textbf{实现} \\
-\midrule
-键映射 & Slice $\xrightarrow{\text{KickHash64}}$ uint64\_t \\
-值映射 & Arena指针 $\xrightarrow{\text{reinterpret\_cast}}$ uint64\_t \\
-存储引擎 & Facility<uint64\_t, uint64\_t>（两级LUT路由） \\
-碰撞防护 & 取回Arena指针，解析LevelDB编码，然后与原始Slice比对 \\
-\bottomrule
-\end{tabular}
-\caption{适配层类型转换方案}
-\label{tab:adapter_types}
-\end{table}
-
-\subsection{KickHashTable包装器}
-
-\texttt{KickHashTable}类封装了Facility对象，提供三个与MemTable匹配的操作接口：
-
-\begin{lstlisting}
-class KickHashTable {
- public:
-  void Insert(const Slice& user_key, uint64_t arena_ptr) {
-    table_.insert(KickHash64(key, len), arena_ptr);
-  }
-  bool Get(const Slice& user_key, uint64_t* out) {
-    return table_.lookup_value(KickHash64(key, len), *out);
-  }
-  void Remove(const Slice& user_key) {
-    table_.remove(KickHash64(key, len));
-  }
- private:
-  Facility<uint64_t, uint64_t> table_;
-};
-\end{lstlisting}
-
-Facility的\texttt{lookup\_value}支持非异常返回（通过bool返回值），
-避免了LevelDB禁用异常的兼容问题。插入和删除通过\texttt{insert}和\texttt{remove}完成，
-Facility内部自动处理踢出链、合并和路由更新。
-
-\section{MemTable集成改动}
-
-\subsection{数据结构扩展}
-
-在\texttt{MemTable}类中增加条件编译成员：
-
-\begin{lstlisting}
-class MemTable {
-  // ... 原有成员 ...
-  Table table_;                    // SkipList（保留，用于迭代）
-
-#ifdef USE_KICK_HASH
-  KickHashTable kick_table_;       // k-kick 哈希加速器
-  bool use_kick_hash_;             // 运行时开关
-#endif
-};
-\end{lstlisting}
-
-\subsection{写入路径（Add）}
-
-\begin{lstlisting}
-void MemTable::Add(seq, type, key, value) {
-  // 原有: Arena 编码后 SkipList::Insert
-  char* buf = arena_.Allocate(encoded_len);
-  // ... 编码 key/value/tag ...
-  table_.Insert(buf);
-
-#ifdef USE_KICK_HASH
-  if (use_kick_hash_) {
-    kick_table_.Insert(key,
-        reinterpret_cast<uint64_t>(buf));
-  }
-#endif
-}
-\end{lstlisting}
-
-\begin{enumerate}
-  \item Arena缓冲区的原始指针作为\texttt{uint64\_t}值存入Facility
-  \item Arena在MemTable生命周期内不释放单个节点，指针全程有效
-  \item 运行时开关\texttt{use\_kick\_hash\_}控制是否启用双写
-\end{enumerate}
-
-\subsection{查询路径（Get）}
-
-\begin{lstlisting}
-bool MemTable::Get(const LookupKey& key, ...) {
-#ifdef USE_KICK_HASH
-  if (use_kick_hash_) {
-    uint64_t arena_ptr;
-    if (kick_table_.Get(key.user_key(), &arena_ptr)) {
-      const char* entry = (const char*)arena_ptr;
-      // 解析: varint32+internal_key+tag+varint32+value
-      uint32_t key_len;
-      const char* kp = GetVarint32Ptr(entry, entry+5, &key_len);
-      if (user_key_match(kp, key)) {
-        // 提取value（处理kTypeValue/kTypeDeletion）
-        return true;
-      }
-      // 哈希碰撞，回退至SkipList
-    }
-  }
-#endif
-  // 原有: SkipList::Seek 后解析
-}
-\end{lstlisting}
-
-\begin{itemize}
-  \item 优先通过两级路由（facility级$\rightarrow$cubby级）定位槽，
-    从Facility取回Arena指针
-  \item 从Arena缓冲区解析LevelDB编码的键值对
-  \item 用原始Slice比对验证，防止64-bit哈希碰撞（概率$\sim 10^{-7}$）
-  \item 碰撞或指针失效时自动回退至SkipList查找
-\end{itemize}
-
-\section{双向开关设计}
-
-系统提供两层开关控制k-kick哈希方案的使用。
-
-\subsection{编译期开关：CMake选项}
-
-\begin{lstlisting}[language=bash]
-# 启用 k-kick 哈希加速
-cmake -B build -DUSE_KICK_HASH=ON
-cmake --build build
-
-# 使用原始 LevelDB（默认，不变）
-cmake -B build
-cmake --build build
-\end{lstlisting}
-
-编译期开关决定是否编译KickHash相关代码，影响二进制大小和异常处理策略。
-
-\begin{table}[H]
-\centering
-\begin{tabular}{l|c|c}
-\toprule
-\textbf{开关} & \textbf{USE\_KICK\_HASH=OFF} & \textbf{USE\_KICK\_HASH=ON} \\
-\midrule
-KickHashTable代码 & 不编译 & 编译 \\
-异常处理 & \texttt{-fno-exceptions} & \texttt{-fexceptions} \\
-\texttt{kick\_table\_}成员 & 不存在 & 存在 \\
-\texttt{use\_kick\_hash\_}成员 & 不存在 & 存在（默认true） \\
-Add/Get额外开销 & 无 & 编译存在，运行时可选 \\
-二进制体积 & 基准 & 增加$\sim$40KB \\
-\bottomrule
-\end{tabular}
-\caption{编译期开关影响对比}
-\label{tab:compile_switch}
-\end{table}
-
-\subsection{运行时开关：MemTable::SetUseKickHash()}
-
-在\texttt{USE\_KICK\_HASH=ON}编译后，MemTable提供公开的运行时控制接口：
-
-\begin{lstlisting}
-// 运行时启用 k-kick 哈希加速（默认true）
-memtable->SetUseKickHash(true);
-
-// 运行时禁用，回退纯SkipList
-memtable->SetUseKickHash(false);
-
-// 查询当前状态
-bool enabled = memtable->GetUseKickHash();
-\end{lstlisting}
-
-运行时开关在不变更二进制的前提下，允许\textbf{同一进程内不同的MemTable实例采用不同策略}，
-或对同一实例在运行时动态切换。这使A/B对比测试无需重新编译，只需在一个测试中先后
-（或并行对比）测试两种路径。
-
-\begin{figure}[H]
-\centering
-\begin{enumerate}
-  \item \textbf{写入路径}：\texttt{Put(key, value)}经过Arena编码后，数据被同时写入
-    SkipList（通过\texttt{Table::Insert}，始终执行）和KickHashTable（通过
-    \texttt{kick\_table\_.Insert}，仅当编译期和运行时开关均开启时执行）。
-
-  \item \textbf{读取路径}：\texttt{Get(key)}首先尝试通过KickHashTable的
-    \texttt{Get}方法以$O(1)$期望时间获取结果（当双开关均开启时）；若未命中或
-    哈希碰撞，则回退至SkipList的\texttt{Seek}方法以$O(\log n)$时间完成查询。
-
-  \item \textbf{迭代路径}：\texttt{NewIterator()}始终基于SkipList的有序遍历
-    能力，不受哈希加速层的任何影响。
-\end{enumerate}
-\caption{双路径数据流}
-\label{fig:dual_path}
-\end{figure}
-
-\section{集成实验}
-
-为验证集成的正确性和性能，设计如下实验方案。
-
-\subsection{实验设计}
-
-\begin{itemize}
-  \item \textbf{测试对象}：KickHashTable适配器（使用最新版Facility，含free\_bitmap、
-    deactivate合并、动态容量、LUT加速）
-  \item \textbf{对比对象}：\texttt{std::unordered\_map}（$O(1)$期望，开放寻址法）
-  \item \textbf{数据规模}：$n \in \{10^3, 5\times10^3, 10^4, 5\times10^4,
-    10^5, 2\times10^5, 5\times10^5, 7.5\times10^5, 10^6\}$
-  \item \textbf{数据类型}：16字节随机字符串键，经KickHash64转换为uint64\_t哈希键，
-    uint64\_t值存储索引
-  \item \textbf{操作流程}：插入全部$n$个键，然后查询全部$n$个键，最后删除全部$n$个键
-  \item \textbf{硬件}：Intel Core i7，16 GB RAM，Windows 11
-  \item \textbf{编译器}：GCC 15.2.0，\texttt{-std=c++20 -O3 -DUSE\_KICK\_HASH=1}
-  \item \textbf{试验次数}：每个数据规模3次独立试验
-\end{itemize}
 
 \subsection{插入性能}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{c|r|r|r}
+\begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{KickHashTable (us/op)} & \textbf{umap (us/op)} & \textbf{Kick/umap} \\
+$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
 \midrule
-$10^3$ & 0.64 & 1.26 & 0.50× \\
-$5\times10^3$ & 0.59 & 0.05 & 10.8× \\
-$10^4$ & 0.67 & 0.06 & 10.1× \\
-$5\times10^4$ & 0.84 & 0.09 & 8.0× \\
-$10^5$ & 0.78 & 0.13 & 5.8× \\
-$2\times10^5$ & 0.86 & 0.14 & 6.3× \\
-$5\times10^5$ & 2.16 & 0.24 & 9.1× \\
-$7.5\times10^5$ & 2.91 & 0.40 & 7.3× \\
-$10^6$ & 3.36 & 0.37 & 9.1× \\
+$5\times10^4$ & $3.31\times 10^4$ & $2.15\times 10^3$ & 0.66 & 0.04 \\
+$1\times10^5$ & $7.10\times 10^4$ & $4.93\times 10^3$ & 0.71 & 0.05 \\
+$2\times10^5$ & $2.19\times 10^5$ & $2.34\times 10^4$ & 1.09 & 0.12 \\
+$5\times10^5$ & $2.53\times 10^6$ & $1.58\times 10^5$ & 5.06 & 0.32 \\
+$1\times10^6$ & $7.47\times 10^6$ & $4.25\times 10^5$ & 7.47 & 0.42 \\
 \bottomrule
 \end{tabular}
-\caption{插入性能对比（KickHashTable vs std::unordered\_map）}
-\label{tab:integration_insert}
+\caption{插入时间比较（5次试验均值）}
+\label{tab:insert}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_insert.png}
-\caption{插入时间对比}
-\label{fig:integration_insert}
-\end{figure}
-
-插入在$n \le 2\times 10^5$时每操作约0.6--0.9 us/op，
-与Facility本身的benchmark数据一致（$\sim$0.8 us/op），说明适配层（KickHash64计算，
-约5 ns/次）带来的额外开销可忽略不计。$n = 5\times 10^5$处触发首次tier-1合并
-（Cubby数量超过200），插入时间跃升至$\sim$2.2 us/op。$n = 10^6$时每操作3.4 us/op，
-主要开销来自多次合并的摊还成本。得益于deactivate合并策略，无需$O(N)$全量路由重建，
-合并仅对实际元素数进行路由更新。
+插入操作在$n=5\times10^4$至$1\times10^5$区间内每操作耗时约0.66--0.71 us（每次操作），
+与理论$O(k)$上界（$k=4$）在趋势上吻合。当$n=2\times10^5$时每操作升至1.09 us（每次操作），
+$n=5\times10^5$时进一步升至5.06 us（每次操作）。这一拐点对应全局合并流程的触发：
+tier-1层级的活跃Cubby数量超过200个的阈值后，系统开始将同层Cubby两两合并
+为更高tier的Cubby对象。合并采用deactivate策略（将旧Cubby标记为停用而非
+物理删除），摊还成本与当次合并涉及的元素数量成比例，而非与全系统总键数相关。
+在$n=10^6$的极限规模下，插入总耗时约7.47秒（7.47 us（每次操作）），其中包含了
+多层级合并的累计摊还成本。每键插入时间约为\texttt{unordered\_map}
+（0.04--0.42 us（每次操作））的15--18倍，这一差距主要源于Trie路由的逐位遍历开销
+和合并操作的分摊成本。
 
 \subsection{查询性能}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{c|r|r|r}
+\begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{KickHashTable (us/op)} & \textbf{umap (us/op)} & \textbf{Kick/umap} \\
+$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
 \midrule
-$10^3$ & 0.21 & 0.02 & 11.1× \\
-$5\times10^3$ & 0.20 & 0.02 & 11.6× \\
-$10^4$ & 0.27 & 0.02 & 11.2× \\
-$5\times10^4$ & 0.37 & 0.04 & 8.4× \\
-$10^5$ & 0.41 & 0.06 & 7.2× \\
-$2\times10^5$ & 0.35 & 0.07 & 5.1× \\
-$5\times10^5$ & 0.53 & 0.09 & 5.8× \\
-$7.5\times10^5$ & 0.69 & 0.11 & 6.1× \\
-$10^6$ & 0.74 & 0.09 & 8.0× \\
+$5\times10^4$ & $1.18\times 10^4$ & $5.79\times 10^2$ & 0.24 & 0.01 \\
+$1\times10^5$ & $2.77\times 10^4$ & $1.33\times 10^3$ & 0.28 & 0.01 \\
+$2\times10^5$ & $8.68\times 10^4$ & $4.35\times 10^3$ & 0.43 & 0.02 \\
+$5\times10^5$ & $6.56\times 10^5$ & $2.93\times 10^4$ & 1.31 & 0.06 \\
+$1\times10^6$ & $1.59\times 10^6$ & $6.47\times 10^4$ & 1.59 & 0.06 \\
 \bottomrule
 \end{tabular}
-\caption{查询性能对比（KickHashTable vs std::unordered\_map）}
-\label{tab:integration_query}
+\caption{查询时间比较（5次试验均值）}
+\label{tab:query}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.48\textwidth]{src/benchmark_query.png}
-\caption{查询时间对比}
-\label{fig:integration_query}
-\end{figure}
-
-查询在$n \le 2\times 10^5$时$\sim$0.2--0.4 us/op，8-bit LUT
-跳过前8层Trie遍历，剩余路径仅需$\sim \log_2|S|-8$层逐位遍历。每操作约是
-\texttt{std::unordered\_map}的5--11×，差距主要来自紧凑Trie的逐位遍历和两级路由
-（facility级$\rightarrow$cubby级）相比哈希表单次探测的开销。$n=10^6$时
-$\sim$0.74 us/op，比Facility自身benchmark的1.95 us/op有明显改善，
-这是因为最新版代码的LUT加速和优化后的Trie walk。
+查询性能表现出明显的两阶段特征。在$n=5\times10^4$至$2\times10^5$范围内，
+8-bit LUT将Trie查询的前8层遍历替换为单次$O(1)$查表操作，每键耗时在
+0.24--0.43 us（每次操作）区间内。$n$增至$5\times10^5$后，Trie深度随$\log_2 n$
+增长（合并后Cubby-router两级路由进一步增加了查询路径的深度），每键耗时升至
+1.31--1.59 us（每次操作）。与\texttt{unordered\_map}（0.01--0.06 us（每次操作））相比，
+本方案的查询时间大约高出20--25倍。这一差距的来源主要有三个方面：
+两级Trie的逐位遍历（Facility级cubby\_router\_和Cubby级route\_各需一次
+walk-down）、MiniArray跨字位读取的位掩码开销，以及合并后多Cubby并行查询
+带来的缓存局部性损失。
 
 \subsection{删除性能}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{c|r}
+\begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{KickHashTable Delete (us/op)} \\
+$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
 \midrule
-$10^3$ & 0.37 \\
-$10^4$ & 0.43 \\
-$10^5$ & 0.52 \\
-$2\times10^5$ & 0.56 \\
-$5\times10^5$ & 0.86 \\
-$10^6$ & 1.08 \\
+$5\times10^4$ & $2.49\times 10^4$ & $1.47\times 10^3$ & 0.50 & 0.03 \\
+$1\times10^5$ & $5.11\times 10^4$ & $3.63\times 10^3$ & 0.51 & 0.04 \\
+$2\times10^5$ & $1.69\times 10^5$ & $1.93\times 10^4$ & 0.84 & 0.10 \\
+$5\times10^5$ & $1.11\times 10^6$ & $1.42\times 10^5$ & 2.21 & 0.28 \\
+$1\times10^6$ & $2.64\times 10^6$ & $3.76\times 10^5$ & 2.64 & 0.38 \\
 \bottomrule
 \end{tabular}
-\caption{删除性能（3次试验均值）}
-\label{tab:integration_delete}
+\caption{删除时间比较（5次试验均值）}
+\label{tab:delete}
 \end{table}
 
-删除在$n \le 2\times 10^5$时$\sim$0.4--0.6 us/op，
-$n = 10^6$时约1.08 us/op。主要开销来自两级路由的两次Trie walk（定位cubby + 定位槽）
-和一次标记空叶操作。
-
-\subsection{哈希函数开销}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|c}
-\toprule
-\textbf{测试} & \textbf{结果} \\
-\midrule
-KickHash64单次调用 & 5.17 ns \\
-1M次KickHash64总开销 & 5.17 ms \\
-占10$^6$键插入总时间的比例 & $< 0.15\%$ \\
-\bottomrule
-\end{tabular}
-\caption{适配层哈希函数开销}
-\label{tab:hash_overhead}
-\end{table}
-
-KickHash64包含两次leveldb::Hash调用和一次64-bit拼接，单次仅5.17 ns，
-在总体操作时间中占比极小（$<0.15\%$），适配层的开销可忽略不计。
+删除操作在$n\leq 2\times10^5$区间每键约0.50--0.84 us（每次操作），主要耗时来自两级
+Trie walk（cubby\_router\_查找所属Cubby，route\_查找具体槽位）和标记式空叶
+写入（将叶节点的fval和hash字段清零）。$n=10^6$时升至2.64 us（每次操作）。本实现中的
+删除操作额外地承担了每个被删键的两级路由清理工作（先通过cubby\_router\_查找
+Cubby索引，再通过该Cubby的route\_查找并标记空叶），这一路径与查询操作几乎
+等长，是造成删除耗时偏高的重要原因。若未来采用per-cubby独立路由器架构，
+删除时将只需更新本地路由，预期可将删除效率提升约一倍。
 
 \subsection{内存占用}
 
-所有规模测试完成后的进程工作集增量为2 MB，因为测试采用顺序构造后析构，
-Facility占用的内存在KickHashTable析构时释放。在MemTable实际运行场景中，
-Facility持续持有Arena缓冲区指针到MemTable生命周期结束，内存占用按
-Chapter 5中的内存数据增长（$n=2\times10^5$时$\sim$9 MB，45 B/key；
-$n=10^6$时$\sim$97 MB，97 B/key）。
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{src/benchmark_memory.png}
+\caption{良好哈希与碰撞条件下内存占用对比}
+\label{fig:mem}
+\end{figure}
 
-\subsection{集成效果评估}
+\begin{table}[H]
+\centering
+\begin{tabular}{c|r|r|r|r}
+\toprule
+$n$ & \textbf{Facility (MB)} & \textbf{umap (MB)} & \textbf{F B/key} & \textbf{U B/key} \\
+\midrule
+$5\times10^4$ & 2.2 & 1.2 & 46.1 & 25.2 \\
+$1\times10^5$ & 4.2 & 2.8 & 44.0 & 29.4 \\
+$2\times10^5$ & 8.4 & 6.0 & 44.0 & 31.5 \\
+$5\times10^5$ & 39.0 & 15.0 & 81.8 & 31.5 \\
+$1\times10^6$ & 97.4 & 30.6 & 102.2 & 32.1 \\
+\bottomrule
+\end{tabular}
+\caption{内存占用比较（5次试验均值）}
+\label{tab:mem}
+\end{table}
+
+内存占用的变化在$n=2\times10^5$前后呈现明显的分界特征。在$n\leq 2\times10^5$
+的合并前阶段，所有键值对集中存储于tier-1 Cubby中，紧凑Trie编码将每键路由器
+空间控制在5--8字节的水平。该阶段Facility每键约44--46 B/key，约为
+\texttt{unordered\_map}（25--31 B/key）的1.4--1.7倍。在$n=5\times10^5$
+和$10^6$处，由于进入合并活跃阶段，高tier Cubby的容量计算采用了
+$\max(\text{论文公式}, \text{merged\_size}\times 2)$的动态策略，
+实际内存占用增速超过线性：$n=10^6$时总内存约97 MB（102 B/key），
+约为\texttt{unordered\_map}（32 B/key）的3.2倍。值得注意的是，
+Facility在$n=10^6$时每键空间的额外开销（约70 B/key中超出32 B/key的部分）
+主要来自高tier Cubby中未被填满的槽位容量浪费和两级路由的加倍Trie存储，
+而非元数据位宽本身（slot\_meta\_每槽仅5 bit）。
+
+\section{高碰撞条件下的查询退化对比}
+
+\subsection{实验设计与动机}
+
+前述实验均基于随机均匀分布键值对，在该条件下\texttt{std::unordered\_map}
+的桶内冲突链极短，查询延迟整体优于本方案。然而，此类实验未能触及两类方案
+在面对恶意构造的\textbf{极端碰撞}数据时的行为差异。在真实应用场景
+（如Web服务的请求参数哈希、数据库索引键的对抗性构造）中，攻击者可以通过
+精心选择的键序列蓄意制造大量哈希碰撞，使依赖单一哈希函数均匀性的数据结构
+性能急剧退化。
+
+为考察这一情景，本节使用自定义哈希函数\texttt{BadHash}（固定返回0）
+替换\texttt{std::unordered\_map}的默认哈希函数，使所有键被映射到同一个桶内，
+形成长度为$n$的单一冲突链。对于本方案（Facility），键经由\texttt{splitmix64}
+进行64-bit雪崩混合后进入Trie路由，与\texttt{BadHash}无关，因此不受单桶冲突
+的影响。冲突链长度（即$n$）依次取$10^3$、$5\times10^3$、$10^4$、$2\times10^4$、
+$5\times10^4$和$10^5$，每组实验重复5次取均值。由于\texttt{unordered\_map}
+在单桶冲突下的插入和查询均退化为$O(n)$每操作，总耗时为$O(n^2)$量级，
+因此碰撞实验的规模上限设在$10^5$（此时\texttt{unordered\_map}的每次查询
+需遍历约$10^5$个元素的链式结构，单次试验总耗时已达数十秒）。
+
+\subsection{实验结果}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{src/benchmark_collision_highlight.png}
+\caption{单桶冲突条件下查询时间对比（双对数坐标）}
+\label{fig:collision}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|r|r|r|r}
+\toprule
+\textbf{链长$n$} & \textbf{Facility (us)} & \textbf{umap (us)} &
+\textbf{F ns/op} & \textbf{U ns/op} \\
+\midrule
+$10^3$   & 189     & $1.33\times 10^3$   & 189   & 1328 \\
+$5\times10^3$ & 1004    & $2.96\times 10^4$   & 201   & 5925 \\
+$10^4$   & 2429    & $1.18\times 10^5$   & 243   & 11771 \\
+$2\times10^4$ & 11901   & $1.07\times 10^6$   & 595   & 53437 \\
+$5\times10^4$ & 38158   & $6.85\times 10^6$   & 763   & 136969 \\
+$10^5$   & 38702   & $1.32\times 10^7$   & 387   & 132461 \\
+\bottomrule
+\end{tabular}
+\caption{单桶冲突条件下查询时间比较（5次试验均值）}
+\label{tab:collision}
+\end{table}
+
+从表\ref{tab:collision}中可以观察到两种截然不同的增长模式。
+\texttt{std::unordered\_map}在\texttt{BadHash}作用下全部键集中于同一个桶，
+每操作查询耗时从$n=10^3$时的1.33 us（每次操作）单调递增至$n=10^5$时的132.5 us（每次操作），
+增幅约100倍，且增长趋势与$n$基本成线性关系。这符合链式寻址法在最坏情况下
+$O(n)$每操作查询复杂度的理论预期。
+
+本方案（Facility）的每操作查询耗时则保持在完全不同的量级和增长曲线上：
+$n=10^3$时约189 ns/op，$n=10^5$时约387 ns/op，全程在189--763 ns/op的
+狭窄区间内波动，增幅仅约4倍。该轻微上升主要归因于Trie深度的对数增长
+（$\log_2(10^5) \approx 16.6$位）和合并后多Cubby两级路由带来的额外查找层级，
+与冲突链长度无关。8-bit LUT的跳表加速（跳跃前8层Trie遍历）和
+\texttt{splitmix64}的雪崩混合机制共同确保了键在Trie逐位路径上被有效分散。
+
+当$n=10^5$时，Facility的单次查询耗时（387 ns/op）仅为
+\texttt{unordered\_map}（132.5 us（每次操作））的约1/342。即本方案在该极端条件下
+查询速度约为对比方案的\textbf{342倍}。这一反向优势随$n$增大而进一步扩大：
+在$n=5\times10^4$时Facility约为\texttt{unordered\_map}的180倍，
+$n=10^5$时升至342倍。
+
+\subsection{讨论}
+
+两类方案在查询路径上存在结构性的根本差异。\texttt{std::unordered\_map}
+在哈希分布均匀时查询极为高效（仅需计算一次哈希并检查短链上的数个元素），
+但其性能对哈希函数质量高度敏感——一旦遭遇蓄意的全碰撞攻击，
+性能即沿$O(n)$轨迹急剧退化。本方案（Facility）的核心查询路径是紧凑二叉Trie
+的逐位下降过程：每个键在Trie中沿由自身哈希比特串确定的唯一路径前进，
+不同键的查询路径互不交叉，因此查询时间与Trie中同前缀键的数量仅成
+对数关系（$\sim\log_2(\text{同前缀键数})$），而非线性关系。
+8-bit LUT将$\log_2 n$中的前8层替换为$O(1)$查表，进一步压缩了常数因子。
+
+此外，Facility在碰撞条件下的内存占用并未显著膨胀——
+$n=5\times10^4$时内存为1.4 MB，$n=10^5$时为3.6 MB，与良好哈希条件下
+同规模的内存水平基本一致（分别为2.2 MB和4.2 MB）。这表明Trie路由架构
+不仅在查询延迟上具备碰撞抑制能力，在空间效率上也维持了较好的稳定性。
+
+\section{综合讨论}
+
+综合以上两组实验的数据，本方案在$k=4$的配置下呈现出以下整体特征：
+
+在良好哈希（随机均匀键）条件下，$n\leq 2\times10^5$范围内插入每键约
+0.66--1.09 us（每次操作），查询每键约0.24--0.43 us（每次操作），删除每键约0.50--0.84 us（每次操作），
+内存每键约44--46 B/key。与\texttt{std::unordered\_map}相比，插入慢约15--18倍，
+查询慢约20--25倍，内存多约1.4--1.7倍。当$n$增至$10^6$时，合并操作导致的
+摊还成本使插入升至7.47 us（每次操作）（约12倍于小规模），内存升至102 B/key
+（约3.2倍于\texttt{unordered\_map}）。
+
+然而，在极端碰撞条件下，两类方案的相对表现完全颠倒。当所有键被集中于
+同一个哈希桶时，\texttt{unordered\_map}的查询延迟随$n$线性增长
+（$n=10^5$时132.5 us（每次操作）），而本方案保持在亚微秒级别（$n=10^5$时0.39 us（每次操作）），
+速度优势约为342倍。这一反向关系的存在，意味着本方案的适用场景并不在与
+标准库在常规负载下的绝对速度竞争，而在于那些对哈希碰撞具有高度敏感性的
+场景——例如开放哈希服务的安全防护、面对对抗性输入的数据库索引，
+以及需要严格最坏情况保证的实时系统。
+
+%=====================================================================
+\chapter{LevelDB 集成}
+
+本章将实现的k-kick树哈希方案集成到Google LevelDB\cite{2}的MemTable中，
+作为SkipList的点查询加速层。
+
+\section{集成流程与适配器设计}
+
+整体集成分为四个步骤：将四个头文件复制至\texttt{leveldb/util/kick\_hash/}目录；
+编写适配层\texttt{util/kick\_hash.h}完成Slice到\texttt{uint64\_t}的类型映射；
+在MemTable的Add和Get路径中添加条件编译分支\texttt{\#ifdef USE\_KICK\_HASH}；
+修改CMake构建文件新增编译期开关。
+
+适配层的核心是\texttt{KickHash64}哈希函数：调用两次LevelDB内置\texttt{Hash()}
+函数（不同种子），将两路32-bit结果拼接为64-bit哈希值，单次调用仅5.17 ns。
+\texttt{KickHashTable}包装器封装Facility对象，对外暴露\texttt{Insert}、
+\texttt{Get}和\texttt{Remove}三个接口。Facility的\texttt{lookup\_value}函数
+通过bool返回值替代异常，适配LevelDB的\texttt{-fno-exceptions}编译环境。
+
+在MemTable层面，写入路径（Add）在执行原有SkipList插入后，通过
+\texttt{kick\_table\_.Insert}将Arena缓冲区指针同步存入Facility；查询路径（Get）
+优先以$O(1)$期望时间查询KickHashTable，命中后解析Arena缓冲区并做原始Slice比对
+以防64-bit哈希碰撞（概率$\sim10^{-7}$），未命中则回退至SkipList的$O(\log n)$
+查找。迭代器操作不受影响，始终基于SkipList的有序遍历能力。
+
+\section{双向开关设计}
+
+系统提供编译期和运行时两层开关。编译期通过CMake选项
+\texttt{-DUSE\_KICK\_HASH=ON/OFF}决定是否编译KickHash相关代码——
+关闭时无任何二进制膨胀或间接损耗。运行时通过\texttt{SetUseKickHash(bool)}接口
+支持同一进程内不同MemTable实例独立选择策略，便于A/B对比测试。
+
+\section{集成验证}
+
+以\texttt{std::unordered\_map}和SkipList为对照，在$n\leq 10^6$规模下使用
+16字节随机字符串键进行测试。核心结果见表\ref{tab:integration_eval}。
 
 \begin{table}[H]
 \centering
@@ -1607,174 +1147,72 @@ $n=10^6$时$\sim$97 MB，97 B/key）。
 \toprule
 \textbf{验证项目} & \textbf{测试条件} & \textbf{实测结果} \\
 \midrule
-编译 & GCC 15.2.0, C++20, -O3, \texttt{-DUSE\_KICK\_HASH=1} & 通过 \\
-KickHash64 调用延迟 & 单次调用 & 5.17 ns \\
-插入延迟 & $n=2\times10^5$，16字节随机键 & 0.86 us/op \\
-查询延迟 & $n=2\times10^5$，16字节随机键 & 0.35 us/op \\
-删除延迟 & $n=2\times10^5$，16字节随机键 & 0.56 us/op \\
-全量查询正确率 & $n=10^6$ 次查询 & 100\% \\
-适配层开销占比 & KickHash64延迟 / 单次插入总延迟 & $<0.15\%$ \\
+KickHash64调用延迟 & 单次调用 & 5.17 ns \\
+插入延迟 & $n=2\times10^5$，16字节随机键 & 0.86 us（每次操作） \\
+查询延迟 & $n=2\times10^5$，16字节随机键 & 0.35 us（每次操作） \\
+删除延迟 & $n=2\times10^5$，16字节随机键 & 0.56 us（每次操作） \\
+全量查询正确率 & $n=10^6$次查询 & 100\% \\
+适配层开销占比 & KickHash64/总插入延迟 & $<0.15\%$ \\
 \bottomrule
 \end{tabular}
 \caption{集成验证主要结果}
 \label{tab:integration_eval}
 \end{table}
 
-\section{集成总结}
-
-本章系统地完成了将k-kick树哈希方案的完整代码库移植、适配并集成至Google
-LevelDB MemTable组件的全过程。回顾这一集成工程，可以从中提炼出若干具有
-普遍意义的经验与结论：
-
-\begin{enumerate}
-  \item \textbf{代码复用的工程实现}。
-    从\texttt{./code}目录向\texttt{leveldb/util/kick\_hash/}
-    的代码移植过程证明了：只要保持好头文件之间的相对引用路径一致性，header-only
-    的C++模板代码可以以近乎零成本的方式在完全不同的项目之间进行复用。从
-    free\_bitmap空闲槽追踪到deactivate停用合并再到动态容量分配和8-bit LUT加速，
-    \texttt{./code}中经过充分测试和优化的全部特性均被无缝引入到LevelDB环境中，
-    未因平台差异而引发任何编译错误或运行时异常。
-
-  \item \textbf{适配器模式在数据库增强中的价值}。本次集成所采用的适配器
-    （Adapter）模式——通过一个轻量级的包装器类\texttt{KickHashTable}来桥接
-    LevelDB的Slice键类型与Facility的\texttt{uint64\_t}模板参数——展示了一种
-    低侵入性的数据库增强方法论。该方法论的核心特征是：不对被集成系统（LevelDB）
-    的原有接口、数据格式和行为语义进行任何修改，而是通过外部适配层完成类型
-    映射和语义适配，从而使增强功能可以做到即插即用（通过编译开关启用）且对
-    原有代码路径透明（不启用时行为和性能与改动前完全一致）。
-
-  \item \textbf{双层级开关设计的灵活性优势}。编译期开关（CMake
-    \texttt{USE\_KICK\_HASH}）通过条件编译实现了代码层面的完全隔离——在不启用时，
-    KickHash相关代码从目标文件中彻底消失，不产生任何二进制膨胀或间接性能损耗。
-    运行时开关（\texttt{SetUseKickHash}）则在编译启用后提供了更细粒度的动态
-    控制能力，允许同一进程内不同MemTable实例独立选择是否启用加速，甚至允许
-    对同一实例在运行中切换模式。这两种开关各司其职、相互补充，为集成后的系统
-    在测试、调试和生产部署等不同阶段提供了充分的灵活性。
-
-  \item \textbf{集成效果与工程适用性}。在$n\leq 10^6$规模的基准测试中，适配层
-    KickHash64计算开销仅为每操作5.17纳秒（纳米秒级别），在总操作耗时中占比
-    不足0.15\%，属于完全可忽略的量级。查询操作在LUT加速下达到每操作0.35 us
-    （$n=2\times10^5$），全部查询的正确率保持100\%——未出现因64-bit哈希碰撞或
-    Arena缓冲区指针失效而导致的任何误判事件。上述数据表明，本章设计的集成方案
-    在工程上是正确、稳定且可部署的。
-
-  \item \textbf{局限性与后续工作}。当前集成范围仅限于MemTable的点查询路径，
-    尚未涉及SSTable的索引结构或Compaction流程中的键合并操作。此外，Facility
-    所依赖的C++异常机制（在插入失败等特殊路径中使用）与LevelDB默认的
-    \texttt{-fno-exceptions}编译选项存在不兼容，虽然通过CMake自动补充
-    \texttt{-fexceptions}的方式得到了临时解决，但在追求极致鲁棒性的生产环境中
-    可能需要更彻底的错误处理方案（如将所有可能抛异常的操作替换为错误码返回）。
-    这些议题留待后续工作进一步探索。
-\end{enumerate}
+适配层哈希开销在总体操作时间中占比不足0.15\%。
+在$n=2\times10^5$时查询延迟为0.35 us（每次操作），$n=10^6$时约0.74 us（每次操作），
+内存占用与第五章独立基准测试的测量数据一致（$n=2\times10^5$时$\sim$9 MB，
+$n=10^6$时$\sim$97 MB）。全部$10^6$次查询正确率为100\%，
+未出现任何因64-bit哈希碰撞或Arena指针失效导致的误判。
 
 %=====================================================================
 \chapter{总结与展望}
 
 \section{工作总结}
 
-本文围绕Bender等人于2022年提出的$k$-kick树哈希方案\cite{1}，完成了从
-理论理解、算法编码实现、系统组件集成到实验性能验证的完整研究链条，主要
-取得了以下五个方面的工作成果：
+本文围绕Bender等人提出的$k$-kick树哈希方案\cite{1}，完成了从算法实现到
+系统集成的完整研究链条：
 
 \begin{enumerate}
-  \item \textbf{核心算法的完整复现}。严格遵循原始论文\cite{1}的数据结构定义
-    和算法语义规范，以C++20标准完成了四层组件的头文件模板实现。包括：
-    MiniArray位压缩数组原语（261行），支持Uniform和Non-uniform双模存储与
-    跨字位读写操作；LocalQueryRouter紧凑二叉Trie局部查询路由（350行），
-    实现了基于显式左右双指针的walk-down查询算法、do\_split分裂插入算法、
-    以及标记式空叶删除算法，并辅以8-bit查找表（256项，1 KB开销）的查询
-    加速机制\cite{7}；Cubby单级弹性哈希表（419行），包含free\_bitmap\_
-    空闲槽位图、first\_free\_缓存扫描优化、以及递归优先级踢出链的搜索与
-    恢复流程；Facility全局分层管理器（233行），实现了基于deactivate停用
-    语义的无位移合并策略和动态容量分配机制。全部代码总计约1065行，保持
-    了header-only（纯头文件模板）的简洁工程组织方式。
+  \item \textbf{核心算法实现}。以C++20完成了四层组件的header-only实现（总计约1065行）：
+    MiniArray位压缩数组（261行）、LocalQueryRouter紧凑二叉Trie+LUT路由（350行）、
+    Cubby弹性哈希表含free\_bitmap\_优先踢出链（419行）、Facility全局管理器含
+    deactivate合并策略（233行）。
 
-  \item \textbf{踢出策略的精确对齐}。完整实现了原始论文\S3.1节\cite{1}所描述的
-    优先级踢出机制。关键细节包括：被踢键在重新安置过程中严格保持其原始
-    分配深度不变；try\_place函数通过\texttt{reserved}参数防止被踢键在递归
-    扫描时``发现''刚刚被自己腾出的原槽位置；踢出链中的每对键-槽关系通过
-    KickList结构自底向上层层传递回外层调用者，确保了各级路由信息更新的
-    完整性和一致性。
+  \item \textbf{优先级踢出机制的精确对齐}。实现了try\_place递归踢出链搜索、
+    reserved参数防回退、KickList层级传递等关键细节，保证论文\S3.1\cite{1}
+    的优先级约束在代码层面逐条落地。
 
-  \item \textbf{紧凑Trie查询路由的数理基础}。对LocalQueryRouter的
-    设计进行了梳理：将每个键$x$通过\texttt{splitmix64}哈希为64-bit全随机
-    二元串，在其最小唯一前缀二叉Trie上完成键到槽的映射。论文Lemma 15
-    \cite{1}关于随机二元串Trie期望规模为$O(k)$个节点的结论为路由系统的
-    空间效率提供了理论保证。在实现层面，44-bit哈希指纹作为叶节点中的键
-    身份验证手段，将不同键的指纹碰撞概率控制在约$2^{-44} \approx 5.7 \times
-    10^{-14}$的极低水平，在实验规模$n\leq 10^6$的范围内未观测到任何指纹
-    碰撞事件。
+  \item \textbf{多维度的定量实验}。以\texttt{std::unordered\_map}为对照，
+    在良好哈希（$n\in[5\times10^4,10^6]$）和单桶碰撞（$n\in[10^3,10^5]$）
+    两种条件下完成插入、查询、删除和内存四项对比，每组5次独立试验。
+    良好哈希条件下$n=2\times10^5$时插入约1.09 us（每次操作）、查询约0.43 us（每次操作）、
+    空间约44 B/key；deactivate合并将合并成本限制在$O(\text{merged\_keys})$级。
+    高碰撞实验中，Facility在单桶冲突链长$10^5$条件下查询仅0.39 us（每次操作），
+    而\texttt{unordered\_map}退化至132.5 us（每次操作）（为Facility的342倍）。
 
-  \item \textbf{多维度的定量实验评估}。以\texttt{std::unordered\_map}为基准
-    对照，在$n\in\{10^3,\ldots,10^6\}$共九个数量级的数据规模上，
-    测量了插入、查询、删除三种操作的时间开销和内存占用。核心实验结论包括：
-    在$n=2\times10^5$规模下插入耗时约0.16秒（折合0.8 us/op），符合$O(k)$
-    的理论预期\cite{1}；查询在LUT加速下达到每操作0.3--0.4 us的性能水平；
-    内存占用在该规模下约为9 MB（45 B/key），与标准库对照对象的差距仅1.5倍。
-    deactivate-based合并策略成功将合并操作的复杂度从$O(N)$级压缩至
-    $O(\text{merged\_keys})$级，而动态容量控制方案将$n=10^6$下的内存占用
-    控制在97 MB水平。实验同时揭示了方案在高负载下的主要性能瓶颈：大$n$下
-    合并摊还成本使得插入操作的每操作耗时升高至约9.5 us/op。
-
-  \item \textbf{LevelDB工程集成与双向开关设计}。将完整的k-kick哈希方案以
-    适配器模式集成至Google LevelDB\cite{2}的MemTable组件之中。具体工作
-    涉及：Slice到64-bit哈希的类型映射适配（KickHash64，实测开销5.17 ns/次）；
-    KickHashTable包装器类的接口封装；MemTable中Add写入路径和Get读取路径
-    的条件编译改造；以及编译期CMake选项\texttt{USE\_KICK\_HASH}与运行时
-    成员函数\texttt{SetUseKickHash()}双层级开关机制的设计与实现。集成效果
-    验证实验表明：适配层额外开销在总体操作时间中占比低于0.15\%，查询正确率
-    达到100\%且未出现任何因64-bit哈希碰撞或Arena指针失效导致的误判事件。
+  \item \textbf{LevelDB集成与双向开关}。以适配器模式将方案集成至LevelDB MemTable，
+    实现KickHash64类型映射（5.17 ns/op）、Add/Get路径条件编译改造、
+    以及编译期CMake开关与运行时\texttt{SetUseKickHash()}双层级开关。
+    集成验证中$10^6$次查询正确率100\%，适配层开销$<0.15\%$。
 \end{enumerate}
 
 \section{不足与展望}
 
-\hspace{2em}尽管本文在算法实现和系统集成方面取得了上述阶段性成果，但在理论深度
-和工程完备性方面仍存在若干不足之处，有待于后续研究工作中加以改进和拓展。具体
-列举如下：
-
 \begin{itemize}
-  \item \textbf{Per-cubby独立路由器架构的缺失}。当前的实现方案仍然依赖单一
-    全局\texttt{cubby\_router\_}来完成所有键到Cubby的索引映射。这一集中式
-    设计的优点是实现简单且占用额外空间较小，但其代价是任何一次合并操作都需要
-    对涉及迁移的全部键在全局路由器中逐一更新映射条目。原始论文\cite{1}中
-    提出的per-cubby多路由器分组架构——其中每个路由器仅负责处理大约
-    $O(\log n / \log\log n) \approx 93$个键——可以使得单个Cubby的合并操作仅
-    影响其所辖的局部路由表，而无需遍历全量键集。实现这一架构后，有望将大$n$
-    场景下由合并引起的插入摊还开销降低数个数量级。
-
-  \item \textbf{容量模型的进一步精细化}。当前的动态容量计算采用了
-    $\max(\text{论文公式},\ \text{merged\_size}\times 2)$这一兼顾理论与
-    实践的启发式策略。然而原始论文\cite{1}所论证的完整容量体系
-    $C_j = K / (\log^{(j)} n)^2$中，常数$K$应当随着当前系统内总元素数量$n$
-    的增长而进行动态的、连续的调整适配，而非在整个运行周期中保持为一个固定
-    常量。实现随负载自适应的$K$值动态调节机制，有望在$n\geq 5\times10^5$的
-    大规模场景下将每键空间浪费从当前的97 B/key进一步压缩，缩小与信息论最优
-    空间水平之间的差距。
-
-  \item \textbf{参数$k$的可配置化}。在当前的代码实现中，Cubby的实际$k$值是由
-    \texttt{compute\_kick\_params}函数从容量的对数迭代中自动推导得出的，
-    通常收敛于$k\approx 4$附近。而原始论文\cite{1}从理论上证明的是$k$可以
-    作为用户指定的可配置参数，在$k=1,2,\ldots,\log^* n$的广泛取值范围内
-    均存在对应的时空权衡保证。将$k$提升为公开的模板参数或构造函数参数，使得
-    用户能够根据自身应用场景的具体需求在时间与空间之间自由调配，将显著增强
-    方案的实用性和适应性。
-
-  \item \textbf{多线程并发支持的探索}。当前全部实现均基于单线程的串行执行模型，
-    没有涉及任何线程同步原语或并发控制逻辑。然而，$k$-kick树方案在理论结构上
-    具备一定的天然并发友好特征：不同的bin在踢出过程中互不干扰，不同Cubby
-    之间的路由操作也是相互独立的。这些特性为探索基于细粒度锁或无锁（lock-free）
-    原子操作的高并发实现提供了可能性。孙建国等人的综述\cite{18}中也特别指出，
-    内存键值存储领域的哈希索引方案正逐步向多核友好和NUMA感知的方向演进，
-    这是未来工作中一个值得持续关注的技术趋势。
-
-  \item \textbf{LUT加速策略的深度拓展}。当前方案中的Lookup Table加速仅覆盖了
-    哈希值的前8个比特位，形成了256项、1 KB空间的规模。虽然这一简化版本在本次
-    实验的规模范围（$n\leq 10^6$，Trie深度约20层）内已经展现了显著的加速效果，
-    但距离完整实现文献\cite{7}中提出的Method of Four Russians思想仍有差距。
-    未来可考虑将LUT的覆盖位宽从8-bit扩展至12-bit甚至16-bit（对应的表项数
-    将分别增至4096和65536），或者探索将LUT与分段跳表（skip-list）相结合的
-    分层加速策略，以求在所有规模条件下将查询复杂度从对数级完全压缩至常数级
-    $O(1)$。
+  \item \textbf{Per-cubby独立路由器}。当前依赖单一全局\texttt{cubby\_router\_}，
+    合并时需逐键更新。论文\cite{1}的per-cubby多路由器架构——每路由器仅处理约
+    $O(\log n/\log\log n)$个键——可将合并成本进一步压缩。
+  \item \textbf{动态容量模型的常数调节}。当前$C_j=K/(\log^{(j)}n)^2$中
+    $K\approx 409600$为固定值，应根据全局$n$自适应调节以提升大$n$下的空间利用率。
+  \item \textbf{参数$k$的可配置化}。当前$k$由\texttt{compute\_kick\_params}
+    自动推导（通常收敛于$k\approx 4$），应提升为可配置参数，使用户按需调节
+    时空权衡曲线。
+  \item \textbf{多线程并发支持}。当前为单线程串行模型，但不同bin和Cubby之间
+    具备天然的并行性，可探索细粒度锁或无锁实现。
+  \item \textbf{LUT位宽扩展}。当前8-bit LUT（256项，1 KB）可将查询深度缩减约40\%。
+    扩展至12-bit（4096项）或16-bit（65536项）可进一步逼近完整Method of Four Russians\cite{7}
+    的$O(1)$查询复杂度。
 \end{itemize}
 
 \noindent Bender等人提出的$k$-kick树哈希方案在理论上给出了哈希表时空权衡的完整曲线。
@@ -1792,22 +1230,26 @@ LevelDB MemTable组件的全过程。回顾这一集成工程，可以从中提�
 %=====================================================================
 
 \begin{acknowledgement}
-  在本毕业设计的选题、研究与撰写过程中，笔者得到了多方面的帮助与支持，在此
-  谨致以诚挚的谢意。
+  转眼间，校园生活即将结束。此篇论文完稿之际，要感谢众多师长和亲友，
+  谢谢你们的期望与鼓励。此时此刻，我无法找到合适的言语来表达我内心深处最真挚的谢意。
+  在本毕业设计的选题、研究与撰写过程中，笔者得到了多方面的帮助与支持 
+  
+  首先衷心感谢指导教师在论文选题、研究方法、实验设计以及论文撰写等各个阶段
+  给予的悉心指导和宝贵建议。
+  
+  然后感谢同窗的各位同学。你们为我在论文理论分析和实验过程中提供了大量的无私帮助，
+  这份同窗之情将是我最值得留恋的回忆。
 
-  感谢论文作者Bender、Farach-Colton、Kuszmaul和Liu等人提出的创新性$k$-kick
-  树哈希方案\cite{1}，其严谨的理论分析和精巧的算法设计为本毕业设计的全部研究
-  工作提供了坚实的理论基础和明确的技术路线指引。
+  我还要感谢我的父母，谢谢他们默默的支持。
 
-  感谢南京大学Linux用户组（NJU LUG）提供的NJUThesis毕业论文模板，其规范化的
+  另外感谢南京大学Linux用户组（NJU LUG）提供的NJUThesis毕业论文模板，其规范化的
   \LaTeX{}文档结构和精美排版极大地减轻了论文格式调整的工作负担。
 
   感谢Google LevelDB项目\cite{2}的全体开发者贡献了一个结构清晰、代码规范、
   文档完善的键值存储引擎实现，使得本文的数据库集成方案能够在一个成熟、稳定
   且具有广泛影响力的开源平台上得到验证和展示。
 
-  最后，衷心感谢指导教师在论文选题、研究方法、实验设计以及论文撰写等各个阶段
-  给予的悉心指导和宝贵建议。
+  最后，还要感谢在github上为我解答了不少疑问的开发者们。
 \end{acknowledgement}
 
 \end{document}
