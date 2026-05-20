@@ -1,30 +1,36 @@
-@article{1,
+@inproceedings{1,
   author       = {Michael A. Bender and Mart{\'{\i}}n Farach-Colton and John Kuszmaul and William Kuszmaul and Mingmou Liu},
   title        = {On the Optimal Time/Space Tradeoff for Hash Tables},
-  journal      = {arXiv preprint},
-  volume       = {arXiv:2111.00602v2},
+  booktitle    = {Proceedings of the 54th Annual ACM SIGACT Symposium on Theory of Computing (STOC)},
   year         = {2022},
+  pages        = {1284--1297},
+  publisher    = {ACM},
+  doi          = {10.1145/3519935.3519968},
   eprint       = {2111.00602},
   archiveprefix = {arXiv},
   primaryclass = {cs.DS}
 }
 
-@misc{2,
+@software{2,
   author       = {Sanjay Ghemawat and Jeff Dean},
   title        = {{LevelDB}: A Fast and Lightweight Key/Value Database Library},
   year         = {2011},
-  howpublished = {\url{https://github.com/google/leveldb}}
+  url          = {https://github.com/google/leveldb},
+  urldate      = {2025-12-01},
+  organization = {Google},
+  note         = {[Z]~在线电子资源}
 }
 
 @article{3,
-  title={Low redundancy in static dictionaries with constant query time},
-  author={Pagh, Rasmus},
-  journal={SIAM Journal on Computing},
-  volume={31},
-  number={2},
-  pages={353--363},
-  year={2001},
-  publisher={SIAM}
+  title        = {Low Redundancy in Static Dictionaries with Constant Query Time},
+  author       = {Pagh, Rasmus},
+  journal      = {SIAM Journal on Computing},
+  volume       = {31},
+  number       = {2},
+  pages        = {353--363},
+  year         = {2001},
+  publisher    = {SIAM},
+  doi          = {10.1137/S0097539700369949}
 }
 
 @article{4,
@@ -39,11 +45,14 @@
   doi          = {10.1016/j.jalgor.2003.12.002}
 }
 
-@misc{5,
-  author       = {David Stafford},
-  title        = {Better Bit Mixing --- Improving on MurmurHash3's 64-bit Finalizer},
-  year         = {2007},
-  howpublished = {\url{https://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html}}
+@inproceedings{5,
+  author       = {Guy L. Steele Jr. and Doug Lea and Christine H. Flood},
+  title        = {Fast Splittable Pseudorandom Number Generators},
+  booktitle    = {Proceedings of the 2014 ACM International Conference on Object Oriented Programming Systems Languages \& Applications (OOPSLA)},
+  year         = {2014},
+  pages        = {453--472},
+  publisher    = {ACM},
+  doi          = {10.1145/2660193.2660195}
 }
 
 @inproceedings{6,
@@ -59,74 +68,74 @@
 }
 
 @article{7,
-  title={On an economical construction of the transitive closure of a directed graph},
-  author={Arlazarov, Vladimir L and Dinic, Efim A and Kronrod, Mikhail A and Faradzhev, Igor A},
-  journal={Doklady Akademii Nauk},
-  volume={194},
-  number={3},
-  pages={487--488},
-  year={1970},
-  publisher={Russian Academy of Sciences}
+  title        = {On an Economical Construction of the Transitive Closure of a Directed Graph},
+  author       = {Arlazarov, Vladimir L. and Dinic, Efim A. and Kronrod, Mikhail A. and Faradzhev, Igor A.},
+  journal      = {Doklady Akademii Nauk},
+  volume       = {194},
+  number       = {3},
+  pages        = {487--488},
+  year         = {1970},
+  publisher    = {Russian Academy of Sciences}
 }
 
 @inproceedings{8,
-  title={De-amortized cuckoo hashing: {P}rovable worst-case performance and experimental results},
-  author={Arbitman, Yuriy and Naor, Moni and Segev, Gil},
-  booktitle={Proceedings of the 36th International Colloquium on Automata, Languages and Programming (ICALP)},
-  pages={107--118},
-  year={2009},
-  publisher={Springer},
-  series={Lecture Notes in Computer Science},
-  volume={5555},
-  doi={10.1007/978-3-642-02927-1\_11}
+  title        = {De-amortized Cuckoo Hashing: {P}rovable Worst-case Performance and Experimental Results},
+  author       = {Arbitman, Yuriy and Naor, Moni and Segev, Gil},
+  booktitle    = {Proceedings of the 36th International Colloquium on Automata, Languages and Programming (ICALP)},
+  pages        = {107--118},
+  year         = {2009},
+  publisher    = {Springer},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {5555},
+  doi          = {10.1007/978-3-642-02927-1\_11}
 }
 
 @inproceedings{9,
-  title={A new universal class of hash functions and dynamic hashing in real time},
-  author={Dietzfelbinger, Martin and Meyer auf der Heide, Friedhelm},
-  booktitle={Proceedings of the 17th International Colloquium on Automata, Languages and Programming (ICALP)},
-  pages={268--283},
-  year={1990},
-  publisher={Springer},
-  series={Lecture Notes in Computer Science},
-  volume={443},
-  doi={10.1007/BFb0032042}
+  title        = {A New Universal Class of Hash Functions and Dynamic Hashing in Real Time},
+  author       = {Dietzfelbinger, Martin and Meyer auf der Heide, Friedhelm},
+  booktitle    = {Proceedings of the 17th International Colloquium on Automata, Languages and Programming (ICALP)},
+  pages        = {268--283},
+  year         = {1990},
+  publisher    = {Springer},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {443},
+  doi          = {10.1007/BFb0032042}
 }
 
 @article{10,
-  title={Storing a sparse table with {$O(1)$} worst case access time},
-  author={Fredman, Michael L and Koml{\'o}s, J{\'a}nos and Szemer{\'e}di, Endre},
-  journal={Journal of the ACM (JACM)},
-  volume={31},
-  number={3},
-  pages={538--544},
-  year={1984},
-  doi={10.1145/828.1884}
+  title        = {Storing a Sparse Table with {$O(1)$} Worst Case Access Time},
+  author       = {Fredman, Michael L. and Koml{\'o}s, J{\'a}nos and Szemer{\'e}di, Endre},
+  journal      = {Journal of the ACM (JACM)},
+  volume       = {31},
+  number       = {3},
+  pages        = {538--544},
+  year         = {1984},
+  doi          = {10.1145/828.1884}
 }
 
 @inproceedings{11,
-  title={Succinct filters for sets of unknown sizes},
-  author={Liu, Mingmou and Yin, Yitong and Yu, Huacheng},
-  booktitle={Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (STOC)},
-  pages={855--868},
-  year={2020},
-  doi={10.1145/3357713.3384294}
+  title        = {Succinct Filters for Sets of Unknown Sizes},
+  author       = {Liu, Mingmou and Yin, Yitong and Yu, Huacheng},
+  booktitle    = {Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (STOC)},
+  pages        = {855--868},
+  year         = {2020},
+  doi          = {10.1145/3357713.3384294}
 }
 
 @inproceedings{12,
-  title={Succinct dynamic dictionaries and trees},
-  author={Raman, Rajeev and Rao, Satti Srinivasa},
-  booktitle={Proceedings of the 30th International Colloquium on Automata, Languages and Programming (ICALP)},
-  pages={357--368},
-  year={2003},
-  publisher={Springer},
-  series={Lecture Notes in Computer Science},
-  volume={2719},
-  doi={10.1007/3-540-45061-0\_30}
+  title        = {Succinct Dynamic Dictionaries and Trees},
+  author       = {Raman, Rajeev and Rao, Satti Srinivasa},
+  booktitle    = {Proceedings of the 30th International Colloquium on Automata, Languages and Programming (ICALP)},
+  pages        = {357--368},
+  year         = {2003},
+  publisher    = {Springer},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {2719},
+  doi          = {10.1007/3-540-45061-0\_30}
 }
 
 @article{13,
-  title        = {{LSM}-based storage techniques: a survey},
+  title        = {{LSM}-based Storage Techniques: A Survey},
   author       = {Chen Luo and Michael J. Carey},
   journal      = {The VLDB Journal},
   volume       = {29},
@@ -136,6 +145,16 @@
   doi          = {10.1007/s00778-019-00555-y}
 }
 
+@inproceedings{14,
+  title        = {Bigtable: A Distributed Storage System for Structured Data},
+  author       = {Fay Chang and Jeffrey Dean and Sanjay Ghemawat and Wilson C. Hsieh and Deborah A. Wallach and Mike Burrows and Tushar Chandra and Andrew Fikes and Robert E. Gruber},
+  booktitle    = {Proceedings of the 7th USENIX Symposium on Operating Systems Design and Implementation (OSDI)},
+  year         = {2006},
+  pages        = {205--218},
+  publisher    = {USENIX Association},
+  doi          = {10.1145/1365815.1365816}
+}
+
 @inproceedings{15,
   title        = {{SILT}: A Memory-Efficient, High-Performance Key-Value Store},
   author       = {Hyeontaek Lim and Bin Fan and David G. Andersen and Michael Kaminsky},
@@ -143,6 +162,17 @@
   year         = {2011},
   pages        = {1--13},
   doi          = {10.1145/2043556.2043558}
+}
+
+@article{16,
+  title        = {Space/Time Trade-offs in Hash Coding with Allowable Errors},
+  author       = {Bloom, Burton H.},
+  journal      = {Communications of the ACM},
+  volume       = {13},
+  number       = {7},
+  pages        = {422--426},
+  year         = {1970},
+  doi          = {10.1145/362686.362692}
 }
 
 @inproceedings{17,
@@ -157,11 +187,34 @@
   doi          = {10.1007/978-3-540-87744-8\_51}
 }
 
-@article{19,
-  title  = {基于非易失性内存的数据库关键技术研究综述},
-  author = {申耀 and 郝豫鹏 and 王子京 and 曾春 and 郑文奎 and 张勇},
-  journal = {计算机科学},
-  pages  = {1--35},
-  issn   = {1002-137X}
+@inproceedings{18,
+  title        = {Hopscotch Hashing},
+  author       = {Herlihy, Maurice and Shavit, Nir and Tzafrir, Moran},
+  booktitle    = {Proceedings of the 22nd International Symposium on Distributed Computing (DISC)},
+  year         = {2008},
+  pages        = {350--364},
+  publisher    = {Springer},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {5218},
+  doi          = {10.1007/978-3-540-87779-0\_24}
 }
 
+@article{19,
+  title        = {基于非易失性内存的数据库关键技术研究综述},
+  author       = {申耀 and 郝豫鹏 and 王子京 and 曾春 and 郑文奎 and 张勇},
+  journal      = {计算机科学},
+  pages        = {1--35},
+  year         = {2024},
+  issn         = {1002-137X}
+}
+
+@article{20,
+  title        = {Universal Classes of Hash Functions},
+  author       = {Carter, J. Lawrence and Wegman, Mark N.},
+  journal      = {Journal of Computer and System Sciences},
+  volume       = {18},
+  number       = {2},
+  pages        = {143--154},
+  year         = {1979},
+  doi          = {10.1016/0022-0000(79)90044-8}
+}

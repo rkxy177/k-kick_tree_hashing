@@ -1,0 +1,119 @@
+
+--- P.43 ---
+第七章 总结与展望
+7.1 工作总结
+本文围绕 Bender 等人提出的 𝑘-kick 树哈希方案[6]，完成了从算法实现到系
+统集成的完整研究链条：
+1. 核心算法实现。以C++20完成了四层组件的header-only实现（总计约1065
+行）：MiniArray位压缩数组（261行）、LocalQueryRouter紧凑二叉Trie+LUT
+路由（350 行）、Cubby 弹性哈希表含 free_bitmap_ 优先踢出链（419 行）、
+Facility全局管理器含deactivate合并策略（233行）。
+2. 优先级踢出机制的精确对齐。实现了 try_place 递归踢出链搜索、reserved
+参数防回退、KickList 层级传递等关键细节，保证论文 §3.1[6] 的优先级约
+束在代码层面逐条落地。
+3. 多维度的定量实验。以 std::unordered_map 为对照，在良好哈希
+（𝑛 ∈ [5×104,106]）和单桶碰撞（𝑛 ∈ [103,105]）两种条件下完成插入、查
+询、删除和内存四项对比，每组5次独立试验。良好哈希条件下𝑛 = 2×105
+时插入约 1.09 us（每次操作）、查询约 0.43 us（每次操作）、空间约 44
+B/key；deactivate 合并将合并成本限制在 𝑂(merged_keys) 级。高碰撞实验
+中，Facility 在单桶冲突链长 105 条件下查询仅 0.39 us（每次操作），而
+unordered_map 退化至132.5us（每次操作）（为Facility的342倍）。
+4. LevelDB集成与双向开关。以适配器模式将方案集成至LevelDBMemTable，
+实现 KickHash64 类型映射（5.17 ns/op）、Add/Get 路径条件编译改造、以
+及编译期CMake开关与运行时 SetUseKickHash()双层级开关。集成
+验证中106 次查询正确率100%，适配层开销< 0.15%。
+33
+--- P.44 ---
+7.2 不足与展望
+• Per-cubby独立路由器。当前依赖单一全局 cubby_router_，合并时需
+逐键更新。论文[6]的per-cubby多路由器架构——每路由器仅处理约𝑂(log𝑛/loglog𝑛)
+个键——可将合并成本进一步压缩。
+• 动态容量模型的常数调节。当前 𝐶 = 𝐾/(log(𝑗)𝑛)2 中 𝐾 ≈ 409600 为固定
+𝑗
+值，应根据全局𝑛自适应调节以提升大𝑛下的空间利用率。
+• 参数 𝑘 的可配置化。当前 𝑘 由 compute_kick_params 自动推导（通
+常收敛于𝑘 ≈ 4），应提升为可配置参数，使用户按需调节时空权衡曲线。
+• 多线程并发支持。当前为单线程串行模型，但不同 bin 和 Cubby 之间具备
+天然的并行性，可探索细粒度锁或无锁实现。
+• LUT位宽扩展。当前8-bitLUT（256项，1KB）可将查询深度缩减约40%。
+扩展至12-bit（4096项）或16-bit（65536项）可进一步逼近完整Methodof
+FourRussians[18] 的𝑂(1)查询复杂度。
+Bender 等人提出的 𝑘-kick 树哈希方案在理论上给出了哈希表时空权衡的完整曲
+线。本文对该方案进行了代码实现和实验验证，并在 LevelDB 中完成了集成尝
+试。所完成的代码和实验数据可供后续相关研究参考。
+34
+--- P.45 ---
+参考文献
+[1] GHEMAWATS,DEANJ.LevelDB:AFastandLightweightKey/ValueDatabase
+Library[Z].https://github.com/google/leveldb.2011.
+[2] 张伟, 李明, 王强. 基于 LSM 树的键值存储系统写放大问题优化综述[J]. 计
+算机学报,2020,43(8):1523-1547.
+[3] 刘洋, 陈静. LevelDB 中面向读性能的混合索引结构设计与实现[J]. 小型微
+型计算机系统,2019,40(5):1034-1041.
+[4] PAGH R. Low redundancy in static dictionaries with constant query time[J].
+SIAMJournalonComputing,2001,31(2):353-363.
+[5] FREDMANML,KOMLÓSJ,SZEMERÉDIE.Storingasparsetablewith𝑂(1)
+worst case access time[J]. Journal of the ACM (JACM), 1984, 31(3):538-544.
+DOI: 10.1145/828.1884.
+[6] BENDER M A, FARACH-COLTON M, KUSZMAUL J, et al. On the Optimal
+Time/SpaceTradeoffforHashTables[J].ArXivpreprint,2022,arXiv:2111.00602v2.
+arXiv:2111.00602[cs.DS].
+[7] 赵宏,周涛,吴晓明.紧凑型哈希索引在内存数据库中的优化策略研究[J].计
+算机工程与设计,2021,42(3):789-796.
+[8] 孙建国,马超,林晓东,等.内存键值存储系统中哈希索引结构的综述与研究
+进展[J]. 计算机科学,2023,50(4):1-18.
+[9] PAGHR,RODLERFF.CuckooHashing[J].JournalofAlgorithms,2004,51(2):
+122-144.DOI: 10.1016/j.jalgor.2003.12.002.
+[10] 黄磊, 杨帆. 基于 Cuckoo Hashing 的键值存储引擎写入优化研究[J]. 软件学
+报,2019,30(6):1702-1718.
+35
+--- P.46 ---
+[11] ARBITMANY,NAORM,SEGEVG.De-amortizedcuckoohashing:Provable
+worst-case performance and experimental results[C]//Lecture Notes in Com-
+puter Science: Proceedings of the 36th International Colloquium on Automata,
+LanguagesandProgramming(ICALP):vol.5555.Springer,2009:107-118.DOI:
+10.1007/978-3-642-02927-1\_11.
+[12] RAMAN R, RAO S S. Succinct dynamic dictionaries and trees[C]//Lecture
+Notes in Computer Science: Proceedings of the 30th International Colloquium
+onAutomata,LanguagesandProgramming(ICALP):vol.2719.Springer,2003:
+357-368.DOI: 10.1007/3-540-45061-0\_30.
+[13] LIUM,YINY,YUH.Succinctfiltersforsetsofunknownsizes[C]//Proceedings
+ofthe52ndAnnualACMSIGACTSymposiumonTheoryofComputing(STOC).
+2020:855-868.DOI: 10.1145/3357713.3384294.
+[14] DIETZFELBINGER M, MEYER AUF DER HEIDE F. A new universal class
+ofhashfunctionsanddynamichashinginrealtime[C]//LectureNotesinCom-
+puter Science: Proceedings of the 17th International Colloquium on Automata,
+LanguagesandProgramming(ICALP):vol.443.Springer,1990:268-283.DOI:
+10.1007/BFb0032042.
+[15] STAFFORD D. Better Bit Mixing — Improving on MurmurHash3’s 64-bit Fi-
+nalizer[Z]. https://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-
+on.html.2007.
+[16] BELAZZOUGUI D, BOTELHO F C, DIETZFELBINGER M. Hash, Displace,
+andCompress[C]//LectureNotesinComputerScience:Proceedingsofthe17th
+AnnualEuropeanSymposiumonAlgorithms(ESA):vol.5757.Springer,2009:
+682-693.DOI: 10.1007/978-3-642-04128-0\_61.
+[17] 陈志强. 面向大规模键值存储系统的高效哈希索引技术研究[D]. 华中科技
+大学,2022.
+[18] ARLAZAROV V L, DINIC E A, KRONROD M A, et al. On an economical
+construction of the transitive closure of a directed graph[J]. Doklady Akademii
+Nauk,1970,194(3):487-488.
+36
+--- P.47 ---
+致 谢
+转眼间，校园生活即将结束。此篇论文完稿之际，要感谢众多师长和亲友，
+谢谢你们的期望与鼓励。此时此刻，我无法找到合适的言语来表达我内心深处最
+真挚的谢意。在本毕业设计的选题、研究与撰写过程中，笔者得到了多方面的帮
+助与支持
+首先衷心感谢指导教师在论文选题、研究方法、实验设计以及论文撰写等各
+个阶段给予的悉心指导和宝贵建议。
+然后感谢同窗的各位同学。你们为我在论文理论分析和实验过程中提供了
+大量的无私帮助，这份同窗之情将是我最值得留恋的回忆。
+我还要感谢我的父母，谢谢他们默默的支持。
+另外感谢南京大学Linux用户组（NJULUG）提供的NJUThesis毕业论文模
+板，其规范化的LATEX文档结构和精美排版极大地减轻了论文格式调整的工作负
+担。
+感谢GoogleLevelDB项目[1]的全体开发者贡献了一个结构清晰、代码规范、
+文档完善的键值存储引擎实现，使得本文的数据库集成方案能够在一个成熟、稳
+定且具有广泛影响力的开源平台上得到验证和展示。
+最后，还要感谢在github上为我解答了不少疑问的开发者们。
+37

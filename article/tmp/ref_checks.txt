@@ -1,0 +1,5 @@
+﻿Banned sources found: 0
+ArXiv references: 2
+Chinese refs: 6
+Total refs: 18
+English refs (est): 12

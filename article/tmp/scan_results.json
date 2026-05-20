@@ -1,0 +1,45 @@
+{
+  "keywords_cn": [
+    "哈希表；时空权衡；k-kick树；位压缩路由；LevelDB"
+  ],
+  "keywords_en": [
+    "hash table; time-space tradeoff; k-kick tree; elastic hashing; bit-packed"
+  ],
+  "fig_count": 6,
+  "tab_count": 13,
+  "eqn_count": 1,
+  "unref_figs": [
+    "图3-2",
+    "图5-1",
+    "图5-2",
+    "图5-3"
+  ],
+  "unref_tabs": [
+    "表3-1",
+    "表3-2",
+    "表4-1",
+    "表5-1",
+    "表5-2",
+    "表5-3",
+    "表5-4"
+  ],
+  "req_func": false,
+  "req_non_func": false,
+  "req_use_case": true,
+  "req_story": false,
+  "arch_diag": true,
+  "arch_tech": false,
+  "arch_layers": true,
+  "code_blocks": 1,
+  "ref_total": 23,
+  "author_year_cites": 0,
+  "url_refs": [
+    "https://github.com/google/leveldb.2011.",
+    "https://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-"
+  ],
+  "abstract_cn_chars": 441,
+  "unmatched_text_refs": [
+    0
+  ],
+  "unmatched_list_refs": []
+}

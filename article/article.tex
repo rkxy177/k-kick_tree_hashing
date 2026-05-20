@@ -69,15 +69,15 @@ MiniArray bit-packing , with slot metadata compressed to 4+1 bits via
 dual MiniArrays and an 8-bit lookup table for query acceleration.
 Experiments with $n\in[5\times10^4,10^6]$ 32-bit key-value pairs (5 trials each)
 compare insertion, query, deletion and space against \texttt{std::unordered\_map}.
-Under good hashing, insertion achieves 0.66--1.09 us（每次操作） for $n\leq 2\times10^5$,
-query 0.24--0.43 us（每次操作）, and space 44--46 B/key, at $n=10^6$, insertion is
-7.47 us（每次操作）, query 1.59 us（每次操作）, space 102 B/key. High-collision experiments show
+Under good hashing, insertion achieves 0.66--1.09 us(per operation) for $n\leq 2\times10^5$,
+query 0.24--0.43 us(per operation), and space 44--46 B/key, at $n=10^6$, insertion is
+7.47 us(per operation), query 1.59 us(per operation), space 102 B/key. High-collision experiments show
 that when all \texttt{unordered\_map} keys land in a single bucket ($n=10^5$),
-the scheme retains 0.39 us（每次操作） query time, giving a 342x speed advantage.
+the scheme retains 0.39 us(per operation) query time, giving a 342x speed advantage.
 The scheme is integrated into LevelDB's MemTable with a
 \texttt{-DUSE\_KICK\_HASH} compile-time switch and \texttt{SetUseKickHash()} runtime
-toggle. Integration benchmarks show adapter overhead of only 5.17 ns/op and
-query performance of 0.35 us（每次操作） at $n=2\times10^5$.
+toggle. Integration benchmarks show adapter overhead of only 5.17 ns(per operation) and
+query performance of 0.35 us(per operation) at $n=2\times10^5$.
 \end{abstract*}
 
 \tableofcontents
@@ -90,13 +90,12 @@ query performance of 0.35 us（每次操作） at $n=2\times10^5$.
 
 \section{研究背景和意义}
 
-哈希表（Hash Table）是现代数据库管理系统、分布式缓存系统和全文搜索引擎中
-最为基础的数据结构之一。从早期的内存键值存储到如今的大规模分布式NoSQL系统，
-高效的数据索引和查找始终是决定系统整体吞吐量的关键因素。哈希表的理论目标十分
-明确：支持动态插入和删除操作，并保证查询的时间复杂度为$O(1)$，即在理想状态下，
-三种基本操作所需时间均为常数级，不随存储数据量$n$的增大而增加。然而，在实际
-系统设计中，为了保证这一理想时间复杂度，哈希表不得不在空间占用方面做出让步——
-通过分配额外的冗余比特位来降低冲突概率并维持探测效率。
+哈希表（Hash Table）是数据库、缓存和搜索引擎中常见的数据结构。
+从内存键值存储到大规模分布式NoSQL系统，高效的数据索引和查找直接影响系统吞吐量。
+哈希表支持动态插入、删除和查询三种操作，在理想状态下三者均需$O(1)$时间。
+然而在实际系统设计中，为维持这一时间复杂度，哈希表需要分配额外空间来处理冲突。
+Bloom\cite{16}在1970年对允许误差的哈希编码空间/时间权衡作出了开创性分析，
+这一问题至今仍是哈希表设计中的核心议题。
 
 近年来，随着互联网应用数据量的爆炸式增长，键值存储（Key-Value Store）系统
 在工业界和学术界均受到了广泛关注。以Google LevelDB\cite{2}、Facebook RocksDB
@@ -115,9 +114,8 @@ query performance of 0.35 us（每次操作） at $n=2\times10^5$.
 更新操作为$O(1)$时间且仅使用简单探测序列的模型下，每个键值对的空间冗余往往
 难以低于$\Omega(\log \log n)$比特。1984年，Fredman、Koml\'{o}s和Szemer\'{e}di
 提出的FKS完美哈希方案\cite{10}首次在严格$O(1)$最坏查询时间下实现了线性总空间，
-为哈希表时空权衡研究奠定了理论基础。然而在此后近四十年的时间里，上述
-$\Omega(\log\log n)$的冗余下界始终未被突破\cite{1}，长期制约着哈希表空间效率的进一步
-提升。
+为哈希表时空权衡研究提供了理论起点。然而在此后近四十年的时间里，上述
+$\Omega(\log\log n)$的冗余下界始终未被突破\cite{1}，制约着哈希表空间效率的进一步提升。
 
 2022年，Bender等人发表的论文《关于哈希表最优时间/空间权衡》\cite{1}
 打破了这一理论僵局。该研究提出了一种基于$k$-kick树的全新哈希方案，从理论上
@@ -128,23 +126,22 @@ $O(k)$（其中$k$是一个可由用户指定的、具有上界的常数）—�
 $\log^{(k)} n = \log(\log^{(k-1)} n)$，并规定$\log^{(0)} n = n$、
 $\log^{(1)} n = \log n$。特别地，当$k = \log^{*} n$（迭代对数函数，定义为
 对$n$连续取对数直到结果收敛至不大于1所需的次数）时，空间浪费可以进一步降低
-至恒定的$O(1)$比特水平，在理论和工程两个层面均构成了重大突破。
+至恒定的$O(1)$比特水平，在理论与工程层面均有突破。
 
 内存占用对数据库系统的实际运行成本具有直接影响。
-Lim等人\cite{15}的工作表明，在内存受限的嵌入式数据库和边缘计算场景中，
+Lim等人的工作表明，在内存受限的嵌入式数据库和边缘计算场景中，
 哈希索引结构的每字节空间开销都会显著影响系统的可部署性和扩展能力。通过降低
 哈希表的冗余比特数，可以在不增加硬件投入的前提下支撑更大的数据规模，从而
 降低单位数据的存储成本和能耗开销。与此同时，内存效率的提升意味着在同样的
 物理服务器上可以部署更多的数据库实例，间接提高了系统的并发处理能力和资源
-利用率。因此，本研究在理论意义之外同样具有现实的工程应用价值。
+利用率。因此，本研究在理论意义之外同样具有工程应用潜力。\cite{15}
 
-本毕业设计旨在复现Bender等人提出的基于$k$-kick树的哈希算法\cite{1}，并在代码
+本毕业设计旨在尝试复现Bender等人提出的基于$k$-kick树的哈希算法\cite{1}，并在代码
 实现的基础上将其适配集成至Google LevelDB这一成熟的开源存储引擎之中。
-研究意义可以从理论和工程两方面加以阐述：从理论方面，通过可控的实验
+研究意义可以从理论和工程两方面阐述：理论上，通过可控的实验
 验证论文所断言的指数级空间压缩效应，并分析参数$k$的取值对时间与空间性能的
-具体量化影响；从工程方面，将这一前沿理论成果落地转化为可实际运行的数据库
-组件，观察和分析其在真实存储系统中的表现，有助于弥合算法理论与系统实现之间
-的鸿沟。
+具体量化影响；工程上，将该理论成果实现并集成为可运行的数据库
+组件，观察和分析其在真实存储系统中的表现，以验证算法理论在系统实现中的效果。
 
 \section{研究现状}
 
@@ -176,6 +173,8 @@ Cuckoo Hashing\cite{4}采用多个独立哈希函数为每个元素生成若干�
 通过踢出（kick out）和重定位机制在最坏情况下保证$O(1)$查询时间。
 Kirsch等人\cite{17}提出预留缓存槽吸收溢出元素，Arbitman等人\cite{8}
 通过队列化踢出实现确定性最坏情况保证。
+Herlihy等人\cite{18}提出的Hopscotch Hashing结合了开放寻址的缓存友好性和
+Cuckoo Hashing的踢出机制，在保持高负载因子的同时实现了良好的并发性能。
 
 \subsection{基于k-kick树的时空最优方案}
 
@@ -237,6 +236,73 @@ $k$-kick树哈希算法\cite{1}，并以Google LevelDB\cite{2}为目标平台，
     为集成方案的工程实用性提供数据支撑。
 \end{enumerate}
 
+\section{需求分析}
+
+本节以软件工程方法论为指导，对$k$-kick树哈希表系统的功能边界和性能约束进行
+系统化定义，作为后续系统设计与算法实现的依据。
+
+\subsection{功能需求}
+
+本系统需满足以下核心功能需求：
+
+\begin{enumerate}[label={FR\arabic*:}]
+  \item \textbf{键值对插入}。系统应支持向哈希表中插入任意类型的键值对
+    （以32-bit整数为基本测试类型），在$k$-kick树的优先级踢出策略下完成
+    键的槽位分配和冲突消解。
+  \item \textbf{键值对查询}。系统应支持根据指定键在哈希表中检索对应的值，
+    查询路径需经过两级Trie路由定位目标Cubby和槽位，并返回准确的查询结果
+    或``未找到''标识。
+  \item \textbf{键值对删除}。系统应支持根据键从哈希表中删除对应条目，
+    删除操作需同步清理两级路由中的映射关系并释放槽位资源。
+  \item \textbf{动态扩容与合并}。当某一tier层级的活跃Cubby数量超过预设
+    阈值时，系统应自动触发相邻Cubby的合并操作，将数据迁移至更高tier层级
+    的Cubby中，同时更新全局路由表。
+  \item \textbf{与LevelDB MemTable集成}。系统应提供适配层接口，将
+    $k$-kick树哈希表集成至LevelDB的MemTable层，提供条件编译开关
+    （\texttt{-DUSE\_KICK\_HASH}）和运行时开关
+    （\texttt{SetUseKickHash()}）双层控制机制。
+\end{enumerate}
+
+\subsection{非功能需求}
+
+\begin{enumerate}[label={NFR\arabic*:}]
+  \item \textbf{性能指标——插入延迟}。在良好哈希条件下、$n\leq 2\times 10^5$
+    数据规模内，单次插入操作的期望延迟应控制在微秒级别（$\leq 2$\,$\mu$s/op）。
+  \item \textbf{性能指标——查询延迟}。在良好哈希条件下、$n\leq 2\times 10^5$
+    数据规模内，单次查询操作的期望延迟应控制在亚微秒级别（$\leq 0.5$\,$\mu$s/op）。
+  \item \textbf{空间效率}。每键的元数据空间开销（不包括键/值原始数据）应控制在
+    数字节级别，槽元数据位压缩至每槽5比特以内，Trie路由节点编码至每节点
+    $\leq 8$字节。
+  \item \textbf{碰撞鲁棒性}。在极端哈希碰撞条件下（如所有键映射至同一桶），
+    查询性能不应出现数量级退化，应保持与正常条件下同量级的延迟水平。
+  \item \textbf{代码可维护性}。系统应采用header-only的C++20模板实现，
+    组件间通过模板参数松耦合连接，单个组件可独立编译和测试，代码总量应
+    保持在合理规模以内（目标$\leq 1500$行）。
+\end{enumerate}
+
+\subsection{用例分析}
+
+系统的主要参与者为应用程序开发者（通过API调用）和LevelDB存储引擎（通过
+适配器接口）。表\ref{tab:usecase}列出了核心用例及其简要描述。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|l|l}
+\toprule
+\textbf{用例编号} & \textbf{用例名称} & \textbf{简要描述} \\
+\midrule
+UC-01 & 插入新键值对 & 用户调用Facility::insert()，系统通过两级路由和踢出链完成插入 \\
+UC-02 & 查询键值对   & 用户调用Facility::lookup()，系统通过Trie路由定位槽位并返回值 \\
+UC-03 & 删除键值对   & 用户调用Facility::remove()，系统清理两级路由并释放槽位 \\
+UC-04 & 自动合并     & 当tier层活跃Cubby超限，Facility自动触发合并与路由更新 \\
+UC-05 & LevelDB集成查询 & LevelDB MemTable通过KickHashTable适配器查询键值对 \\
+UC-06 & 编译/运行时开关 & 开发者通过CMake选项或运行时接口启用/禁用KickHash加速 \\
+\bottomrule
+\end{tabular}
+\caption{系统核心用例描述}
+\label{tab:usecase}
+\end{table}
+
 \section{论文结构}
 
 本文共分为七个章节展开论述。第一章为引言部分，介绍研究背景、国内外
@@ -265,7 +331,7 @@ LocalQueryRouter、Cubby和Facility四个组件的设计动机、接口定义与
 哈希表在特定负载下的综合表现。
 
 一个工程可用的哈希函数须满足确定性、均匀性和高效性三个准则。
-通用哈希族\cite{9}为均匀性提供了形式化定义：若对任意$x\neq y$，
+通用哈希族\cite{9,20}为均匀性提供了形式化定义：若对任意$x\neq y$，
 $\Pr[h(x)=h(y)]\le 1/m$，则$\mathcal{H}$为通用哈希族。
 本系统采用\texttt{splitmix64}\cite{5}作为最终化函数，
 其64-bit混合步骤具有优异的雪崩效应，通过注入不同种子可生成多个统计独立的
@@ -337,6 +403,74 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$。插入时按以下规则操作：
 此结果打破了长期存在的$\Omega(\log\log n)$空间下界，展示了时空权衡的极致
 曲线：每次增加常数的更新时间，空间浪费可\textbf{指数级减少}。
 
+\section{LevelDB存储引擎概述}
+
+Google LevelDB\cite{2}是一个由Sanjay Ghemawat和Jeff Dean开发的
+轻量级开源键值存储引擎，基于LSM树（Log-Structured Merge-Tree）架构。
+其设计源自Google Bigtable\cite{14}中使用的底层存储架构，经过模块化
+重构后作为独立库发布。
+
+\subsection{核心架构}
+
+LevelDB的存储架构分为内存层和磁盘层两部分，如图\ref{fig:leveldb_arch}所示。
+
+\begin{figure}[H]
+\centering
+\begin{verbatim}
+写入路径: Put/Delete
+    │
+    ▼
+┌──────────────┐
+│   MemTable   │  ← SkipList（内存中的最近写入缓冲区）
+│  (SkipList)  │
+└──────┬───────┘
+       │ 写满后转换为
+       ▼
+┌──────────────┐
+│  Immutable   │  ← 只读 MemTable，等待后台压缩线程处理
+│   MemTable   │
+└──────┬───────┘
+       │ 写入磁盘
+       ▼
+┌──────────────────────────────────────────────┐
+│                  SSTable 文件                  │
+│  Level 0 (0.7MB)  ───── 无重叠 key 范围          │
+│  Level 1 (7MB)    ───── 无序文件                  │
+│  Level 2 (70MB)   ───── 每层增大 10 倍             │
+│  ...                                          │
+│  Level n                                       │
+└──────────────────────────────────────────────┘
+       │
+       ▼  Compaction（合并压缩）
+  后台线程将低层 SSTable 与高层 SSTable 归并，
+  去除重复键和删除标记，生成新的有序 SSTable
+\end{verbatim}
+\caption{LevelDB存储引擎核心架构}
+\label{fig:leveldb_arch}
+\end{figure}
+
+\noindent 在写入路径上，用户的Put/Delete操作首先被追加到磁盘上的预写日志
+（Write-Ahead Log, WAL）以确保持久性，随后键值对插入到内存中的MemTable中。
+MemTable基于SkipList（跳跃表）实现，支持$O(\log N)$时间的查找和$O(1)$
+时间的追加插入。当MemTable的大小达到预设阈值（默认4\,MB）时，它被转换为
+Immutable MemTable（不可变内存表），并由后台压缩线程写入磁盘生成SSTable文件。
+
+在读取路径上，LevelDB采用``由新到旧''的查找顺序：首先在MemTable中查找，
+若未命中的话则在Immutable MemTable中查找，然后按层级从Level 0到高层
+逐层搜索SSTable文件，直到找到目标键或遍历完成返回``未找到''。
+
+\subsection{MemTable的性能瓶颈}
+
+MemTable作为LevelDB写入路径的第一站，其读写效率直接影响整个存储引擎的
+吞吐能力。默认的SkipList实现虽然提供了$O(\log N)$的查询复杂度，但在
+大规模数据（如数百万键）和热点查询场景下，跳跃表的层间跳跃导致缓存行
+频繁失效，成为点查询延迟的瓶颈。
+
+Luo和Carey的综述\cite{13}指出，LSM树优化的重要方向之一在于改进
+MemTable的索引结构以降低查询延迟。本文通过将$k$-kick树哈希方案集成至
+MemTable层，作为一个辅助索引加速器，在保持SkipList原有插入性能的前提下，
+将点查询延迟从$O(\log N)$降至$O(1)$期望水平。
+
 %=====================================================================
 \chapter{系统设计}
 
@@ -393,6 +527,33 @@ Facility (全局分层管理器)
 内部Slot级路由。这种隔离性使得系统的合并操作成本与所合并的实际键数量呈线性关系，
 而非与全系统总键数相关。
 
+\subsection{技术选型说明}
+
+系统在语言选型、组织方式和关键算法方面作出了以下技术决策：
+
+\begin{itemize}
+  \item \textbf{C++20语言标准}。采用C++20标准以获得\texttt{consteval}、
+    改进的\texttt{constexpr}支持以及\texttt{std::bit\_cast}等现代特性，
+    在编译期完成部分计算以降低运行时开销。模板元编程能力使得MiniArray的
+    位宽参数可在编译期确定，避免虚函数调用带来的间接开销。
+  \item \textbf{Header-only组织方式}。四个核心组件（MiniArray、LocalQueryRouter、
+    Cubby、Facility）均以纯头文件（\texttt{.hpp}）形式组织，不依赖独立的
+    编译单元。这一设计简化了外部项目的集成流程——使用者仅需将头文件复制至
+    目标项目目录并添加\texttt{\#include}指令——同时赋予编译器更大的内联
+    优化空间。
+  \item \textbf{splitmix64哈希函数}。系统采用\texttt{splitmix64}\cite{5}
+    作为最终化哈希函数（finalizer），而非CityHash或xxHash等重型哈希方案。
+    splitmix64的64-bit雪崩混合步骤具有优异的位扩散特性，转换结果通过
+    不同的种子值可生成任意数量统计独立的哈希函数\cite{9}，且单次调用成本
+    极低（$\sim$5\,ns），适合在Trie逐位查询路径上被高频调用。
+  \item \textbf{与std::unordered\_map的定位差异}。C++标准库的
+    \texttt{std::unordered\_map}基于链式寻址法，在良好哈希条件下
+    具备优秀的综合性能，但其查询路径依赖于单个哈希函数的均匀性，对恶意
+    碰撞数据较为敏感。本方案的Trie路由架构将键的查询路径与其哈希比特串
+    绑定，不同键的查询路径互不交叉，在对抗性输入下维持$\sim\log n$的
+    退化上界，与\texttt{unordered\_map}的$O(n)$退化相比具有结构性优势。
+\end{itemize}
+
 \section{MiniArray：位压缩数组}
 
 \subsection{设计动机}
@@ -401,7 +562,8 @@ Facility (全局分层管理器)
 例如槽元数据仅需4比特（occupied + depth），路由条目中cubby索引仅需11比特。
 若使用\texttt{std::vector<uint64\_t>}存储，每个元素固定64比特，造成严重空间浪费。
 
-MiniArray通过将元素紧密平铺在连续位流中，实现了\textbf{精确位宽存储}\cite{1}。
+MiniArray通过将元素紧密平铺在连续位流中，实现了\textbf{精确位宽存储}\cite{1}，
+其两种存储模式的特性见表\ref{tab:miniarray}。
 
 \subsection{双模存储}
 
@@ -554,7 +716,8 @@ Cubby的核心算法\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级�
 基于论文公式 $C_j = K / (\log^{(j)} n)^2$（$K \approx 409600$）\cite{1}计算各层容量。
 此外，构造时支持传入\texttt{desired\_capacity}以动态指定容量（用于合并场景）。
 合并时的容量策略为 $\max(\text{论文公式}, \text{merged\_size} \times 2)$，
-取2的幂，确保$\sim$50\%的空间利用率。
+取2的幂，确保$\sim$50\%的空间利用率。各tier对应的基准容量和典型使用场景
+见表\ref{tab:cubcap}。
 
 \begin{table}[H]
 \centering
@@ -593,7 +756,7 @@ Cubby索引映射——这是合并操作的主要时间开销来源。
 所占用的索引位保留不变。当后续需要分配新的Cubby槽位时，\texttt{alloc\_cubby\_slot}
 函数会优先回收这些已被停用的空槽，从而实现索引的循环利用。这一设计使得路由表
 中指向其他活跃Cubby的映射条目在整个合并过程中始终保持有效，无需进行任何
-额外的批量修复操作。
+额外的批量修复操作。各tier的合并触发阈值见表\ref{tab:merge}。
 
 \begin{table}[H]
 \centering
@@ -627,7 +790,7 @@ Cubby索引映射——这是合并操作的主要时间开销来源。
 全部代码严格遵循C++20语言标准，采用了header-only（纯头文件模板）的组织形式，
 使得外部使用者仅需包含对应的\texttt{.hpp}文件即可获得该组件的完整定义，无需
 进行额外的编译单元链接。代码整体规模约为1065行，具有较高的内聚性和较低的
-外部依赖度。
+外部依赖度。四个源文件的组织结构和职责划分见表\ref{tab:files}。
 
 \section{文件组织与依赖关系}
 
@@ -834,7 +997,7 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
 在本实现中，$k$被硬编码为$k_{\max}=4$。为使$k=4$对应的理论保证具有实际意义，
 需要$\log^{(4)} n > 1$，即$n > 2^{16} = 65536$。由此确定了本实验的规模下限：
 选取$n=5\times 10^4$作为基准点，向上拓展至$n=10^6$。对于碰撞实验，由于
-\texttt{unorderd\_map}在单桶冲突下退化为$O(n^2)$总耗时，无法在大规模下完成
+\texttt{std::unordered\_map}在单桶冲突下退化为$O(n^2)$总耗时，无法在大规模下完成
 测试，因此碰撞测试的规模上限设为$n=10^5$。
 
 \subsection{硬件与软件环境}
@@ -869,6 +1032,7 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
 
 本节在随机均匀分布\texttt{uint32\_t}键的条件下，比较两类方案在插入、
 查询、删除和内存四个维度上的表现。每组试验重复5次，报告均值和标准差。
+整体趋势如图\ref{fig:time_good}所示。
 
 \begin{figure}[H]
 \centering
@@ -878,6 +1042,8 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
 \end{figure}
 
 \subsection{插入性能}
+
+插入操作的详细测量数据见表\ref{tab:insert}。
 
 \begin{table}[H]
 \centering
@@ -909,6 +1075,8 @@ tier-1层级的活跃Cubby数量超过200个的阈值后，系统开始将同层
 
 \subsection{查询性能}
 
+查询操作的详细测量数据见表\ref{tab:query}。
+
 \begin{table}[H]
 \centering
 \begin{tabular}{c|r|r|r|r}
@@ -938,6 +1106,8 @@ walk-down）、MiniArray跨字位读取的位掩码开销，以及合并后多Cu
 
 \subsection{删除性能}
 
+删除操作的详细测量数据见表\ref{tab:delete}。
+
 \begin{table}[H]
 \centering
 \begin{tabular}{c|r|r|r|r}
@@ -964,6 +1134,8 @@ Cubby索引，再通过该Cubby的route\_查找并标记空叶），这一路径
 删除时将只需更新本地路由，预期可将删除效率提升约一倍。
 
 \subsection{内存占用}
+
+内存占用的测量数据见表\ref{tab:mem}，变化趋势如图\ref{fig:mem}所示。
 
 \begin{figure}[H]
 \centering
@@ -1023,6 +1195,8 @@ $5\times10^4$和$10^5$，每组实验重复5次取均值。由于\texttt{unorder
 需遍历约$10^5$个元素的链式结构，单次试验总耗时已达数十秒）。
 
 \subsection{实验结果}
+
+单桶冲突条件下的查询性能对比见图\ref{fig:collision}，详细数据见表\ref{tab:collision}。
 
 \begin{figure}[H]
 \centering
@@ -1216,8 +1390,9 @@ $n=10^6$时$\sim$97 MB）。全部$10^6$次查询正确率为100\%，
 \end{itemize}
 
 \noindent Bender等人提出的$k$-kick树哈希方案在理论上给出了哈希表时空权衡的完整曲线。
-本文对该方案进行了代码实现和实验验证，并在LevelDB中完成了集成尝试。
-所完成的代码和实验数据可供后续相关研究参考。
+本文实现了该方案的核心算法，通过多维度实验验证了其性能特征，并在LevelDB MemTable中
+验证了k-kick方案的工程可行性。所完成的C++代码（约1065行，header-only）、
+实验数据以及与LevelDB的集成适配器可供后续相关研究参考。
 
 %=====================================================================
 %  参考文献

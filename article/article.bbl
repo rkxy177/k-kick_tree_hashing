@@ -19,7 +19,57 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
-    \entry{2}{misc}{}
+    \entry{16}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3124dcc7c1c1643c091687ec4b0dcd3e}{%
+           family={Bloom},
+           familyi={B\bibinitperiod},
+           given={Burton\bibnamedelima H.},
+           giveni={B\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=3124dcc7c1c1643c091687ec4b0dcd3e}{%
+           family={Bloom},
+           familyi={B\bibinitperiod},
+           given={Burton\bibnamedelima H.},
+           giveni={B\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{fullhash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{bibnamehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{authorbibnamehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{authornamehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{authorfullhash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{nameabibnamehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{nameanamehash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \strng{nameafullhash}{3124dcc7c1c1643c091687ec4b0dcd3e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{7}
+      \field{title}{Space/Time Trade-offs in Hash Coding with Allowable Errors}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{13}
+      \field{year}{1970}
+      \field{dateera}{ce}
+      \field{pages}{422\bibrangedash 426}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1145/362686.362692
+      \endverb
+      \keyw{16}
+    \endentry
+    \entry{2}{online}{}
       \name{author}{2}{}{%
         {{hash=193bcec5240237591ad8fb697869f013}{%
            family={Ghemawat},
@@ -47,6 +97,9 @@
       \list{language}{1}{%
         {english}%
       }
+      \list{organization}{1}{%
+        {Google}%
+      }
       \strng{namehash}{ad06183c7a2472c0cc346e096d168c23}
       \strng{fullhash}{62b0b826f258086a9d63459f6d6b033f}
       \strng{bibnamehash}{62b0b826f258086a9d63459f6d6b033f}
@@ -56,128 +109,163 @@
       \strng{nameabibnamehash}{62b0b826f258086a9d63459f6d6b033f}
       \strng{nameanamehash}{ad06183c7a2472c0cc346e096d168c23}
       \strng{nameafullhash}{62b0b826f258086a9d63459f6d6b033f}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://github.com/google/leveldb}}
-      \field{langid}{english}
-      \field{languageid}{english}
-      \field{lansortorder}{4}
-      \field{title}{{LevelDB}: A Fast and Lightweight Key/Value Database Library}
-      \field{usera}{Z}
-      \field{userd}{english}
-      \field{userf}{english}
-      \field{year}{2011}
-      \field{dateera}{ce}
-      \keyw{2}
-    \endentry
-    \entry{13}{article}{}
-      \name{author}{3}{}{%
-        {{hash=305be7965375e114a6965c245e1ffc9e}{%
-           family={张伟},
-           familyi={张\bibinitperiod}}}%
-        {{hash=15095d14367f7f02655030d498a4ba03}{%
-           family={李明},
-           familyi={李\bibinitperiod}}}%
-        {{hash=577865cfd98af5f05b64b3047251c8ca}{%
-           family={王强},
-           familyi={王\bibinitperiod}}}%
-      }
-      \name{namea}{3}{}{%
-        {{hash=305be7965375e114a6965c245e1ffc9e}{%
-           family={张伟},
-           familyi={张\bibinitperiod}}}%
-        {{hash=15095d14367f7f02655030d498a4ba03}{%
-           family={李明},
-           familyi={李\bibinitperiod}}}%
-        {{hash=577865cfd98af5f05b64b3047251c8ca}{%
-           family={王强},
-           familyi={王\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {chinese}%
-      }
-      \list{publisher}{1}{%
-        {中国计算机学会}%
-      }
-      \strng{namehash}{ba6ffd922d0d01b738e64702eb46a868}
-      \strng{fullhash}{5266e3a90700cb2cd64cc5b43b27f300}
-      \strng{bibnamehash}{5266e3a90700cb2cd64cc5b43b27f300}
-      \strng{authorbibnamehash}{5266e3a90700cb2cd64cc5b43b27f300}
-      \strng{authornamehash}{ba6ffd922d0d01b738e64702eb46a868}
-      \strng{authorfullhash}{5266e3a90700cb2cd64cc5b43b27f300}
-      \strng{nameabibnamehash}{5266e3a90700cb2cd64cc5b43b27f300}
-      \strng{nameanamehash}{ba6ffd922d0d01b738e64702eb46a868}
-      \strng{nameafullhash}{5266e3a90700cb2cd64cc5b43b27f300}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{计算机学报}
       \field{langid}{english}
-      \field{languageid}{chinese}
-      \field{lansortorder}{1}
-      \field{number}{8}
-      \field{title}{基于LSM树的键值存储系统写放大问题优化综述}
-      \field{usera}{J}
-      \field{userd}{chinese}
-      \field{userf}{chinese}
-      \field{volume}{43}
-      \field{year}{2020}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{note}{[Z]~在线电子资源}
+      \field{title}{{LevelDB}: A Fast and Lightweight Key/Value Database Library}
+      \field{urlday}{1}
+      \field{urlmonth}{12}
+      \field{urlyear}{2025}
+      \field{usera}{CP}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2011}
       \field{dateera}{ce}
-      \field{pages}{1523\bibrangedash 1547}
-      \range{pages}{25}
-      \keyw{13}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/google/leveldb
+      \endverb
+      \verb{url}
+      \verb https://github.com/google/leveldb
+      \endverb
+      \keyw{2}
     \endentry
-    \entry{14}{article}{}
+    \entry{13}{article}{}
       \name{author}{2}{}{%
-        {{hash=49c531db9a238c41eb438ff9999e83c3}{%
-           family={刘洋},
-           familyi={刘\bibinitperiod}}}%
-        {{hash=57a0dec9ef930ef93a541d37e2456663}{%
-           family={陈静},
-           familyi={陈\bibinitperiod}}}%
+        {{hash=2d455b2efdd78e5b0bf126f66ba927f6}{%
+           family={Luo},
+           familyi={L\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f4629551fc0c133ef3a4f8604bedd06b}{%
+           family={Carey},
+           familyi={C\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
       }
       \name{namea}{2}{}{%
-        {{hash=49c531db9a238c41eb438ff9999e83c3}{%
-           family={刘洋},
-           familyi={刘\bibinitperiod}}}%
-        {{hash=57a0dec9ef930ef93a541d37e2456663}{%
-           family={陈静},
-           familyi={陈\bibinitperiod}}}%
+        {{hash=2d455b2efdd78e5b0bf126f66ba927f6}{%
+           family={Luo},
+           familyi={L\bibinitperiod},
+           given={Chen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f4629551fc0c133ef3a4f8604bedd06b}{%
+           family={Carey},
+           familyi={C\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{4951878a1bbf672bb9990e33f1372289}
+      \strng{fullhash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \strng{bibnamehash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \strng{authorbibnamehash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \strng{authornamehash}{4951878a1bbf672bb9990e33f1372289}
+      \strng{authorfullhash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \strng{nameabibnamehash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \strng{nameanamehash}{4951878a1bbf672bb9990e33f1372289}
+      \strng{nameafullhash}{4adfec94a4731f3ce15da6ddda0cf9e0}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The VLDB Journal}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{1}
+      \field{title}{{LSM}-based Storage Techniques: A Survey}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{29}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{393\bibrangedash 418}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.1007/s00778-019-00555-y
+      \endverb
+      \keyw{13}
+    \endentry
+    \entry{19}{article}{}
+      \name{author}{6}{}{%
+        {{hash=6e8680f15afd194e5c04270b7d836c8f}{%
+           family={申耀},
+           familyi={申\bibinitperiod}}}%
+        {{hash=955fc506f9ee491ffd501d02c6587d0d}{%
+           family={郝豫鹏},
+           familyi={郝\bibinitperiod}}}%
+        {{hash=8d97d7758b2c58b68e9fe52843dbaa0b}{%
+           family={王子京},
+           familyi={王\bibinitperiod}}}%
+        {{hash=0b0cb6e1f0a24ccf90cfdb31ff747a81}{%
+           family={曾春},
+           familyi={曾\bibinitperiod}}}%
+        {{hash=2e1a91d4f0b1491ff889be5b51900806}{%
+           family={郑文奎},
+           familyi={郑\bibinitperiod}}}%
+        {{hash=4a58a74260a43b6398c043d990b41d84}{%
+           family={张勇},
+           familyi={张\bibinitperiod}}}%
+      }
+      \name{namea}{6}{}{%
+        {{hash=6e8680f15afd194e5c04270b7d836c8f}{%
+           family={申耀},
+           familyi={申\bibinitperiod}}}%
+        {{hash=955fc506f9ee491ffd501d02c6587d0d}{%
+           family={郝豫鹏},
+           familyi={郝\bibinitperiod}}}%
+        {{hash=8d97d7758b2c58b68e9fe52843dbaa0b}{%
+           family={王子京},
+           familyi={王\bibinitperiod}}}%
+        {{hash=0b0cb6e1f0a24ccf90cfdb31ff747a81}{%
+           family={曾春},
+           familyi={曾\bibinitperiod}}}%
+        {{hash=2e1a91d4f0b1491ff889be5b51900806}{%
+           family={郑文奎},
+           familyi={郑\bibinitperiod}}}%
+        {{hash=4a58a74260a43b6398c043d990b41d84}{%
+           family={张勇},
+           familyi={张\bibinitperiod}}}%
       }
       \list{language}{1}{%
         {chinese}%
       }
-      \strng{namehash}{8515d6b2a232e3f5c9ccb09c17b17546}
-      \strng{fullhash}{6b6b66a54747e78fe62da167da239162}
-      \strng{bibnamehash}{6b6b66a54747e78fe62da167da239162}
-      \strng{authorbibnamehash}{6b6b66a54747e78fe62da167da239162}
-      \strng{authornamehash}{8515d6b2a232e3f5c9ccb09c17b17546}
-      \strng{authorfullhash}{6b6b66a54747e78fe62da167da239162}
-      \strng{nameabibnamehash}{6b6b66a54747e78fe62da167da239162}
-      \strng{nameanamehash}{8515d6b2a232e3f5c9ccb09c17b17546}
-      \strng{nameafullhash}{6b6b66a54747e78fe62da167da239162}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \strng{namehash}{88c2d3dae38d460e838a5e11385f4b62}
+      \strng{fullhash}{06fa8947d787531d8b1330d38c42488b}
+      \strng{bibnamehash}{a3596665a49df4eaee7b01713843ca54}
+      \strng{authorbibnamehash}{a3596665a49df4eaee7b01713843ca54}
+      \strng{authornamehash}{88c2d3dae38d460e838a5e11385f4b62}
+      \strng{authorfullhash}{06fa8947d787531d8b1330d38c42488b}
+      \strng{nameabibnamehash}{a3596665a49df4eaee7b01713843ca54}
+      \strng{nameanamehash}{88c2d3dae38d460e838a5e11385f4b62}
+      \strng{nameafullhash}{06fa8947d787531d8b1330d38c42488b}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{小型微型计算机系统}
+      \field{issn}{1002-137X}
+      \field{journaltitle}{计算机科学}
       \field{langid}{english}
       \field{languageid}{chinese}
       \field{lansortorder}{1}
-      \field{number}{5}
-      \field{title}{LevelDB中面向读性能的混合索引结构设计与实现}
+      \field{title}{基于非易失性内存的数据库关键技术研究综述}
       \field{usera}{J}
       \field{userd}{chinese}
       \field{userf}{chinese}
-      \field{volume}{40}
-      \field{year}{2019}
+      \field{year}{2024}
       \field{dateera}{ce}
-      \field{pages}{1034\bibrangedash 1041}
-      \range{pages}{8}
-      \keyw{14}
+      \field{pages}{1\bibrangedash 35}
+      \range{pages}{35}
+      \keyw{19}
     \endentry
     \entry{3}{article}{}
       \name{author}{1}{}{%
@@ -209,8 +297,8 @@
       \strng{nameabibnamehash}{88974e5158546cc2704aa597baa5ac09}
       \strng{nameanamehash}{88974e5158546cc2704aa597baa5ac09}
       \strng{nameafullhash}{88974e5158546cc2704aa597baa5ac09}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{SIAM Journal on Computing}
@@ -218,7 +306,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{number}{2}
-      \field{title}{Low redundancy in static dictionaries with constant query time}
+      \field{title}{Low Redundancy in Static Dictionaries with Constant Query Time}
       \field{usera}{J}
       \field{userd}{english}
       \field{userf}{english}
@@ -227,6 +315,9 @@
       \field{dateera}{ce}
       \field{pages}{353\bibrangedash 363}
       \range{pages}{11}
+      \verb{doi}
+      \verb 10.1137/S0097539700369949
+      \endverb
       \keyw{3}
     \endentry
     \entry{10}{article}{}
@@ -234,7 +325,7 @@
         {{hash=87928bfac08fafcf3e80defe20fa4b2f}{%
            family={Fredman},
            familyi={F\bibinitperiod},
-           given={Michael\bibnamedelima L},
+           given={Michael\bibnamedelima L.},
            giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
         {{hash=3756019aaa8edc42f2cf872c9850284c}{%
            family={Komlós},
@@ -251,7 +342,7 @@
         {{hash=87928bfac08fafcf3e80defe20fa4b2f}{%
            family={Fredman},
            familyi={F\bibinitperiod},
-           given={Michael\bibnamedelima L},
+           given={Michael\bibnamedelima L.},
            giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
         {{hash=3756019aaa8edc42f2cf872c9850284c}{%
            family={Komlós},
@@ -276,8 +367,8 @@
       \strng{nameabibnamehash}{064f6e537115d64b00776a509519a562}
       \strng{nameanamehash}{ee37760ea41a769f54a869794f6fe5aa}
       \strng{nameafullhash}{064f6e537115d64b00776a509519a562}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of the ACM (JACM)}
@@ -285,7 +376,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{number}{3}
-      \field{title}{Storing a sparse table with {$O(1)$} worst case access time}
+      \field{title}{Storing a Sparse Table with {$O(1)$} Worst Case Access Time}
       \field{usera}{J}
       \field{userd}{english}
       \field{userf}{english}
@@ -299,7 +390,7 @@
       \endverb
       \keyw{10}
     \endentry
-    \entry{1}{article}{}
+    \entry{1}{inproceedings}{}
       \name{author}{5}{}{%
         {{hash=73b35b4e99fa82d2e693c149ec5d1d17}{%
            family={Bender},
@@ -357,6 +448,9 @@
       \list{language}{1}{%
         {english}%
       }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
       \strng{namehash}{ea17af64b4155d928fe840fac634dc54}
       \strng{fullhash}{0694fd0e1ebae86c4fb551edb388b820}
       \strng{bibnamehash}{f438aa5ba56aef4b9ed9440604f79fd9}
@@ -366,143 +460,109 @@
       \strng{nameabibnamehash}{f438aa5ba56aef4b9ed9440604f79fd9}
       \strng{nameanamehash}{ea17af64b4155d928fe840fac634dc54}
       \strng{nameafullhash}{0694fd0e1ebae86c4fb551edb388b820}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 54th Annual ACM SIGACT Symposium on Theory of Computing (STOC)}
       \field{eprintclass}{cs.DS}
       \field{eprinttype}{arXiv}
-      \field{journaltitle}{arXiv preprint}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{title}{On the Optimal Time/Space Tradeoff for Hash Tables}
-      \field{usera}{J}
+      \field{usera}{C}
       \field{userd}{english}
       \field{userf}{french}
-      \field{volume}{arXiv:2111.00602v2}
       \field{year}{2022}
       \field{dateera}{ce}
+      \field{pages}{1284\bibrangedash 1297}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1145/3519935.3519968
+      \endverb
       \verb{eprint}
       \verb 2111.00602
       \endverb
       \keyw{1}
     \endentry
-    \entry{15}{article}{}
-      \name{author}{3}{}{%
-        {{hash=48d2c0d797c7ccfe7eeb22612e5604a6}{%
-           family={赵宏},
-           familyi={赵\bibinitperiod}}}%
-        {{hash=6f3a855b2409cbb35aeb80842a139a61}{%
-           family={周涛},
-           familyi={周\bibinitperiod}}}%
-        {{hash=c226c39454586012c7e223cdb530bf99}{%
-           family={吴晓明},
-           familyi={吴\bibinitperiod}}}%
-      }
-      \name{namea}{3}{}{%
-        {{hash=48d2c0d797c7ccfe7eeb22612e5604a6}{%
-           family={赵宏},
-           familyi={赵\bibinitperiod}}}%
-        {{hash=6f3a855b2409cbb35aeb80842a139a61}{%
-           family={周涛},
-           familyi={周\bibinitperiod}}}%
-        {{hash=c226c39454586012c7e223cdb530bf99}{%
-           family={吴晓明},
-           familyi={吴\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {chinese}%
-      }
-      \strng{namehash}{c3f525b9a2892eba8ac573498e7577f4}
-      \strng{fullhash}{68d33e8bd41d94687915a3b54e9837eb}
-      \strng{bibnamehash}{68d33e8bd41d94687915a3b54e9837eb}
-      \strng{authorbibnamehash}{68d33e8bd41d94687915a3b54e9837eb}
-      \strng{authornamehash}{c3f525b9a2892eba8ac573498e7577f4}
-      \strng{authorfullhash}{68d33e8bd41d94687915a3b54e9837eb}
-      \strng{nameabibnamehash}{68d33e8bd41d94687915a3b54e9837eb}
-      \strng{nameanamehash}{c3f525b9a2892eba8ac573498e7577f4}
-      \strng{nameafullhash}{68d33e8bd41d94687915a3b54e9837eb}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{计算机工程与设计}
-      \field{langid}{english}
-      \field{languageid}{chinese}
-      \field{lansortorder}{1}
-      \field{number}{3}
-      \field{title}{紧凑型哈希索引在内存数据库中的优化策略研究}
-      \field{usera}{J}
-      \field{userd}{chinese}
-      \field{userf}{chinese}
-      \field{volume}{42}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{pages}{789\bibrangedash 796}
-      \range{pages}{8}
-      \keyw{15}
-    \endentry
-    \entry{18}{article}{}
+    \entry{15}{inproceedings}{}
       \name{author}{4}{}{%
-        {{hash=639c95aa93b934bafe4281396bd38b7a}{%
-           family={孙建国},
-           familyi={孙\bibinitperiod}}}%
-        {{hash=269b602990e6996f9731e8d30cbe0a19}{%
-           family={马超},
-           familyi={马\bibinitperiod}}}%
-        {{hash=6ea76c066a6c27635f7b21ea2fe8cd12}{%
-           family={林晓东},
-           familyi={林\bibinitperiod}}}%
-        {{hash=6e4a6f53b4611b244f835db4b805421e}{%
-           family={何敏},
-           familyi={何\bibinitperiod}}}%
+        {{hash=4498aad690f2c6e0698b89a1d2dde41b}{%
+           family={Lim},
+           familyi={L\bibinitperiod},
+           given={Hyeontaek},
+           giveni={H\bibinitperiod}}}%
+        {{hash=acf1f8ac8a2dae7837b6c8130b5fe71b}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Bin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=89b4b2a6fa735d08993dc81c86f31571}{%
+           family={Andersen},
+           familyi={A\bibinitperiod},
+           given={David\bibnamedelima G.},
+           giveni={D\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=4ce7390da57289e9d86884c3d923b036}{%
+           family={Kaminsky},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
       }
       \name{namea}{4}{}{%
-        {{hash=639c95aa93b934bafe4281396bd38b7a}{%
-           family={孙建国},
-           familyi={孙\bibinitperiod}}}%
-        {{hash=269b602990e6996f9731e8d30cbe0a19}{%
-           family={马超},
-           familyi={马\bibinitperiod}}}%
-        {{hash=6ea76c066a6c27635f7b21ea2fe8cd12}{%
-           family={林晓东},
-           familyi={林\bibinitperiod}}}%
-        {{hash=6e4a6f53b4611b244f835db4b805421e}{%
-           family={何敏},
-           familyi={何\bibinitperiod}}}%
+        {{hash=4498aad690f2c6e0698b89a1d2dde41b}{%
+           family={Lim},
+           familyi={L\bibinitperiod},
+           given={Hyeontaek},
+           giveni={H\bibinitperiod}}}%
+        {{hash=acf1f8ac8a2dae7837b6c8130b5fe71b}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Bin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=89b4b2a6fa735d08993dc81c86f31571}{%
+           family={Andersen},
+           familyi={A\bibinitperiod},
+           given={David\bibnamedelima G.},
+           giveni={D\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=4ce7390da57289e9d86884c3d923b036}{%
+           family={Kaminsky},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
       }
       \list{language}{1}{%
-        {chinese}%
+        {english}%
       }
-      \strng{namehash}{2cf5ae2db4127bf7e392dae0b1a9a6fb}
-      \strng{fullhash}{d16c4368e359f217d21cf6425a5dc5de}
-      \strng{bibnamehash}{1d2920c6ac1ac2b6a621c3f6f99183c5}
-      \strng{authorbibnamehash}{1d2920c6ac1ac2b6a621c3f6f99183c5}
-      \strng{authornamehash}{2cf5ae2db4127bf7e392dae0b1a9a6fb}
-      \strng{authorfullhash}{d16c4368e359f217d21cf6425a5dc5de}
-      \strng{nameabibnamehash}{1d2920c6ac1ac2b6a621c3f6f99183c5}
-      \strng{nameanamehash}{2cf5ae2db4127bf7e392dae0b1a9a6fb}
-      \strng{nameafullhash}{d16c4368e359f217d21cf6425a5dc5de}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \strng{namehash}{8be6183beb1509c1514d194bb1a4f5db}
+      \strng{fullhash}{0d22f1fdab56f3e1fb763d7a2c5b0784}
+      \strng{bibnamehash}{2b99dd861a32ad55b2eeef6438caec62}
+      \strng{authorbibnamehash}{2b99dd861a32ad55b2eeef6438caec62}
+      \strng{authornamehash}{8be6183beb1509c1514d194bb1a4f5db}
+      \strng{authorfullhash}{0d22f1fdab56f3e1fb763d7a2c5b0784}
+      \strng{nameabibnamehash}{2b99dd861a32ad55b2eeef6438caec62}
+      \strng{nameanamehash}{8be6183beb1509c1514d194bb1a4f5db}
+      \strng{nameafullhash}{0d22f1fdab56f3e1fb763d7a2c5b0784}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{计算机科学}
+      \field{booktitle}{Proceedings of the 23rd ACM Symposium on Operating Systems Principles (SOSP)}
       \field{langid}{english}
-      \field{languageid}{chinese}
-      \field{lansortorder}{1}
-      \field{number}{4}
-      \field{title}{内存键值存储系统中哈希索引结构的综述与研究进展}
-      \field{usera}{J}
-      \field{userd}{chinese}
-      \field{userf}{chinese}
-      \field{volume}{50}
-      \field{year}{2023}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{{SILT}: A Memory-Efficient, High-Performance Key-Value Store}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2011}
       \field{dateera}{ce}
-      \field{pages}{1\bibrangedash 18}
-      \range{pages}{18}
-      \keyw{18}
+      \field{pages}{1\bibrangedash 13}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/2043556.2043558
+      \endverb
+      \keyw{15}
     \endentry
     \entry{4}{article}{}
       \name{author}{2}{}{%
@@ -565,53 +625,77 @@
       \endverb
       \keyw{4}
     \endentry
-    \entry{17}{article}{}
-      \name{author}{2}{}{%
-        {{hash=dbcf6180dfc28079ebe394ddf3043c1e}{%
-           family={黄磊},
-           familyi={黄\bibinitperiod}}}%
-        {{hash=9ecf2556015c73226f8fccc172c3529f}{%
-           family={杨帆},
-           familyi={杨\bibinitperiod}}}%
+    \entry{17}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=7c52241d31326decffca130d6880ecf9}{%
+           family={Kirsch},
+           familyi={K\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4dbcb1c7060726deee27d97b4bf31321}{%
+           family={Mitzenmacher},
+           familyi={M\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=bc24aebbfea9fc0a6ce9a09af5db64c6}{%
+           family={Wieder},
+           familyi={W\bibinitperiod},
+           given={Udi},
+           giveni={U\bibinitperiod}}}%
       }
-      \name{namea}{2}{}{%
-        {{hash=dbcf6180dfc28079ebe394ddf3043c1e}{%
-           family={黄磊},
-           familyi={黄\bibinitperiod}}}%
-        {{hash=9ecf2556015c73226f8fccc172c3529f}{%
-           family={杨帆},
-           familyi={杨\bibinitperiod}}}%
+      \name{namea}{3}{}{%
+        {{hash=7c52241d31326decffca130d6880ecf9}{%
+           family={Kirsch},
+           familyi={K\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4dbcb1c7060726deee27d97b4bf31321}{%
+           family={Mitzenmacher},
+           familyi={M\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=bc24aebbfea9fc0a6ce9a09af5db64c6}{%
+           family={Wieder},
+           familyi={W\bibinitperiod},
+           given={Udi},
+           giveni={U\bibinitperiod}}}%
       }
       \list{language}{1}{%
-        {chinese}%
+        {english}%
       }
-      \strng{namehash}{4437c0eec8378b599fd192014ecfe0e0}
-      \strng{fullhash}{38d4c1b67b61cad489421e89d70922ad}
-      \strng{bibnamehash}{38d4c1b67b61cad489421e89d70922ad}
-      \strng{authorbibnamehash}{38d4c1b67b61cad489421e89d70922ad}
-      \strng{authornamehash}{4437c0eec8378b599fd192014ecfe0e0}
-      \strng{authorfullhash}{38d4c1b67b61cad489421e89d70922ad}
-      \strng{nameabibnamehash}{38d4c1b67b61cad489421e89d70922ad}
-      \strng{nameanamehash}{4437c0eec8378b599fd192014ecfe0e0}
-      \strng{nameafullhash}{38d4c1b67b61cad489421e89d70922ad}
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{96368b5f03dc6c57bbf26dfdd81cc724}
+      \strng{fullhash}{1264e8e51005be24e153baebde955e04}
+      \strng{bibnamehash}{1264e8e51005be24e153baebde955e04}
+      \strng{authorbibnamehash}{1264e8e51005be24e153baebde955e04}
+      \strng{authornamehash}{96368b5f03dc6c57bbf26dfdd81cc724}
+      \strng{authorfullhash}{1264e8e51005be24e153baebde955e04}
+      \strng{nameabibnamehash}{1264e8e51005be24e153baebde955e04}
+      \strng{nameanamehash}{96368b5f03dc6c57bbf26dfdd81cc724}
+      \strng{nameafullhash}{1264e8e51005be24e153baebde955e04}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{软件学报}
+      \field{booktitle}{Proceedings of the 16th Annual European Symposium on Algorithms (ESA)}
       \field{langid}{english}
-      \field{languageid}{chinese}
-      \field{lansortorder}{1}
-      \field{number}{6}
-      \field{title}{基于Cuckoo Hashing的键值存储引擎写入优化研究}
-      \field{usera}{J}
-      \field{userd}{chinese}
-      \field{userf}{chinese}
-      \field{volume}{30}
-      \field{year}{2019}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{More Robust Hashing: {C}uckoo Hashing with a Stash}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{5193}
+      \field{year}{2008}
       \field{dateera}{ce}
-      \field{pages}{1702\bibrangedash 1718}
-      \range{pages}{17}
+      \field{pages}{611\bibrangedash 622}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1007/978-3-540-87744-8\_51
+      \endverb
       \keyw{17}
     \endentry
     \entry{8}{inproceedings}{}
@@ -673,7 +757,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{series}{Lecture Notes in Computer Science}
-      \field{title}{De-amortized cuckoo hashing: {P}rovable worst-case performance and experimental results}
+      \field{title}{De-amortized Cuckoo Hashing: {P}rovable Worst-case Performance and Experimental Results}
       \field{usera}{C}
       \field{userd}{english}
       \field{userf}{english}
@@ -686,6 +770,79 @@
       \verb 10.1007/978-3-642-02927-1\_11
       \endverb
       \keyw{8}
+    \endentry
+    \entry{18}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=dec3948f0497f5447bae5c2365b87e8f}{%
+           family={Herlihy},
+           familyi={H\bibinitperiod},
+           given={Maurice},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3e2aee6574e3dcbdbc582166218008cb}{%
+           family={Shavit},
+           familyi={S\bibinitperiod},
+           given={Nir},
+           giveni={N\bibinitperiod}}}%
+        {{hash=c68769765d2e6c827e99f9c772836fd5}{%
+           family={Tzafrir},
+           familyi={T\bibinitperiod},
+           given={Moran},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=dec3948f0497f5447bae5c2365b87e8f}{%
+           family={Herlihy},
+           familyi={H\bibinitperiod},
+           given={Maurice},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3e2aee6574e3dcbdbc582166218008cb}{%
+           family={Shavit},
+           familyi={S\bibinitperiod},
+           given={Nir},
+           giveni={N\bibinitperiod}}}%
+        {{hash=c68769765d2e6c827e99f9c772836fd5}{%
+           family={Tzafrir},
+           familyi={T\bibinitperiod},
+           given={Moran},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{355816315ff1312fd0d967a49593be2d}
+      \strng{fullhash}{2412743a76addebf7025dde56cb3cba5}
+      \strng{bibnamehash}{2412743a76addebf7025dde56cb3cba5}
+      \strng{authorbibnamehash}{2412743a76addebf7025dde56cb3cba5}
+      \strng{authornamehash}{355816315ff1312fd0d967a49593be2d}
+      \strng{authorfullhash}{2412743a76addebf7025dde56cb3cba5}
+      \strng{nameabibnamehash}{2412743a76addebf7025dde56cb3cba5}
+      \strng{nameanamehash}{355816315ff1312fd0d967a49593be2d}
+      \strng{nameafullhash}{2412743a76addebf7025dde56cb3cba5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 22nd International Symposium on Distributed Computing (DISC)}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Hopscotch Hashing}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{5218}
+      \field{year}{2008}
+      \field{dateera}{ce}
+      \field{pages}{350\bibrangedash 364}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1007/978-3-540-87779-0\_24
+      \endverb
+      \keyw{18}
     \endentry
     \entry{12}{inproceedings}{}
       \name{author}{2}{}{%
@@ -736,7 +893,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{series}{Lecture Notes in Computer Science}
-      \field{title}{Succinct dynamic dictionaries and trees}
+      \field{title}{Succinct Dynamic Dictionaries and Trees}
       \field{usera}{C}
       \field{userd}{english}
       \field{userf}{english}
@@ -805,7 +962,7 @@
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
-      \field{title}{Succinct filters for sets of unknown sizes}
+      \field{title}{Succinct Filters for Sets of Unknown Sizes}
       \field{usera}{C}
       \field{userd}{english}
       \field{userf}{english}
@@ -867,7 +1024,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{series}{Lecture Notes in Computer Science}
-      \field{title}{A new universal class of hash functions and dynamic hashing in real time}
+      \field{title}{A New Universal Class of Hash Functions and Dynamic Hashing in Real Time}
       \field{usera}{C}
       \field{userd}{english}
       \field{userf}{english}
@@ -881,47 +1038,135 @@
       \endverb
       \keyw{9}
     \endentry
-    \entry{5}{misc}{}
-      \name{author}{1}{}{%
-        {{hash=cc0ce4cee93205c20666a22d5fe78f44}{%
-           family={Stafford},
-           familyi={S\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod}}}%
+    \entry{20}{article}{}
+      \name{author}{2}{}{%
+        {{hash=c5c3c34b9651392cd8ff4d5de678c2e5}{%
+           family={Carter},
+           familyi={C\bibinitperiod},
+           given={J.\bibnamedelimi Lawrence},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=c23fab9dd091b460882c84209cecd365}{%
+           family={Wegman},
+           familyi={W\bibinitperiod},
+           given={Mark\bibnamedelima N.},
+           giveni={M\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
       }
-      \name{namea}{1}{}{%
-        {{hash=cc0ce4cee93205c20666a22d5fe78f44}{%
-           family={Stafford},
-           familyi={S\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod}}}%
+      \name{namea}{2}{}{%
+        {{hash=c5c3c34b9651392cd8ff4d5de678c2e5}{%
+           family={Carter},
+           familyi={C\bibinitperiod},
+           given={J.\bibnamedelimi Lawrence},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=c23fab9dd091b460882c84209cecd365}{%
+           family={Wegman},
+           familyi={W\bibinitperiod},
+           given={Mark\bibnamedelima N.},
+           giveni={M\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
       }
       \list{language}{1}{%
         {english}%
       }
-      \strng{namehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{fullhash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{bibnamehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{authorbibnamehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{authornamehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{authorfullhash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{nameabibnamehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{nameanamehash}{cc0ce4cee93205c20666a22d5fe78f44}
-      \strng{nameafullhash}{cc0ce4cee93205c20666a22d5fe78f44}
+      \strng{namehash}{836ada948f0c716930ef53f7b8151a7d}
+      \strng{fullhash}{4171599eecf41f71973ba133f190cfa0}
+      \strng{bibnamehash}{4171599eecf41f71973ba133f190cfa0}
+      \strng{authorbibnamehash}{4171599eecf41f71973ba133f190cfa0}
+      \strng{authornamehash}{836ada948f0c716930ef53f7b8151a7d}
+      \strng{authorfullhash}{4171599eecf41f71973ba133f190cfa0}
+      \strng{nameabibnamehash}{4171599eecf41f71973ba133f190cfa0}
+      \strng{nameanamehash}{836ada948f0c716930ef53f7b8151a7d}
+      \strng{nameafullhash}{4171599eecf41f71973ba133f190cfa0}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html}}
+      \field{journaltitle}{Journal of Computer and System Sciences}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
-      \field{title}{Better Bit Mixing --- Improving on MurmurHash3's 64-bit Finalizer}
-      \field{usera}{Z}
+      \field{number}{2}
+      \field{title}{Universal Classes of Hash Functions}
+      \field{usera}{J}
       \field{userd}{english}
       \field{userf}{english}
-      \field{year}{2007}
+      \field{volume}{18}
+      \field{year}{1979}
       \field{dateera}{ce}
+      \field{pages}{143\bibrangedash 154}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/0022-0000(79)90044-8
+      \endverb
+      \keyw{20}
+    \endentry
+    \entry{5}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=5fb4e146b94ccd4a184efef4424f2286}{%
+           family={Jr.},
+           familyi={J\bibinitperiod},
+           given={Guy\bibnamedelimb L.\bibnamedelimi Steele},
+           giveni={G\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=b4071ff1af912d3c66b7b4b5ffed8956}{%
+           family={Lea},
+           familyi={L\bibinitperiod},
+           given={Doug},
+           giveni={D\bibinitperiod}}}%
+        {{hash=37737c977f134764d5aee44b734ac4f4}{%
+           family={Flood},
+           familyi={F\bibinitperiod},
+           given={Christine\bibnamedelima H.},
+           giveni={C\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=5fb4e146b94ccd4a184efef4424f2286}{%
+           family={Jr.},
+           familyi={J\bibinitperiod},
+           given={Guy\bibnamedelimb L.\bibnamedelimi Steele},
+           giveni={G\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=b4071ff1af912d3c66b7b4b5ffed8956}{%
+           family={Lea},
+           familyi={L\bibinitperiod},
+           given={Doug},
+           giveni={D\bibinitperiod}}}%
+        {{hash=37737c977f134764d5aee44b734ac4f4}{%
+           family={Flood},
+           familyi={F\bibinitperiod},
+           given={Christine\bibnamedelima H.},
+           giveni={C\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{55cb44754f525a25f1cbf0aa4defe66f}
+      \strng{fullhash}{7bae59ad4256f989767051551ffc0d32}
+      \strng{bibnamehash}{7bae59ad4256f989767051551ffc0d32}
+      \strng{authorbibnamehash}{7bae59ad4256f989767051551ffc0d32}
+      \strng{authornamehash}{55cb44754f525a25f1cbf0aa4defe66f}
+      \strng{authorfullhash}{7bae59ad4256f989767051551ffc0d32}
+      \strng{nameabibnamehash}{7bae59ad4256f989767051551ffc0d32}
+      \strng{nameanamehash}{55cb44754f525a25f1cbf0aa4defe66f}
+      \strng{nameafullhash}{7bae59ad4256f989767051551ffc0d32}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2014 ACM International Conference on Object Oriented Programming Systems Languages \& Applications (OOPSLA)}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Fast Splittable Pseudorandom Number Generators}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \field{pages}{453\bibrangedash 472}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1145/2660193.2660195
+      \endverb
       \keyw{5}
     \endentry
     \entry{6}{inproceedings}{}
@@ -997,91 +1242,180 @@
       \endverb
       \keyw{6}
     \endentry
-    \entry{16}{thesis}{}
-      \name{author}{1}{}{%
-        {{hash=91f6f999ead6227c5ffee4af2d855b06}{%
-           family={陈志强},
-           familyi={陈\bibinitperiod}}}%
+    \entry{14}{inproceedings}{}
+      \name{author}{9}{}{%
+        {{hash=99aa91509d23d29aa378129870419731}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Fay},
+           giveni={F\bibinitperiod}}}%
+        {{hash=4aecfb0cc2e1e3b7899129fa2a94e2b8}{%
+           family={Dean},
+           familyi={D\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+        {{hash=193bcec5240237591ad8fb697869f013}{%
+           family={Ghemawat},
+           familyi={G\bibinitperiod},
+           given={Sanjay},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b93b6f26620de06e75f2a0a829012414}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={Wilson\bibnamedelima C.},
+           giveni={W\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=02705ef81442ae8f11eac3ad9937b72f}{%
+           family={Wallach},
+           familyi={W\bibinitperiod},
+           given={Deborah\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=52bd219ee38c5f14ff2c280e7e4216d1}{%
+           family={Burrows},
+           familyi={B\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod}}}%
+        {{hash=aae0ced6a97ff5b4ca38e38013046ebe}{%
+           family={Chandra},
+           familyi={C\bibinitperiod},
+           given={Tushar},
+           giveni={T\bibinitperiod}}}%
+        {{hash=54829df18899a21970bee5323732f0f3}{%
+           family={Fikes},
+           familyi={F\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f36b85d06eea0c3fb0e6347d9889189c}{%
+           family={Gruber},
+           familyi={G\bibinitperiod},
+           given={Robert\bibnamedelima E.},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
       }
-      \name{namea}{1}{}{%
-        {{hash=91f6f999ead6227c5ffee4af2d855b06}{%
-           family={陈志强},
-           familyi={陈\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {华中科技大学}%
+      \name{namea}{9}{}{%
+        {{hash=99aa91509d23d29aa378129870419731}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Fay},
+           giveni={F\bibinitperiod}}}%
+        {{hash=4aecfb0cc2e1e3b7899129fa2a94e2b8}{%
+           family={Dean},
+           familyi={D\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+        {{hash=193bcec5240237591ad8fb697869f013}{%
+           family={Ghemawat},
+           familyi={G\bibinitperiod},
+           given={Sanjay},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b93b6f26620de06e75f2a0a829012414}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={Wilson\bibnamedelima C.},
+           giveni={W\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=02705ef81442ae8f11eac3ad9937b72f}{%
+           family={Wallach},
+           familyi={W\bibinitperiod},
+           given={Deborah\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=52bd219ee38c5f14ff2c280e7e4216d1}{%
+           family={Burrows},
+           familyi={B\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod}}}%
+        {{hash=aae0ced6a97ff5b4ca38e38013046ebe}{%
+           family={Chandra},
+           familyi={C\bibinitperiod},
+           given={Tushar},
+           giveni={T\bibinitperiod}}}%
+        {{hash=54829df18899a21970bee5323732f0f3}{%
+           family={Fikes},
+           familyi={F\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f36b85d06eea0c3fb0e6347d9889189c}{%
+           family={Gruber},
+           familyi={G\bibinitperiod},
+           given={Robert\bibnamedelima E.},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
       }
       \list{language}{1}{%
-        {chinese}%
+        {english}%
       }
-      \strng{namehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{fullhash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{bibnamehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{authorbibnamehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{authornamehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{authorfullhash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{nameabibnamehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{nameanamehash}{91f6f999ead6227c5ffee4af2d855b06}
-      \strng{nameafullhash}{91f6f999ead6227c5ffee4af2d855b06}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \list{publisher}{1}{%
+        {USENIX Association}%
+      }
+      \strng{namehash}{04df278898df96bfa712dd3ecb1365f9}
+      \strng{fullhash}{91f05fcac0234d78d4242dffda2a3cf2}
+      \strng{bibnamehash}{788b7db65118752f7e95d0209ca7e64c}
+      \strng{authorbibnamehash}{788b7db65118752f7e95d0209ca7e64c}
+      \strng{authornamehash}{04df278898df96bfa712dd3ecb1365f9}
+      \strng{authorfullhash}{91f05fcac0234d78d4242dffda2a3cf2}
+      \strng{nameabibnamehash}{788b7db65118752f7e95d0209ca7e64c}
+      \strng{nameanamehash}{04df278898df96bfa712dd3ecb1365f9}
+      \strng{nameafullhash}{91f05fcac0234d78d4242dffda2a3cf2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 7th USENIX Symposium on Operating Systems Design and Implementation (OSDI)}
       \field{langid}{english}
-      \field{languageid}{chinese}
-      \field{lansortorder}{1}
-      \field{title}{面向大规模键值存储系统的高效哈希索引技术研究}
-      \field{type}{phdthesis}
-      \field{usera}{D}
-      \field{userd}{chinese}
-      \field{userf}{chinese}
-      \field{year}{2022}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Bigtable: A Distributed Storage System for Structured Data}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2006}
       \field{dateera}{ce}
-      \keyw{16}
+      \field{pages}{205\bibrangedash 218}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1145/1365815.1365816
+      \endverb
+      \keyw{14}
     \endentry
     \entry{7}{article}{}
       \name{author}{4}{}{%
         {{hash=337a09209a5a3f04c1f0296f15e92db7}{%
            family={Arlazarov},
            familyi={A\bibinitperiod},
-           given={Vladimir\bibnamedelima L},
+           given={Vladimir\bibnamedelima L.},
            giveni={V\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
         {{hash=f093bfcc4d1cf03e20e345d20a9c8c11}{%
            family={Dinic},
            familyi={D\bibinitperiod},
-           given={Efim\bibnamedelima A},
+           given={Efim\bibnamedelima A.},
            giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
         {{hash=80d24157a713ad94ce04e6cc08b70c16}{%
            family={Kronrod},
            familyi={K\bibinitperiod},
-           given={Mikhail\bibnamedelima A},
+           given={Mikhail\bibnamedelima A.},
            giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
         {{hash=1096a0663eb97fb61cc13e3cd4b757d2}{%
            family={Faradzhev},
            familyi={F\bibinitperiod},
-           given={Igor\bibnamedelima A},
+           given={Igor\bibnamedelima A.},
            giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
       }
       \name{namea}{4}{}{%
         {{hash=337a09209a5a3f04c1f0296f15e92db7}{%
            family={Arlazarov},
            familyi={A\bibinitperiod},
-           given={Vladimir\bibnamedelima L},
+           given={Vladimir\bibnamedelima L.},
            giveni={V\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
         {{hash=f093bfcc4d1cf03e20e345d20a9c8c11}{%
            family={Dinic},
            familyi={D\bibinitperiod},
-           given={Efim\bibnamedelima A},
+           given={Efim\bibnamedelima A.},
            giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
         {{hash=80d24157a713ad94ce04e6cc08b70c16}{%
            family={Kronrod},
            familyi={K\bibinitperiod},
-           given={Mikhail\bibnamedelima A},
+           given={Mikhail\bibnamedelima A.},
            giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
         {{hash=1096a0663eb97fb61cc13e3cd4b757d2}{%
            family={Faradzhev},
            familyi={F\bibinitperiod},
-           given={Igor\bibnamedelima A},
+           given={Igor\bibnamedelima A.},
            giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
       }
       \list{language}{1}{%
@@ -1108,7 +1442,7 @@
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{number}{3}
-      \field{title}{On an economical construction of the transitive closure of a directed graph}
+      \field{title}{On an Economical Construction of the Transitive Closure of a Directed Graph}
       \field{usera}{J}
       \field{userd}{english}
       \field{userf}{english}

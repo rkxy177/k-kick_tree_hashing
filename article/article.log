@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  17 MAY 2026 23:27
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2024.10.1)  21 MAY 2026 00:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1859,17 +1859,17 @@ Package fontspec Info: Font family 'KaiTi(0)' created for font 'KaiTi' with
 
 ]
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 12.04628pt on input line 54.
+(Font)              scaled to size 12.04628pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 9.03471pt on input line 54.
+(Font)              scaled to size 9.03471pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 7.22777pt on input line 54.
+(Font)              scaled to size 7.22777pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 12.0437pt on input line 54.
+(Font)              scaled to size 12.0437pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 9.03278pt on input line 54.
+(Font)              scaled to size 9.03278pt on input line 56.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 7.22623pt on input line 54.
+(Font)              scaled to size 7.22623pt on input line 56.
 
 Package fontspec Info: Could not resolve font "FangSong/I" (it probably
 (fontspec)             doesn't exist).
@@ -1883,7 +1883,7 @@ Package fontspec Info: Could not resolve font "FangSong/I" (it probably
 (fontspec)             doesn't exist).
 
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
-(Font)              scaled to size 12.74046pt on input line 54.
+(Font)              scaled to size 12.74046pt on input line 56.
 
 Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             with options [Script={CJK},AutoFakeBold={2.17}].
@@ -1903,9 +1903,7 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 
 ] [2
 
-] [3] [4
-
-] (./article.toc
+] [3] [4] (./article.toc
 
 Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
 (fontspec)             exist).
@@ -1932,19 +1930,16 @@ Package fontspec Info: Font family 'SimHei(0)' created for font 'SimHei' with
 (fontspec)             <->"SimHei/OT:script=hani;language=dflt;embolden=2.17;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
- [5] [6])
+ [5
+
+] [6] [7])
 \tf@toc=\write5
 \openout5 = `article.toc'.
 
- [7] [8
-
-]
+ [8]
 第一章
 
-LaTeX Warning: Citation '19' on page 1 undefined on input line 109.
-
-
-Overfull \hbox (2.1256pt too wide) in paragraph at lines 99--110
+Overfull \hbox (2.1256pt too wide) in paragraph at lines 100--111
 \TU/SimSun(0)/m/n/12.045 统 在 工 业 界 和 学 术 界 均 受 到 了 广 泛 关 注。|  以 \TU/TimesNewRom
 an(0)/m/n/12.045 Google LevelDB$[]$\TU/SimSun(0)/m/n/12.045 、| \TU/TimesNewRoma
 n(0)/m/n/12.045 Facebook RocksDB
@@ -1952,21 +1947,40 @@ n(0)/m/n/12.045 Facebook RocksDB
 
 [1
 
+
 ] [2] [3] [4]
-Overfull \hbox (49.63034pt too wide) in paragraph at lines 228--234
+Overfull \hbox (49.63034pt too wide) in paragraph at lines 229--237
 []\TU/SimSun(0)/b/n/12.045 全 面 的 性 能 对 比 实 验 与 集 成 效 果 评 估\TU/SimSun(0)/m/n/12.
 045 。|  以 \TU/TimesNewRoman(0)/m/n/12.045 C++ \TU/SimSun(0)/m/n/12.045 标 准 库 中 
 的 \TU/CourierNew(0)/m/n/12.045 std::unordered_map
  []
 
-[5] [6]
-第二章
-[7
+[5]
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 10.54048pt on input line 290.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.00075pt on input line 290.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 5.00053pt on input line 290.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 10.53824pt on input line 290.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 290.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 290.
 
-] [8] [9]
+Overfull \hbox (45.52092pt too wide) in paragraph at lines 290--302
+ [][] 
+ []
+
+[6] [7]
+第二章
+[8
+
+] [9] [10] [11] [12]
 第三章
 
-Overfull \hbox (54.92508pt too wide) in paragraph at lines 371--371
+Overfull \hbox (54.92508pt too wide) in paragraph at lines 509--509
 []\TU/CourierNew(0)/m/n/12.045 ├── cubby_router_: LocalQueryRouter        \TU/F
 angSong(0)/m/n/12.045 将  \TU/CourierNew(0)/m/n/12.045 key  \TU/FangSong(0)/m/n/
 12.045 映 射 至  \TU/CourierNew(0)/m/n/12.045 cubby  \TU/FangSong(0)/m/n/12.045 索 
@@ -1974,33 +1988,37 @@ angSong(0)/m/n/12.045 将  \TU/CourierNew(0)/m/n/12.045 key  \TU/FangSong(0)/m/n
  []
 
 
-Overfull \hbox (34.53703pt too wide) in paragraph at lines 371--371
+Overfull \hbox (34.53703pt too wide) in paragraph at lines 509--509
 []    \TU/CourierNew(0)/m/n/12.045 ├── route_: LocalQueryRouter            \TU/
 FangSong(0)/m/n/12.045 将  \TU/CourierNew(0)/m/n/12.045 key  \TU/FangSong(0)/m/n
 /12.045 映 射 至  \TU/CourierNew(0)/m/n/12.045 slot  \TU/FangSong(0)/m/n/12.045 索 
 引 [] 
  []
 
-[10
+[13
 
-] [11]
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 10.54048pt on input line 406.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 7.00075pt on input line 406.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 406.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 10.53824pt on input line 406.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 406.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 406.
- [12] [13] [14]
+] [14]
+Overfull \hbox (2.00438pt too wide) in paragraph at lines 539--544
+[]\TU/TimesNewRoman(0)/b/n/12.045 Header-only \TU/SimSun(0)/b/n/12.045 组 织 方 式\
+TU/SimSun(0)/m/n/12.045 。|  四 个 核 心 组 件  |（\TU/TimesNewRoman(0)/m/n/12.045 Mini
+Array\TU/SimSun(0)/m/n/12.045 、| \TU/TimesNewRoman(0)/m/n/12.045 LocalQueryRout
+er\TU/SimSun(0)/m/n/12.045 、| \TU/TimesNewRoman(0)/m/n/12.045 Cubby\TU/SimSun(0
+)/m/n/12.045 、|
+ []
+
+
+Overfull \hbox (13.2807pt too wide) in paragraph at lines 549--555
+[]\TU/SimSun(0)/b/n/12.045 与 \TU/TimesNewRoman(0)/b/n/12.045 std::unordered_map
+ \TU/SimSun(0)/b/n/12.045 的 定 位 差 异\TU/SimSun(0)/m/n/12.045 。| \TU/TimesNewRoma
+n(0)/m/n/12.045 C++ \TU/SimSun(0)/m/n/12.045 标 准 库 的 \TU/CourierNew(0)/m/n/12.0
+45 std::unordered_map
+ []
+
+[15] [16] [17] [18]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 521.
- [15] [16]
-Overfull \hbox (53.34836pt too wide) in paragraph at lines 617--618
+put line 687.
+ [19] [20]
+Overfull \hbox (53.34836pt too wide) in paragraph at lines 784--785
 []\TU/SimSun(0)/b/n/12.045 删 除\TU/SimSun(0)/m/n/12.045 ：| \TU/TimesNewRoman(0)/
 m/n/12.045 cubby_router_ \TU/SimSun(0)/m/n/12.045 定 位 \TU/TimesNewRoman(0)/m/n/
 12.045 cubby\TU/SimSun(0)/m/n/12.045 ，|  执 行 \TU/TimesNewRoman(0)/m/n/12.045 Cu
@@ -2008,179 +2026,158 @@ bby::remove_at\TU/SimSun(0)/m/n/12.045 ，|  然 后 清 理 \TU/TimesNewRoman(0
 045 cubby_router_.remove\TU/SimSun(0)/m/n/12.045 。| 
  []
 
-[17]
+[21]
 第四章
 LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
-(Font)              scaled to size 11.14789pt on input line 636.
+(Font)              scaled to size 11.14789pt on input line 803.
 
-Overfull \hbox (15.08705pt too wide) in paragraph at lines 632--642
+Overfull \hbox (15.08705pt too wide) in paragraph at lines 799--809
  [][] 
  []
 
 
-Overfull \hbox (5.5494pt too wide) in paragraph at lines 646--651
+Overfull \hbox (5.5494pt too wide) in paragraph at lines 813--818
 \TU/SimSun(0)/m/n/12.045 者 所 依 赖；| \TU/CourierNew(0)/m/n/12.045 local_query_rou
 ter.hpp \TU/SimSun(0)/m/n/12.045 依 赖 \TU/CourierNew(0)/m/n/12.045 miniarray.hpp
 \TU/SimSun(0)/m/n/12.045 ；| \TU/CourierNew(0)/m/n/12.045 cubby.hpp
  []
 
-[18
+[22
 
-] [19] [20]
-Overfull \hbox (16.64272pt too wide) in paragraph at lines 746--749
+] [23] [24]
+Overfull \hbox (16.64272pt too wide) in paragraph at lines 913--916
 []\TU/CourierNew(0)/m/n/12.045 max_depth_for(key)\TU/SimSun(0)/m/n/12.045 ：|  对
  键 做 \TU/TimesNewRoman(0)/m/n/12.045 hash\TU/SimSun(0)/m/n/12.045 ，|  使 用 概 率 公
  式 $[][][][][][] [] [][] [] [][][][][] [][][]$
  []
 
 
-Overfull \hbox (9.12465pt too wide) in paragraph at lines 752--756
+Overfull \hbox (9.12465pt too wide) in paragraph at lines 919--923
 []\TU/CourierNew(0)/m/n/12.045 free_bitmap_ |\TU/SimSun(0)/m/n/12.045 （\TU/Time
 sNewRoman(0)/m/n/12.045 MiniArray, 1 bit/slot, 0= \TU/SimSun(0)/m/n/12.045 占 用\
 TU/TimesNewRoman(0)/m/n/12.045 , 1= \TU/SimSun(0)/m/n/12.045 空 闲）|  配 合 \TU/Cou
 rierNew(0)/m/n/12.045 first_free_
  []
 
-[21]
-Overfull \hbox (45.66318pt too wide) in paragraph at lines 783--794
+[25]
+Overfull \hbox (45.66318pt too wide) in paragraph at lines 950--961
  [][] 
  []
 
-[22]
+[26]
 第五章
-[23
+
+Overfull \hbox (57.63661pt too wide) in paragraph at lines 979--985
+\TU/SimSun(0)/m/n/12.045 一 部 分 在 随 机 均 匀 分 布 键  |（即 \TU/TimesNewRoman(0)/m/n/12
+.045 “\TU/SimSun(0)/m/n/12.045 良 好 哈 希\TU/TimesNewRoman(0)/m/n/12.045 ” \TU/Sim
+Sun(0)/m/n/12.045 条 件）|  下，|  对 比 本 方 案 与 \TU/CourierNew(0)/m/n/12.045 std::uno
+rdered_map
+ []
+
+[27
 
 ]
-File: src/benchmark_insert.png Graphic file (type bmp)
-<src/benchmark_insert.png>
- [24]
-File: src/benchmark_query.png Graphic file (type bmp)
-<src/benchmark_query.png>
- [25]
-File: src/benchmark_delete.png Graphic file (type bmp)
-<src/benchmark_delete.png>
+File: src/benchmark_time_good_hash.png Graphic file (type bmp)
+<src/benchmark_time_good_hash.png>
+ [28] [29] [30]
 File: src/benchmark_memory.png Graphic file (type bmp)
 <src/benchmark_memory.png>
- [26] [27]
-Overfull \hbox (61.3452pt too wide) in paragraph at lines 1021--1031
-\TU/CourierNew(0)/m/n/12.045 std::hash<uint32_t> |\TU/SimSun(0)/m/n/12.045 （对 \
-TU/TimesNewRoman(0)/m/n/12.045 32 \TU/SimSun(0)/m/n/12.045 位 整 型 来 说 即 为 恒 等 映 
-射） ，|  使 \TU/CourierNew(0)/m/n/12.045 std::unordered_map
+ [31]
+Overfull \hbox (8.00159pt too wide) in paragraph at lines 1180--1186
+[]\TU/SimSun(0)/m/n/12.045 前 述 实 验 均 基 于 随 机 均 匀 分 布 键 值 对，|  在 该 条 件 下 \TU/Cou
+rierNew(0)/m/n/12.045 std::unordered_map
  []
 
-[28]
-Overfull \hbox (26.94772pt too wide) in paragraph at lines 1089--1099
-[]\TU/SimSun(0)/m/n/12.045 上 述 实 验 揭 示 了 两 种 方 案 在 查 询 路 径 上 的 结 构 性 差 异：| \TU/
-CourierNew(0)/m/n/12.045 std::unordered_map
- []
-
-[29] [30]
+File: src/benchmark_collision_highlight.png Graphic file (type bmp)
+<src/benchmark_collision_highlight.png>
+[32] [33] [34] [35]
 第六章
 
-Overfull \hbox (34.13736pt too wide) in paragraph at lines 1124--1128
+Overfull \hbox (34.13736pt too wide) in paragraph at lines 1289--1293
 []\TU/SimSun(0)/m/n/12.045 整 体 集 成 分 为 四 个 步 骤：|  将 四 个 头 文 件 复 制 至 \TU/Courier
 New(0)/m/n/12.045 leveldb/util/kick_hash/\TU/SimSun(0)/m/n/12.045 目
  []
 
 
-Overfull \hbox (88.14127pt too wide) in paragraph at lines 1143--1147
+Overfull \hbox (88.14127pt too wide) in paragraph at lines 1308--1312
 []\TU/SimSun(0)/m/n/12.045 系 统 提 供 编 译 期 和 运 行 时 两 层 开 关。|  编 译 期 通 过 \TU/Times
 NewRoman(0)/m/n/12.045 CMake \TU/SimSun(0)/m/n/12.045 选 项 \TU/CourierNew(0)/m/n
 /12.045 -DUSE_KICK_HASH=ON/OFF
  []
 
-[31
+[36
 
-] [32]
+] [37]
 第七章
 
-Overfull \hbox (17.311pt too wide) in paragraph at lines 1195--1201
-[]\TU/SimSun(0)/b/n/12.045 多 维 度 的 定 量 实 验\TU/SimSun(0)/m/n/12.045 。|  以 \TU/Co
-urierNew(0)/m/n/12.045 std::unordered_map \TU/SimSun(0)/m/n/12.045 为 对 照，|  在 $
-[] [] [][][][][] [] [] [][][][]$
- []
-
-
-Overfull \hbox (47.60414pt too wide) in paragraph at lines 1211--1214
+Overfull \hbox (47.60414pt too wide) in paragraph at lines 1377--1380
 \TU/SimSun(0)/m/n/12.045 逐 键 更 新。|  论 文$[]$的 \TU/TimesNewRoman(0)/m/n/12.045 pe
 r-cubby \TU/SimSun(0)/m/n/12.045 多 路 由 器 架 构  |— —|  每 路 由 器 仅 处 理 约 $[][][] []
 [] [] [] [][]$
  []
 
-[33
+[38
 
-] [34]
-Overfull \hbox (1.9442pt too wide) in paragraph at lines 1235--1235
+] [39]
+Overfull \hbox (1.9442pt too wide) in paragraph at lines 1402--1402
 []\TU/TimesNewRoman(0)/m/n/12.045 GHEMAWAT S, DEAN J. LevelDB: A Fast and Light
 weight Key/Value Database
  []
 
+[40
 
-Overfull \hbox (17.1294pt too wide) in paragraph at lines 1235--1235
-\TU/TimesNewRoman(0)/m/n/12.045 Time/Space Tradeoff for Hash Tables[J]. ArXiv p
-reprint, 2022, arXiv:2111.00602v2.
+]
+Overfull \hbox (1.94098pt too wide) in paragraph at lines 1402--1402
+\TU/TimesNewRoman(0)/m/n/12.045 the 16th Annual European Symposium on Algorithm
+s (ESA): vol. 5193. Springer,
  []
 
 
-Overfull \hbox (0.4775pt too wide) in paragraph at lines 1235--1235
+Overfull \hbox (0.4775pt too wide) in paragraph at lines 1402--1402
 \TU/TimesNewRoman(0)/m/n/12.045 Languages and Programming (ICALP): vol. 5555. S
 pringer, 2009: 107-118. DOI:
  []
 
-[35
 
-]
-Overfull \hbox (5.8154pt too wide) in paragraph at lines 1235--1235
-[]\TU/TimesNewRoman(0)/m/n/12.045 LIU M, YIN Y, YU H. Succinct filters for sets
- of unknown sizes[C]\TU/CourierNew(0)/m/n/12.045 //\TU/TimesNewRoman(0)/m/n/12.
+Overfull \hbox (4.28427pt too wide) in paragraph at lines 1402--1402
+[]\TU/TimesNewRoman(0)/m/n/12.045 HERLIHY M, SHAVIT N, TZAFRIR M. Hopscotch Has
+hing[C]\TU/CourierNew(0)/m/n/12.045 //\TU/TimesNewRoman(0)/m/n/12.045 Lecture N
+otes
+ []
+
+
+Overfull \hbox (15.20203pt too wide) in paragraph at lines 1402--1402
+[]\TU/TimesNewRoman(0)/m/n/12.045 LIU M, YIN Y, YU H. Succinct Filters for Sets
+ of Unknown Sizes[C]\TU/CourierNew(0)/m/n/12.045 //\TU/TimesNewRoman(0)/m/n/12.
 045 Proceedings
  []
 
 
-Overfull \hbox (3.07336pt too wide) in paragraph at lines 1235--1235
+Overfull \hbox (3.07336pt too wide) in paragraph at lines 1402--1402
 \TU/TimesNewRoman(0)/m/n/12.045 of the 52nd Annual ACM SIGACT Symposium on Theo
 ry of Computing (STOC).
  []
 
-[36] [37
+[41] [42] [43
 
 ]
 \tf@thm=\write6
 \openout6 = `article.thm'.
 
  (./article.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `article.out' has not changed.
-(rerunfilecheck)             Checksum: C84B0D8BDDA56DABBF4BF21C6BCECA55;10208.
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                article
-(biblatex)                and rerun LaTeX afterwards.
-
+(rerunfilecheck)             Checksum: E1676751E104DA511F3FA2A770062F55;11865.
 Package logreq Info: Writing requests to 'article.run.xml'.
-! I can't write on file `article.run.xml'.
-<to be read again> 
-                   \relax 
-l.1263 \end{document}
-                     
-(Press Enter to retry, or Control-Z to exit; default file extension is `.tex')
-Please type another output file name
-! Emergency stop.
-<to be read again> 
-                   \relax 
-l.1263 \end{document}
-                     
-*** (job aborted, file error in nonstop mode)
+\openout1 = `article.run.xml'.
 
- 
+ ) 
 Here is how much of TeX's memory you used:
- 36305 strings out of 476179
- 754514 string characters out of 5807780
- 1674468 words of memory out of 5000000
- 56530 multiletter control sequences out of 15000+600000
- 475633 words of font info for 162 fonts, out of 8000000 for 9000
+ 36383 strings out of 476179
+ 759579 string characters out of 5807780
+ 1676452 words of memory out of 5000000
+ 56611 multiletter control sequences out of 15000+600000
+ 475617 words of font info for 160 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,12n,131p,3311b,6565s stack positions out of 10000i,1000n,20000p,200000b,200000s
-Output written on article.pdf (47 pages).
+ 102i,12n,131p,3311b,6563s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on article.pdf (53 pages).

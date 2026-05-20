@@ -1,0 +1,44 @@
+
+--- P.41 ---
+第六章 LevelDB 集成
+本章将实现的 k-kick 树哈希方案集成到 Google LevelDB[1]的 MemTable 中，
+作为SkipList的点查询加速层。
+6.1 集成流程与适配器设计
+整体集成分为四个步骤：将四个头文件复制至 leveldb/util/kick_hash/目
+录；编写适配层 util/kick_hash.h完成Slice到 uint64_t的类型映射；在
+MemTable的Add和Get路径中添加条件编译分支 #ifdef USE_KICK_HASH；
+修改CMake构建文件新增编译期开关。
+适配层的核心是 KickHash64哈希函数：调用两次LevelDB内置 Hash()
+函数（不同种子），将两路 32-bit 结果拼接为 64-bit 哈希值，单次调用仅 5.17
+ns。KickHashTable 包装器封装 Facility 对象，对外暴露 Insert、Get 和
+Remove 三个接口。Facility 的 lookup_value 函数通过 bool 返回值替代异
+常，适配LevelDB的-fno-exceptions 编译环境。
+在 MemTable 层面，写入路径（Add）在执行原有 SkipList 插入后，通过
+kick_table_.Insert将Arena缓冲区指针同步存入Facility；查询路径（Get）
+优先以 𝑂(1) 期望时间查询 KickHashTable，命中后解析 Arena 缓冲区并做原始
+Slice 比对以防 64-bit 哈希碰撞（概率 ∼ 10−7），未命中则回退至 SkipList 的
+𝑂(log𝑛)查找。迭代器操作不受影响，始终基于 SkipList的有序遍历能力。
+6.2 双向开关设计
+系统提供编译期和运行时两层开关。编译期通过CMake选项-DUSE_KICK_HASH=ON/OFF
+决定是否编译 KickHash 相关代码——关闭时无任何二进制膨胀或间接损耗。运
+行时通过 SetUseKickHash(bool) 接口支持同一进程内不同 MemTable 实
+例独立选择策略，便于A/B对比测试。
+31
+--- P.42 ---
+6.3 集成验证
+以 std::unordered_map和SkipList为对照，在𝑛 ⩽ 106 规模下使用16
+字节随机字符串键进行测试。核心结果见表6-1。
+验证项目 测试条件 实测结果
+KickHash64调用延迟 单次调用 5.17ns
+插入延迟 𝑛=2×105，16字节随机键 0.86us（每次操作）
+查询延迟 𝑛=2×105，16字节随机键 0.35us（每次操作）
+删除延迟 𝑛=2×105，16字节随机键 0.56us（每次操作）
+全量查询正确率 𝑛=106 次查询 100%
+适配层开销占比 KickHash64/总插入延迟 <0.15%
+表6-1 集成验证主要结果
+适配层哈希开销在总体操作时间中占比不足 0.15%。在 𝑛 = 2×105 时查询
+延迟为0.35us（每次操作），𝑛 = 106 时约0.74us（每次操作），内存占用与第五
+章独立基准测试的测量数据一致（𝑛 = 2×105 时 ∼9 MB，𝑛 = 106 时 ∼97 MB）。
+全部 106 次查询正确率为 100%，未出现任何因 64-bit 哈希碰撞或 Arena 指针失
+效导致的误判。
+32
