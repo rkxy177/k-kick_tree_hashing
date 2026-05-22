@@ -385,7 +385,7 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$。插入时按以下规则操作：
   \item 若目标bin无空位且\textbf{未饱和}（存在深度较低的键）：
     踢出该低深度键，新键占据其位置
   \item 被踢键\textbf{保持原深度不变}，在其自身深度bin中寻找新空位
-  \item 被踢键若触发新一轮踢出，则形成\textbf{踢出链}，但总踢出次数不超过$k$
+  \item 被踢键若触发新一轮踢出，则形成\textbf{踢出链}，但总踢出次数不超过$k$。
 \end{enumerate}
 
 \textbf{关键性质}：高深度的键优先踢出低深度的键，被踢键保持原深度。
@@ -395,9 +395,9 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$。插入时按以下规则操作：
 
 论文\cite{1}证明，对于任意$k \in [\log^* n]$，上述方案可实现：
 \begin{itemize}
-  \item 插入/删除时间：$O(k)$（高概率）
-  \item 查询时间：$O(1)$（确定性）
-  \item 每键空间浪费：$O(\log^{(k)} n)$比特（高概率）
+  \item 插入/删除时间：$O(k)$（高概率）。
+  \item 查询时间：$O(1)$（确定性）。
+  \item 每键空间浪费：$O(\log^{(k)} n)$比特（高概率）。
 \end{itemize}
 
 此结果打破了长期存在的$\Omega(\log\log n)$空间下界，展示了时空权衡的极致
@@ -927,9 +927,9 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$ 计算阈值，从$k$到0逐层比较并返
 
 \texttt{lookup(key)}：
 \begin{enumerate}
-  \item \texttt{cubby\_router\_.probe\_index(key)} 获取 cubby索引$ci$
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_slot}(key)$ 获取槽索引$slot$
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_at}(slot, key)$ 获取返回值
+  \item \texttt{cubby\_router\_.probe\_index(key)} 获取 cubby索引$ci$。
+  \item $\text{cubbies\_}[ci].\texttt{lookup\_slot}(key)$ 获取槽索引$slot$。
+  \item $\text{cubbies\_}[ci].\texttt{lookup\_at}(slot, key)$ 获取返回值。
 \end{enumerate}
 
 \subsection{合并与路由更新}
@@ -991,7 +991,7 @@ Bender等人的理论分析\cite{1}指出，对于参数$k$的$k$-kick树，每�
 $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数：
 
 \begin{equation}
-\log^{(k)} n = \underbrace{\log_2 \log_2 \cdots \log_2}_{k\text{次}} n
+\log^{(k)} n = \underbrace{\log_2 \log_2 \cdots \log_2}_{k\text{次}} n \text{。}
 \end{equation}
 
 在本实现中，$k$被硬编码为$k_{\max}=4$。为使$k=4$对应的理论保证具有实际意义，
