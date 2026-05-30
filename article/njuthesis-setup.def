@@ -26,7 +26,7 @@
     keywords = {哈希表,时空权衡,k-kick树,位压缩路由,LevelDB},
     % 中文关键词列表
     %
-    keywords* = {hash table,time-space tradeoff,k-kick tree,elastic hashing,bit-packed routing,LevelDB},
+    keywords* = {Hash table; Time-space tradeoff; k-kick tree; Elastic hashing; Bit-packed routing; LevelDB},
     % 英文关键词
     % 使用英文半角逗号(,)分隔
     %
@@ -59,7 +59,7 @@
     % 第二导师全称
     % 如果确实没有第二导师，不填写即可
     %
-    submit-date = {2026-05-12},
+    submit-date = {2026-05-30},
     % 提交日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
@@ -122,31 +122,12 @@
 
 % bib 类用于参考文献设置
 \njusetup[bib]{
-    % style = numeric|author-year,
-    % 参考文献样式
-    % 默认为顺序编码制（numeric）
-    % 可选著者-出版年制（author-year）
-    %
+    style = numeric,
     resource = {references.bib},
-    % 参考文献数据源
-    % 需要带扩展名的完整文件名
-    % 可使用逗号分隔多个文件
-    % 此条等效于 \addbibresource 命令
-    %
-    % option = {
-        % doi    = false,
-        % isbn   = false,
-        % url    = false,
-        % eprint = false,
-        % 关闭部分无用文献信息
-        %
-        % refsection = chapter,
-        % 将参考文献表置于每章后
-        %
-        % gbnamefmt = lowercase
-        % 使用仅首字母大写的姓名
-    %   }
-    % 额外的 biblatex 宏包选项
+    option = {
+        gbnamefmt = lowercase,
+        gbpub = false,
+    },
 }
 
 % image 类用于载入外置的图片
