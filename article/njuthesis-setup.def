@@ -28,7 +28,7 @@
     %
     keywords* = {Hash table; Time-space tradeoff; k-kick tree; Elastic hashing; Bit-packed routing; LevelDB},
     % 英文关键词
-    % 使用英文半角逗号(,)分隔
+    % 使用英文半角分号(;)分隔
     %
     grade = {2022},
     % 年级
@@ -59,7 +59,7 @@
     % 第二导师全称
     % 如果确实没有第二导师，不填写即可
     %
-    submit-date = {2026-05-30},
+    submit-date = {2026-05-31},
     % 提交日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
@@ -96,7 +96,7 @@
     secret-level = {公开},
     % 密级
     %
-    defend-date = {2022-05-21},
+    defend-date = {2026-05-29},
     % 答辩日期
     % 格式为 yyyy-mm-dd
     % 不填就是编译当天日期
@@ -115,7 +115,7 @@
     %
     supervisor-contact = {
         南京大学~
-        江苏省南京市栖霞区仙林大道163号
+        江苏省苏州市虎丘区太湖大道
     }
     % 导师联系方式
 }
@@ -233,7 +233,7 @@
 % \njusetup{anonymous-mode/no-nju}
 
 % 一些灵活调整
-% \njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
+\njusetname{type}{本科毕业设计}                 % 我做的是毕业设计
 % \njusetname{notation}{术语表}                   % 更改符号表名称
 % \njusetlength{crulewd}{240pt}                   % 加长封面页下划线
 % \njusetformat{subsection}{\normalfont\bfseries} % 修改 subsection 为小四号粗体宋体
