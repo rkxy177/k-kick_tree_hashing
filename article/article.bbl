@@ -108,7 +108,7 @@
       \field{pages}{1284\bibrangedash 1297}
       \range{pages}{14}
       \verb{doi}
-      \verb 10.1145/3519935.3519968
+      \verb 10.1145/3519935.3519969
       \endverb
       \verb{eprint}
       \verb 2111.00602
@@ -412,7 +412,7 @@
       \field{pages}{353\bibrangedash 363}
       \range{pages}{11}
       \verb{doi}
-      \verb 10.1137/S0097539700369949
+      \verb 10.1137/s0097539700369909
       \endverb
       \keyw{3}
     \endentry
@@ -616,7 +616,7 @@
       \field{pages}{611\bibrangedash 622}
       \range{pages}{12}
       \verb{doi}
-      \verb 10.1007/978-3-540-87744-8\_51
+      \verb 10.1007/978-3-540-87744-8_51
       \endverb
       \keyw{17}
     \endentry
@@ -689,7 +689,7 @@
       \field{pages}{107\bibrangedash 118}
       \range{pages}{12}
       \verb{doi}
-      \verb 10.1007/978-3-642-02927-1\_11
+      \verb 10.1007/978-3-642-02927-1_11
       \endverb
       \keyw{8}
     \endentry
@@ -762,7 +762,7 @@
       \field{pages}{350\bibrangedash 364}
       \range{pages}{15}
       \verb{doi}
-      \verb 10.1007/978-3-540-87779-0\_24
+      \verb 10.1007/978-3-540-87779-0_24
       \endverb
       \keyw{18}
     \endentry
@@ -825,7 +825,7 @@
       \field{pages}{357\bibrangedash 368}
       \range{pages}{12}
       \verb{doi}
-      \verb 10.1007/3-540-45061-0\_30
+      \verb 10.1007/3-540-45061-0_30
       \endverb
       \keyw{12}
     \endentry
@@ -898,7 +898,7 @@
       \field{pages}{682\bibrangedash 693}
       \range{pages}{12}
       \verb{doi}
-      \verb 10.1007/978-3-642-04128-0\_61
+      \verb 10.1007/978-3-642-04128-0_61
       \endverb
       \keyw{6}
     \endentry
@@ -940,6 +940,9 @@
       \list{language}{1}{%
         {english}%
       }
+      \list{publisher}{1}{%
+        {Schloss Dagstuhl -- Leibniz-Zentrum für Informatik}%
+      }
       \strng{namehash}{4cc5d54496c1d9c030e5f3fe8642005b}
       \strng{fullhash}{af0d5186a37d2ba842b1cfdceb9539ab}
       \strng{bibnamehash}{af0d5186a37d2ba842b1cfdceb9539ab}
@@ -953,20 +956,26 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (STOC)}
+      \field{booktitle}{Proceedings of the 47th International Colloquium on Automata, Languages and Programming (ICALP)}
+      \field{eprinttype}{arXiv}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
+      \field{series}{LIPIcs}
       \field{title}{Succinct Filters for Sets of Unknown Sizes}
       \field{usera}{C}
       \field{userd}{english}
       \field{userf}{english}
+      \field{volume}{168}
       \field{year}{2020}
       \field{dateera}{ce}
-      \field{pages}{855\bibrangedash 868}
-      \range{pages}{14}
+      \field{pages}{79:1\bibrangedash 79:19}
+      \range{pages}{-1}
       \verb{doi}
-      \verb 10.1145/3357713.3384294
+      \verb 10.4230/LIPIcs.ICALP.2020.79
+      \endverb
+      \verb{eprint}
+      \verb 2004.12465
       \endverb
       \keyw{11}
     \endentry
@@ -1073,10 +1082,10 @@
       \field{volume}{443}
       \field{year}{1990}
       \field{dateera}{ce}
-      \field{pages}{268\bibrangedash 283}
-      \range{pages}{16}
+      \field{pages}{6\bibrangedash 19}
+      \range{pages}{14}
       \verb{doi}
-      \verb 10.1007/BFb0032042
+      \verb 10.1007/BFb0032018
       \endverb
       \keyw{9}
     \endentry
@@ -1270,9 +1279,109 @@
       \field{pages}{523\bibrangedash 534}
       \range{pages}{12}
       \verb{doi}
-      \verb 10.1007/3-540-39799-X\_32
+      \verb 10.1007/3-540-39799-x_41
       \endverb
       \keyw{21}
+    \endentry
+    \entry{27}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=537246790cf52f26674d736f551da8e9}{%
+           family={邓莹莹},
+           familyi={邓\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=537246790cf52f26674d736f551da8e9}{%
+           family={邓莹莹},
+           familyi={邓\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {南京邮电大学}%
+      }
+      \list{language}{1}{%
+        {chinese}%
+      }
+      \strng{namehash}{537246790cf52f26674d736f551da8e9}
+      \strng{fullhash}{537246790cf52f26674d736f551da8e9}
+      \strng{bibnamehash}{537246790cf52f26674d736f551da8e9}
+      \strng{authorbibnamehash}{537246790cf52f26674d736f551da8e9}
+      \strng{authornamehash}{537246790cf52f26674d736f551da8e9}
+      \strng{authorfullhash}{537246790cf52f26674d736f551da8e9}
+      \strng{nameabibnamehash}{537246790cf52f26674d736f551da8e9}
+      \strng{nameanamehash}{537246790cf52f26674d736f551da8e9}
+      \strng{nameafullhash}{537246790cf52f26674d736f551da8e9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{languageid}{chinese}
+      \field{lansortorder}{1}
+      \field{title}{布谷鸟哈希表的优化及其应用}
+      \field{type}{mathesis}
+      \field{usera}{D}
+      \field{userd}{chinese}
+      \field{userf}{chinese}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.27251/d.cnki.gnjdc.2021.000705
+      \endverb
+      \keyw{27}
+    \endentry
+    \entry{28}{article}{}
+      \name{author}{3}{}{%
+        {{hash=dc0546fccfe3422b0fb29b8ff876d346}{%
+           family={金琪},
+           familyi={金\bibinitperiod}}}%
+        {{hash=8a50cdf0f56c29b52a81b0596f5edaef}{%
+           family={王俊昌},
+           familyi={王\bibinitperiod}}}%
+        {{hash=b9653e4d1857d6abbcd7a8ff9976d13a}{%
+           family={付雄},
+           familyi={付\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=dc0546fccfe3422b0fb29b8ff876d346}{%
+           family={金琪},
+           familyi={金\bibinitperiod}}}%
+        {{hash=8a50cdf0f56c29b52a81b0596f5edaef}{%
+           family={王俊昌},
+           familyi={王\bibinitperiod}}}%
+        {{hash=b9653e4d1857d6abbcd7a8ff9976d13a}{%
+           family={付雄},
+           familyi={付\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {chinese}%
+      }
+      \strng{namehash}{64984ec19d8bf31163548b74329eb380}
+      \strng{fullhash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \strng{bibnamehash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \strng{authorbibnamehash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \strng{authornamehash}{64984ec19d8bf31163548b74329eb380}
+      \strng{authorfullhash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \strng{nameabibnamehash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \strng{nameanamehash}{64984ec19d8bf31163548b74329eb380}
+      \strng{nameafullhash}{2bf1eea8070ff9887d140a72fb8752f6}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机科学}
+      \field{langid}{english}
+      \field{languageid}{chinese}
+      \field{lansortorder}{1}
+      \field{number}{8}
+      \field{title}{基于智能放置策略的Cuckoo哈希表}
+      \field{usera}{J}
+      \field{userd}{chinese}
+      \field{userf}{chinese}
+      \field{volume}{47}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{80\bibrangedash 86}
+      \range{pages}{7}
+      \keyw{28}
     \endentry
     \entry{26}{article}{}
       \name{author}{4}{}{%
@@ -1434,7 +1543,7 @@
       \endverb
       \keyw{23}
     \endentry
-    \entry{14}{inproceedings}{}
+    \entry{14}{article}{}
       \name{author}{9}{}{%
         {{hash=99aa91509d23d29aa378129870419731}{%
            family={Chang},
@@ -1532,9 +1641,6 @@
       \list{language}{1}{%
         {english}%
       }
-      \list{publisher}{1}{%
-        {USENIX Association}%
-      }
       \strng{namehash}{04df278898df96bfa712dd3ecb1365f9}
       \strng{fullhash}{91f05fcac0234d78d4242dffda2a3cf2}
       \strng{bibnamehash}{788b7db65118752f7e95d0209ca7e64c}
@@ -1548,18 +1654,20 @@
       \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 7th USENIX Symposium on Operating Systems Design and Implementation (OSDI)}
+      \field{journaltitle}{ACM Transactions on Computer Systems}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
+      \field{number}{2}
       \field{title}{Bigtable: A Distributed Storage System for Structured Data}
-      \field{usera}{C}
+      \field{usera}{J}
       \field{userd}{english}
       \field{userf}{english}
-      \field{year}{2006}
+      \field{volume}{26}
+      \field{year}{2008}
       \field{dateera}{ce}
-      \field{pages}{205\bibrangedash 218}
-      \range{pages}{14}
+      \field{pages}{1\bibrangedash 26}
+      \range{pages}{26}
       \verb{doi}
       \verb 10.1145/1365815.1365816
       \endverb
