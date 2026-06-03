@@ -50,14 +50,14 @@ Bender等人在2021年提出了一种名为$k$-kick树的哈希方案\cite{1}，
 可将每键空间浪费从$\Omega(\log\log n)$压缩至$O(\log^{(k)} n)$比特。
 本文依据此方案做了工程实现和实验验证。
 实现方面，以C++构建了一个分层的弹性哈希存储结构，约1065行纯头文件模板代码。
-包含基于优先级的踢出机制、用MiniArray位压缩数组实现的紧凑二叉字典树路由、
+包含基于优先级的踢出机制、用\texttt{MiniArray}位压缩数组实现的紧凑二叉字典树路由、
 以及一个8-bit Lookup Table用于跳过字典树前8层加速查询。
 槽元数据和空闲槽位图分别压至每槽4比特和1比特。
 实验方面，在良好哈希条件下取$n\in[5\times10^4,10^6]$五个规模，
 以\texttt{std::unordered\_map}为对照，每组5次独立试验，测量插入、查询、删除和内存。
 $n\leq 2\times10^5$时，插入约0.66--1.09 us/op，查询约0.24--0.43 us/op，内存约44--46 B/key；
 $n=10^6$时因合并摊还，插入升至约7.47 us/op，查询约1.59 us/op，内存约102 B/key。
-高碰撞条件下，\texttt{unordered\_map}所有键被打入同一桶，$n=10^5$时查询退化至132.5 us/op，
+高碰撞条件下，\texttt{std::unordered\_map}所有键被打入同一桶，$n=10^5$时查询退化至132.5 us/op，
 而本方案保持在0.39 us/op，差距约342倍。
 此外，将方案以适配器方式接入LevelDB 内存表层，提供CMake编译开关和运行时开关。
 适配层单次Hash转换约5.17 ns，$n=2\times10^5$时查询约0.35 us/op。
@@ -71,14 +71,14 @@ reduces per-element space waste from $\Omega(\log\log n)$ to $O(\log^{(k)} n)$ b
 This thesis implements the scheme in C++ and evaluates it experimentally.
 The implementation comprises four 纯头文件模板 components (~1065 lines total):
 a priority-based kicking mechanism, a compact binary trie local query router
-built on MiniArray bit-packing (slot metadata at 4+1 bits per slot),
+built on \texttt{MiniArray} bit-packing (slot metadata at 4+1 bits per slot),
 and an 8-bit lookup table to skip the first 8 trie levels during query.
 Experiments with $n\in[5\times10^4,10^6]$ key-value pairs (5 trials each)
 compare against \texttt{std::unordered\_map} on insertion, query, deletion and memory.
 Under good hashing with $n\leq 2\times10^5$, insertion takes 0.66--1.09 us/op,
 query 0.24--0.43 us/op, and memory 44--46 B/key, at $n=10^6$, insertion reaches
 7.47 us/op, query 1.59 us/op, and memory 102 B/key.
-When all \texttt{unordered\_map} keys are forced into a single bucket ($n=10^5$),
+When all \texttt{std::unordered\_map} keys are forced into a single bucket ($n=10^5$),
 query time degrades to 132.5 us/op while the scheme stays at 0.39 us/op, a 342x gap.
 The scheme is also integrated into LevelDB's MemTable with a \texttt{-DUSE\_KICK\_HASH}
 compile-time switch and a \texttt{SetUseKickHash()} runtime toggle. Adapter overhead
@@ -176,18 +176,18 @@ Bender 等人\cite{1}的贡献在于第一次给出了从$k=1$到$k=\log^* n$可
 本工作围绕以下四件事展开：
 
 \begin{enumerate}
-  \item \textbf{核心数据结构实现}。以 C++23 实现四个 纯头文件模板 组件：
-    MiniArray 位压缩数组、LocalQueryRouter 紧凑二叉 字典树、
-    Cubby 弹性哈希桶、Facility 全局管理器。尽量贴近论文\cite{1}的设计意图。
+  \item 核心数据结构实现。以 C++23 实现四个 纯头文件模板 组件：
+    \texttt{MiniArray} 位压缩数组、\texttt{LocalQueryRouter} 紧凑二叉 字典树、
+    \texttt{Cubby} 弹性哈希桶、\texttt{Facility} 全局管理器。尽量贴近论文\cite{1}的设计意图。
 
-  \item \textbf{LevelDB 内存表 适配}。写一个 KickHash64 函数做 分片 到 64-bit
-    hash 的类型映射，再封装成 KickHashTable。改 内存表 的 Add/Get 路径，
-    加上 CMake 编译开关和运行时 SetUseKickHash() 接口。
+  \item LevelDB 内存表 适配。写一个 \texttt{KickHash64} 函数做 分片 到 64-bit
+    hash 的类型映射，再封装成 \texttt{KickHashTable}。改 内存表 的 Add/Get 路径，
+    加上 CMake 编译开关和运行时 SetUse\texttt{KickHash}() 接口。
 
-  \item \textbf{正确性自测}。用边界测试验证踢出链长度、字典树 路由的指纹碰撞率、
+  \item 正确性自测。用边界测试验证踢出链长度、字典树 路由的指纹碰撞率、
     空间用法随数据规模的变化趋势等几个维度，测试是否明显偏离理论。
 
-  \item \textbf{性能实验}。以 std::unordered\_map 为对照，在良好哈希
+  \item 性能实验。以 std::unordered\_map 为对照，在良好哈希
     （$n\in[5\times10^4,10^6]$）和极端碰撞（$n\in[10^3,10^5]$）两个条件下
     测插入、查询、删除和内存。每组 5 次取均值。集成部分单测适配层开销。
 \end{enumerate}
@@ -198,10 +198,10 @@ Bender 等人\cite{1}的贡献在于第一次给出了从$k=1$到$k=\log^* n$可
 
 \begin{enumerate}[label={FR\arabic*:}]
   \item 插入键值对。以 32-bit 整数为基础测试类型，用优先级踢出策略处理冲突。
-  \item 查询键值对。通过两级 字典树 路由定位目标 Cubby 和槽位，如果成功命中则返回结果值，否则返回未找到目标。
+  \item 查询键值对。通过两级 字典树 路由定位目标 \texttt{Cubby} 和槽位，如果成功命中则返回结果值，否则返回未找到目标。
   \item 删除键值对。清理两级路由映射，释放对应槽位。
-  \item 合并。层级活跃 Cubby 在超出原论文\cite{1}提到的阈值时自动触发同层合并，数据向上迁移一个层级（tier），同步更新路由。
-  \item LevelDB 集成。提供用于决定采用数据库原生哈希或新型哈希方案的 -DUSE\_KICK\_HASH 编译开关和 SetUseKickHash() 运行时开关。
+  \item 合并。层级活跃 \texttt{Cubby} 在超出原论文\cite{1}提到的阈值时自动触发同层合并，数据向上迁移一个层级（tier），同步更新路由。
+  \item LevelDB 集成。提供用于决定采用数据库原生哈希或新型哈希方案的 -DUSE\_KICK\_HASH 编译开关和 SetUse\texttt{KickHash}() 运行时开关。
 \end{enumerate}
 
 \subsection{非功能需求}
@@ -224,14 +224,14 @@ Bender 等人\cite{1}的贡献在于第一次给出了从$k=1$到$k=\log^* n$可
 \resizebox{\linewidth}{!}{
 \begin{tabular}{c|l|l}
 \toprule
-\textbf{用例编号} & \textbf{用例名称} & \textbf{简要描述} \\
+用例编号 & 用例名称 & 简要描述 \\
 \midrule
-UC-01 & 插入新键值对 & 用户调用Facility::insert()，系统通过两级路由和踢出链完成插入 \\
-UC-02 & 查询键值对   & 用户调用Facility::lookup()，系统通过字典树路由定位槽位并返回值 \\
-UC-03 & 删除键值对   & 用户调用Facility::remove()，系统清理两级路由并释放槽位 \\
-UC-04 & 自动合并     & 当层级活跃Cubby超限，Facility自动触发合并与路由更新 \\
-UC-05 & LevelDB集成查询 & LevelDB 内存表通过KickHashTable适配器查询键值对 \\
-UC-06 & 编译/运行时开关 & 开发者通过CMake选项或运行时接口启用/禁用KickHash加速 \\
+UC-01 & 插入新键值对 & 用户调用\texttt{Facility}::insert()，系统通过两级路由和踢出链完成插入 \\
+UC-02 & 查询键值对   & 用户调用\texttt{Facility}::lookup()，系统通过字典树路由定位槽位并返回值 \\
+UC-03 & 删除键值对   & 用户调用\texttt{Facility}::remove()，系统清理两级路由并释放槽位 \\
+UC-04 & 自动合并     & 当层级活跃\texttt{Cubby}超限，\texttt{Facility}自动触发合并与路由更新 \\
+UC-05 & LevelDB集成查询 & LevelDB 内存表通过\texttt{KickHashTable}适配器查询键值对 \\
+UC-06 & 编译/运行时开关 & 开发者通过CMake选项或运行时接口启用/禁用\texttt{KickHash}加速 \\
 \bottomrule
 \end{tabular}
 }
@@ -242,7 +242,7 @@ UC-06 & 编译/运行时开关 & 开发者通过CMake选项或运行时接口启
 \section{论文结构}
 
 后面各章安排如下：第二章讲哈希表基本概念和 k-kick 树的理论基础；
-第三章是系统设计，从 MiniArray 往上一层层介绍四个组件；第四章是具体的实现
+第三章是系统设计，从 \texttt{MiniArray} 往上一层层介绍四个组件；第四章是具体的实现
 细节和复杂度；第五章放实验数据和分析；第六章说 LevelDB 的集成；
 第七章做总结，用以罗列当前实现的不足以及后续改进方向。
 
@@ -436,32 +436,32 @@ Luo和Carey的综述\cite{13}指出，改进内存表的索引结构是降低
 
 \section{总体架构}
 
-Facility作为全局入口，维护一个\texttt{cubbies\_}\newline
-向量存放所有Cubby，
-一个\texttt{tail\_idx\_}指向当前接收新数据的tail Cubby，
-以及一个全局路由\texttt{cubby\_router\_}负责把键映射到对应的Cubby编号。
+\texttt{Facility}作为全局入口，维护一个\texttt{cubbies\_}\newline
+向量存放所有\texttt{Cubby}，
+一个\texttt{tail\_idx\_}指向当前接收新数据的tail \texttt{Cubby}，
+以及一个全局路由\texttt{cubby\_router\_}负责把键映射到对应的\texttt{Cubby}编号。
 
-\texttt{cubbies\_}由多个层级的Cubby组成。tail位于tier-1，容量固定1024，
-是唯一接收新插入的入口。tier-1中填满的Cubby标记为非tail，
+\texttt{cubbies\_}由多个层级的\texttt{Cubby}组成。tail位于tier-1，容量固定1024，
+是唯一接收新插入的入口。tier-1中填满的\texttt{Cubby}标记为非tail，
 不再写入新数据。合并产物放在tier-2及更高层级，容量根据实际数据量
-动态指定。每个Cubby内部有独立的路由器\texttt{route\_}把键映射到槽索引，
-还有\texttt{slot\_meta\_}（MiniArray，每槽4 bit记录占用状态和深度）、
-\texttt{free\_bitmap\_}（MiniArray，每槽1 bit标识空闲）、
+动态指定。每个\texttt{Cubby}内部有独立的路由器\texttt{route\_}把键映射到槽索引，
+还有\texttt{slot\_meta\_}（\texttt{MiniArray}，每槽4 bit记录占用状态和深度）、
+\texttt{free\_bitmap\_}（\texttt{MiniArray}，每槽1 bit标识空闲）、
 \texttt{keys\_[]}和\texttt{values\_[]}数组以及bin大小参数\texttt{s\_[]}和\texttt{k\_}。
 
 系统用两级路由组织键到槽的映射：
 
 \begin{enumerate}
-  \item \textbf{Cubby级路由}（由\texttt{Facility::cubby\_router\_}承担）：
-    根据键的哈希值确定该键当前存储在哪个Cubby中。此路由为全局性映射，所有键
+  \item \texttt{Cubby}级路由（由\texttt{Facility::cubby\_router\_}承担）：
+    根据键的哈希值确定该键当前存储在哪个\texttt{Cubby}中。此路由为全局性映射，所有键
     共享同一个路由字典树实例。
-  \item \textbf{Slot级路由}（由每个Cubby内部的\texttt{Cubby::route\_}承担）：
-    在确定目标Cubby后，进一步将键映射到该Cubby内部的某个具体槽索引。每个Cubby
-    拥有独立的路由实例，因此单个Cubby的路由操作不干扰其他Cubby。
+  \item Slot级路由（由每个\texttt{Cubby}内部的\texttt{Cubby::route\_}承担）：
+    在通过第一级路由确定目标\texttt{Cubby}后，进一步将键映射到该\texttt{Cubby}内部的某个具体槽索引。每个\texttt{Cubby}
+    拥有独立的路由实例，因此单个\texttt{Cubby}的路由操作不干扰其他\texttt{Cubby}。
 \end{enumerate}
 
-\noindent 两级分离设计的好处是显而易见的：当某一个Cubby被合并或停用时，只需要
-更新Cubby级路由中对应的那部分键的映射信息，无需触碰其他活跃Cubby的
+\noindent 两级分离设计的好处是显而易见的：当某一个\texttt{Cubby}被合并或停用时，只需要
+更新\texttt{Cubby}级路由中对应的那部分键的映射信息，无需触碰其他活跃\texttt{Cubby}的
 内部Slot级路由。这种隔离性使得系统的合并操作成本与所合并的实际键数量呈线性关系，
 而非与全系统总键数相关。
 
@@ -470,61 +470,61 @@ Facility作为全局入口，维护一个\texttt{cubbies\_}\newline
 系统在语言选型、组织方式和算法方面采用以下技术方案：
 
 \begin{itemize}
-  \item \textbf{C++23语言标准}。系统使用C++23标准的\texttt{consteval}、
+  \item C++23语言标准。系统使用C++23标准的\texttt{consteval}、
     \texttt{constexpr}和\texttt{std::bit\_cast}，在编译期完成部分计算以降低
-    运行时开销。MiniArray的位宽参数通过模板在编译期确定。
-  \item \textbf{纯头文件模板组织方式}。四个组件均以纯头文件
+    运行时开销。\texttt{MiniArray}的位宽参数通过模板在编译期确定。
+  \item 纯头文件模板组织方式。四个组件均以纯头文件
     （\texttt{.hpp}）形式组织，无独立编译单元。使用者将头文件复制至
     项目目录并添加\texttt{\#include}即可集成，同时编译器获得更大的内联
     优化空间。
-  \item \textbf{splitmix64哈希函数}。哈希函数使用\texttt{splitmix64}\cite{5}，
-    而非CityHash或xxHash等重型方案。splitmix64的64-bit雪崩混合步骤位扩散均匀，
+  \item \texttt{splitmix64}哈希函数。哈希函数使用\texttt{splitmix64}\cite{5}，
+    而非\texttt{CityHash}或\texttt{xxHash}等重型方案。\texttt{splitmix64}的64-bit雪崩混合步骤位扩散均匀，
     通过不同种子值可生成任意数量统计独立的哈希函数\cite{9}，单次调用成本
     极低（约5\,ns），适合字典树查询路径上的高频调用。
-  \item \textbf{与std::unordered\_map的定位差异}。\newline
+  \item 与std::unordered\_map的定位差异。\newline
     C++标准库的\texttt{std::unordered\_map}\newline
     基于链式寻址法，在良好哈希条件下
     性能出色，但其查询路径依赖单个哈希函数的均匀性，对恶意
     碰撞数据敏感。本方案的字典树路由将键的查询路径与其哈希比特串
     绑定，不同键的查询路径互不交叉，对抗性输入下退化上界为$\log n$，
-    优于\texttt{unordered\_map}的$O(n)$退化。
+    优于\texttt{std::unordered\_map}的$O(n)$退化。
 \end{itemize}
 
-\section{MiniArray：位压缩数组}
+\section{\texttt{MiniArray}：位压缩数组}
 
 \subsection{设计动机}
 
 在紧凑哈希表中，大量元数据（槽状态、路由条目）的位宽远小于标准整型（64 bits）。
-例如槽元数据仅需4比特（occupied + depth），路由条目中cubby索引仅需11比特。
+例如槽元数据仅需4比特（occupied + depth），路由条目中\texttt{cubby}索引仅需11比特。
 若使用\texttt{std::vector<uint64\_t>}存储，每个元素固定64比特，造成严重空间浪费。
 
-MiniArray将元素紧密平铺在连续位流中，按精确位宽存储\cite{1}，
+\texttt{MiniArray}将元素紧密平铺在连续位流中，按精确位宽存储\cite{1}，
 其两种存储模式的特性见表\ref{tab:miniarray}。
 
 \begin{table}[H]
 \centering
 \begin{tabular}{c|c|c}
 \toprule
-\textbf{模式} & \textbf{条件} & \textbf{操作复杂度} \\
+模式 & 条件 & 操作复杂度 \\
 \midrule
 Uniform & 全部元素等宽 & get/update $O(1)$ \\
 Non-uniform & 元素宽度不等 & insert/erase $O(n)$ \\
 \bottomrule
 \end{tabular}
-\caption{MiniArray双模存储}
+\caption{\texttt{MiniArray}双模存储}
 \label{tab:miniarray}
 \end{table}
 
 \subsection{双模存储}
 \begin{itemize}
-  \item \textbf{Uniform模式}：所有元素位宽$w$相等，第$i$个元素位于\texttt{data\_}的
+  \item Uniform模式：所有元素位宽$w$相等，第$i$个元素位于\texttt{data\_}的
     位偏移$i \times w$处，通过\texttt{bit\_read}/\texttt{bit\_write}直接存取
-  \item \textbf{Non-uniform模式}：元素位宽不等时启用，使用\texttt{lens\_[]}和
+  \item Non-uniform模式：元素位宽不等时启用，使用\texttt{lens\_[]}和
     \texttt{vals\_[]}分别存储每个元素的位长和值；修改操作后调用
     \texttt{rebuild\_uniform()}尝试切回Uniform模式
 \end{itemize}
 
-\section{LocalQueryRouter：紧凑二叉字典树局部查询路由}
+\section{\texttt{LocalQueryRouter}：紧凑二叉字典树局部查询路由}
 
 \subsection{设计原理（论文 \S4.3 + Lemma 15）}
 
@@ -537,21 +537,21 @@ Non-uniform & 元素宽度不等 & insert/erase $O(n)$ \\
 
 \subsection{紧凑节点编码}
 
-本次实现将 字典树 及 f-values 以紧凑位编码存储于 MiniArray 中：
+本次实现将 字典树 及 f-values 以紧凑位编码存储于 \texttt{MiniArray} 中：
 
 \begin{itemize}
-  \item \textbf{节点编码}：每个节点固定 $w=\texttt{entry\_bits\_}$ 位宽，
+  \item 节点编码：每个节点固定 $w=\texttt{entry\_bits\_}$ 位宽，
     最高位为类型标志（0=内部节点, 1=叶节点）。
     内部节点存储 left\_child + right\_child 两个显式子指针（各 $\texttt{child\_bits\_}$ 位），
     叶节点存储 f\_value（$\texttt{fval\_bits\_}$ 位）+ 键哈希指纹（$\texttt{kh\_bits\_}$ 位，
     默认44位）。
-  \item \textbf{查询}（\texttt{walk\_down}）：沿键的 最低有效位 方向哈希位遍历 字典树，
+  \item 查询（\texttt{walk\_down}）：沿键的 最低有效位 方向哈希位遍历 字典树，
     遇叶节点用指纹验证后返回 f\_value。
-  \item \textbf{插入}（\texttt{insert + do\_split}）：沿路径 walk 遍历，遇异键叶时分裂
+  \item 插入（\texttt{insert + do\_split}）：沿路径 \texttt{walk} 遍历，遇异键叶时分裂
     （找两键哈希分叉位，然后创建内部节点链，最后在分叉处创建两新叶）；遇 NO\_CHILD 空方向时链接新叶。
-  \item \textbf{删除}（\texttt{remove}）：walk\_down 找到叶，标记为空叶（hash=0, fval=0）。
+  \item 删除（\texttt{remove}）：\texttt{walk\_down} 找到叶，标记为空叶（hash=0, fval=0）。
 \end{itemize}
-整体空间 $= |\texttt{nodes\_}| \times w$ bits，其中 $|\texttt{nodes\_}| \approx 2|S|$，
+整体空间即 $ |\texttt{nodes\_}| \times w$ bits，其中 $|\texttt{nodes\_}| \approx 2|S|$，
 $w \le 62$ bits。紧凑编码实现了每节点 5-8 bytes 的空间占用。
 
 \subsection{Lookup Table 加速}
@@ -563,11 +563,11 @@ $w \le 62$ bits。紧凑编码实现了每节点 5-8 bytes 的空间占用。
 
 本实现采用8-bit 查找表：预计算哈希低8位（256种前缀模式）各自在字典树中可达的
 目标节点索引，存入\texttt{lut\_[]}。查询时以键哈希低8位直接查表获得起跳节点，
-跳过前8层，从第9位起继续walk-down至叶节点。8-bit 查找表仅消耗
+跳过前8层，从第9位起继续\texttt{walk-down}至叶节点。8-bit 查找表仅消耗
 $256 \times 4\text{B} = 1\text{KB}$空间，将字典树查询深度缩减8层，
 在本文实验规模（$n\leq 10^6$，字典树深度约20层）削减约40\%的遍历工作量。
 
-以具体实例说明查找表的工作方式。设某键经splitmix64哈希后的低8位为0xA3（二进制10100011），\texttt{ensure\_lut()}在查找表构建阶段已从字典树根节点出发，沿最低有效位方向按b0=1、b1=1、b2=0、b3=0、b4=0、b5=1、b6=0、b7=1的顺序下降8层，将最终抵达的节点索引写入\texttt{lut\_[0xA3]}。查询时，probe\_index以键哈希的0xA3直接索引lut\_[]数组，一步跳至该预计算节点，随后从该节点沿哈希第9位起继续逐位向字典树下层遍历。此过程以1 KB的查表空间换取字典树前8层的全部逐位穿越开销。
+以具体实例说明查找表的工作方式。设某键经\texttt{splitmix64}哈希后的低8位为0xA3（二进制10100011），\texttt{ensure\_lut()}在查找表构建阶段已从字典树根节点出发，沿最低有效位方向按b0=1、b1=1、b2=0、b3=0、b4=0、b5=1、b6=0、b7=1的顺序下降8层，将最终抵达的节点索引写入\texttt{lut\_[0xA3]}。查询时，\texttt{probe\_index}以键哈希的0xA3直接索引lut\_[]数组，一步跳至该预计算节点，随后从该节点沿哈希第9位起继续逐位向字典树下层遍历。此过程以1 KB的查表空间换取字典树前8层的全部逐位穿越开销。
 
 查找表在字典树节点总数（\texttt{nodes\_.size()}）增长时失效：插入或分裂操作会
 增加节点，此时\texttt{lut\_valid\_ = false}；键已存在时的值更新不改变拓扑，
@@ -578,24 +578,27 @@ $256 \times 4\text{B} = 1\text{KB}$空间，将字典树查询深度缩减8层�
 \subsection{两级路由中的使用}
 
 \begin{itemize}
-  \item \textbf{Facility::cubby\_router\_}：全局二级路由，容量 $2^{21}$，映射键到 cubby 索引
-  \item \textbf{Cubby::route\_}：每 cubby 内一级路由，容量 capacity$\times 2$，映射键到槽索引
+  \item \texttt{Facility::cubby\_router\_}：\newline
+  全局二级路由，容量 $2^{21}$，映射键到 cubby 索引
+  \item \texttt{Cubby::route\_}：\newline
+  每 cubby 内一级路由，容量 capacity$\times 2$，映射键到槽索引
 \end{itemize}
 
-两者均使用同一 LocalQueryRouter 模板，无 oracle 时通过 key\_hash\_val 指纹验证键身份。
+两者均使用同一 \texttt{LocalQueryRouter} 模板，无 \texttt{oracle} 时通过\newline
+ \texttt{key\_hash\_val} 指纹验证键身份。
 
-\section{Cubby：单级弹性哈希表}
+\section{\texttt{Cubby}：单级弹性哈希表}
 
-Cubby是$k$-kick树方案的物理载体\cite{1}，也是系统中最复杂的单体组件。
-每个Cubby实例有独立的容量参数$m$可通过构造函数中的
+\texttt{Cubby}是$k$-kick树方案的物理载体\cite{1}，也是系统中最复杂的单体组件。
+每个\texttt{Cubby}实例有独立的容量参数$m$可通过构造函数中的
 \texttt{desired\_capacity}显式指定，也可由\texttt{compute\_capacity}静态方法
 根据层级和全局数据规模自动推算并在此容量上构建$k+1$个深度层级
 的kick-bin层次网络。
 
-Cubby的容量不是固定值。构造时允许传入动态指定的期望容量，
-这在合并操作频繁的分层管理架构中是必要的：两个tier-$j$的Cubby合并为
-一个tier-$(j+1)$的Cubby时，新Cubby的容量综合考量论文理论公式的参考值与合并后
-实际数据量$\times 2$的经验界限，在避免空间透支的同时维持不低于50\%的槽位利用率。
+\texttt{Cubby}的容量不是固定值。构造时允许传入动态指定的期望容量，
+这在合并操作频繁的分层管理架构中是必要的：两个层级处于第$j$层级的\texttt{Cubby}合并为
+一个层级处于$j+1$层的\texttt{Cubby}时，新\texttt{Cubby}的容量综合考量论文理论公式的参考值与合并后
+实际数据量的两倍的经验界限，在避免空间透支的同时维持不低于50\%的槽位利用率。
 
 \subsection{槽元数据编码}
 
@@ -605,14 +608,13 @@ Cubby的容量不是固定值。构造时允许传入动态指定的期望容量
   \item bit 1--3: depth（0--7，指代该槽所在kick深度）
 \end{itemize}
 
-4比特的取值有明确的信息论依据。depth的取值范围为0--7（$k_{\max}=4$时踢出深度最多$k=4$层，含depth-0的根bin共5层；预留余量至7以兼容更大的$k$），需$\lceil\log_2 8\rceil=3$比特。occupied仅为布尔标志，需1比特，合计4比特。若以常见的uint8\_t逐槽存储元数据（即使只用到4个有效位，对齐后仍占8比特），则每个Cubby中$m$个槽的元数据总开销为$m$字节；MiniArray将其压缩至$m\times 4$比特（即$m/2$字节），节省恰好一半。对于典型Cubby容量$m=1024$，节省512字节；$m=65536$时节省32 KB，其累积效应在多层Cubby并存时进一步放大。
-
+4比特的取值有明确的信息论依据。depth的取值范围为0--7（$k_{\max}=4$时踢出深度最多$k=4$层，含depth-0的根bin共5层；预留余量至7以兼容更大的$k$），需$\lceil\log_2 8\rceil=3$比特。occupied仅为布尔标志，需1比特，合计4比特。若以常见的\texttt{uint8\_t}逐槽存储元数据，则每个\texttt{Cubby}中$m$个槽的元数据总开销为$m$字节；\texttt{MiniArray}将其压缩至$m/2$字节，节省恰好一半。对于典型\texttt{Cubby}容量$m=1024$，节省512字节；$m=65536$时节省32 KB，其累积效应在多层\texttt{Cubby}并存时进一步放大。
 另设1比特 \texttt{free\_bitmap\_} 标识空闲槽（1=空闲），配合
 \texttt{first\_free\_} 缓存指针实现近似$O(1)$的空闲槽查找。
 
 \subsection{踢出算法}
 
-Cubby的\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级踢出：
+\texttt{Cubby}的\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级踢出：
 
 \begin{algorithm}[H]
 \caption{try\_place(key, max\_depth)}
@@ -623,14 +625,12 @@ Cubby的\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级踢出：
   \IF{$d > 0$}
     \STATE Phase 2: 扫描$bin$中深度$< d$的占槽
     \IF{找到}
-      \STATE 暂存$victim\_key, victim\_val$
-      \STATE 清空该槽
+      \STATE 暂存$victim\_key, victim\_val$，清空该槽
       \STATE 递归\texttt{try\_place}(victim, victim\_depth, kick\_idx)
       \IF{成功}
         \STATE victim移入新槽，新键占据该槽
         \RETURN
-      \ELSE
-        \STATE 恢复原槽
+      \ELSE 恢复原槽
       \ENDIF
     \ENDIF
   \ENDIF
@@ -653,7 +653,7 @@ Cubby的\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级踢出：
 \centering
 \begin{tabular}{c|c|c}
 \toprule
-\textbf{Tier} & \textbf{基准容量} & \textbf{场景} \\
+Tier & 基准容量 & 场景 \\
 \midrule
 1 & 1,024 & Tail，新数据写入 \\
 2 & 约4,096（动态） & 两个tier-1合并为一个 \\
@@ -661,36 +661,36 @@ Cubby的\texttt{try\_place}实现了论文\S3.1\cite{1}的优先级踢出：
 4 & 约65,536（动态） & 两个tier-3合并为一个 \\
 \bottomrule
 \end{tabular}
-\caption{Cubby容量尺度（动态容量）}
+\caption{\texttt{Cubby}容量尺度（动态容量）}
 \label{tab:cubcap}
 \end{table}
 
-\section{Facility：全局分层管理器}
+\section{\texttt{Facility}：全局分层管理器}
 
-Facility组件负责全局状态协调、合并调度和统一查询接口\cite{1}。内部维护着当前活跃的写入目标（tail指针）、各
-层级的Cubby计数、以及全局Cubby级路由表\texttt{cubby\_router\_}。
+\texttt{Facility}组件负责全局状态协调、合并调度和统一查询接口\cite{1}。内部维护着当前活跃的写入目标（tail指针）、各
+层级的\texttt{Cubby}计数、以及全局\texttt{Cubby}级路由表\texttt{cubby\_router\_}。
 
 \subsection{合并机制的设计考量}
 
-当某一层级的活跃Cubby数量超过预设上限（由\texttt{max\_cubbies}函数根据
-层级编号返回的固定阈值）时，Facility触发该层级的合并流程。两个被选中的
-同层Cubby中的所有元素被全部提取，依次插入一个新分配的、高一层级的Cubby。
-每个被迁移的键都需在全局路由表中更新其Cubby索引映射这是合并操作的主要
+当某一层级的活跃\texttt{Cubby}数量超过预设上限（由\texttt{max\_cubbies}函数根据
+层级编号返回的固定阈值）时，\texttt{Facility}触发该层级的合并流程。两个被选中的
+同层\texttt{Cubby}中的所有元素被全部提取，依次插入一个新分配的、高一层级的\texttt{Cubby}。
+每个被迁移的键都需在全局路由表中更新其\texttt{Cubby}索引映射这是合并操作的主要
 时间开销。
 
-为避免\texttt{std::vector::erase}引起的索引整体偏移（会使已存储键的Cubby编号
+为避免\texttt{std::vector::erase}引起的索引整体偏移（会使已存储键的\texttt{Cubby}编号
 大规模失效，触发全量路由重建），本实现采用\texttt{deactivate()}停用而非物理
-删除。被停用的Cubby清空内部存储、将\texttt{active\_}置为false，但其在
-\texttt{cubbies\_}向量中的索引保留不变。后续分配新Cubby槽位时，
+删除。被停用的\texttt{Cubby}清空内部存储、将\texttt{active\_}置为false，但其在
+\texttt{cubbies\_}向量中的索引保留不变。后续分配新\texttt{Cubby}槽位时，
 \texttt{alloc\_cubby\_slot}优先回收这些已停用的空槽，实现索引循环利用。
-路由表中指向其他活跃Cubby的映射条目在整个合并过程中始终保持有效，无需额外
+路由表中指向其他活跃\texttt{Cubby}的映射条目在整个合并过程中始终保持有效，无需额外
 的批量修复操作。各层级的合并触发阈值见表\ref{tab:merge}。
 
 \begin{table}[H]
 \centering
 \begin{tabular}{c|c|c}
 \toprule
-\textbf{Tier} & \textbf{max\_cubbies} & \textbf{触发条件} \\
+Tier & \texttt{max\_cubbies} & 触发条件 \\
 \midrule
 1 & 200 & 约20万元素触发合并 \\
 2 & 50  & 50个tier-2后合并 \\
@@ -704,16 +704,17 @@ Facility组件负责全局状态协调、合并调度和统一查询接口\cite{
 
 \subsection{插入/查询/删除流程}
 
-\textbf{插入}：cubby\_router\_查重；若tail满则执行promote和rebalance；
-然后调用Cubby::insert\_new（含kick链）；最后更新两级路由。
+插入：\texttt{cubby\_router\_}查重；若tail满则执行\texttt{promote}和\texttt{rebalance}；
+然后调用\texttt{Cubby::insert\_new}（含kick链）；最后更新两级路由。
 
-\textbf{查询}：cubby\_router\_根据哈希值在字典树中路由定位cubby，
-再通过\newline
-Cubby::route\_定位到相应槽位，最后调用lookup\_at比对键值验证是否存在。
+查询：\texttt{cubby\_router\_}根据哈希值在字典树中路由定位\texttt{cubby}，
+然后再通过
+\texttt{Cubby::route\_}定位到相应槽位，最后调用\texttt{lookup\_at}比对键值验证这个被查询的键值是否存在。
 
-\textbf{删除}：cubby\_router\_根据哈希值定位目标cubby，
-执行Cubby::remove\_at移除键值对并释放槽位，
-随后清理cubby\_router\_.remove更新路由表空闲标记。
+删除：\texttt{cubby\_router\_}根据哈希值定位目标\texttt{cubby}，
+然后执行\newline
+\texttt{Cubby::remove\_at}移除键值对并释放槽位，
+随后清理\texttt{cubby\_router\_.remove}更新路由表空闲标记。
 
 %=====================================================================
 \chapter{算法实现}
@@ -730,7 +731,7 @@ Cubby::route\_定位到相应槽位，最后调用lookup\_at比对键值验证�
 \resizebox{\linewidth}{!}{
 \begin{tabular}{l|l|l}
 \toprule
-\textbf{文件} & \textbf{行数} & \textbf{职责} \\
+文件 & 行数 & 职责 \\
 \midrule
 \texttt{miniarray.hpp} & 261 & 位压缩数组，Uniform和Non-uniform双模存储 \\
 \texttt{local\_query\_router.hpp} & 350 & 紧凑二叉字典树局部查询路由  8-bit Lookup Table \\
@@ -747,7 +748,7 @@ Cubby::route\_定位到相应槽位，最后调用lookup\_at比对键值验证�
 \texttt{miniarray.hpp}；\texttt{cubby.hpp}依赖前两者；\texttt{facility.hpp}
 依赖全部三个底层组件。分层依赖保证编译的有序性和代码的可测试性。
 
-\section{MiniArray实现}\label{sec:ma-impl}
+\section{\texttt{MiniArray}实现}\label{sec:ma-impl}
 
 \subsection{位操作原语}
 
@@ -771,26 +772,26 @@ uint64_t bit_read(size_t bit_off, size_t bit_len) const {
 
 \subsection{模式切换}
 
-\texttt{to\_non\_uniform()}：将Uniform数据转为Non-uniform格式（lens\_[] + vals\_[]）。
-\texttt{rebuild\_uniform()}：若所有lens\_等长，则切回Uniform并重建data\_；否则保持
+\texttt{to\_non\_uniform()}：将Uniform数据转为Non-uniform格式（\texttt{lens\_[]} + \texttt{vals\_[]}）。
+\texttt{rebuild\_uniform()}：若所有\texttt{lens\_}等长，则切回Uniform并重建\texttt{data\_}；否则保持
 Non-uniform并平铺写入。
 
-\section{LocalQueryRouter实现（紧凑MiniArray 字典树 + 查找表）}
+\section{\texttt{LocalQueryRouter}实现}
 
 \subsection{紧凑节点编码}
 
-每个字典树节点在MiniArray中以固定的\texttt{entry\_bits\_}位宽（不超过62位）
+每个字典树节点在\texttt{MiniArray}中以固定的\texttt{entry\_bits\_}位宽（不超过62位）
 存储，最高位为类型标志：0表示内部节点，1表示叶节点。内部节点将剩余位
 均分为左右两个子指针字段（各\texttt{child\_bits\_}位），分别指向左子树和
-右子树的根节点在MiniArray中的序号。叶节点将剩余位划分为功能值字段
+右子树的根节点在\texttt{MiniArray}中的序号。叶节点将剩余位划分为功能值字段
 （\texttt{fval\_bits\_}位，高位部分）和键哈希指纹字段（\texttt{kh\_bits\_}位，
-默认44位，低位部分）。功能值存储该键在所属Cubby中的槽位索引，键哈希指纹
+默认44位，低位部分）。功能值存储该键在所属\texttt{Cubby}中的槽位索引，键哈希指纹
 取值为\texttt{splitmix64(hash(key)) \& ((1<<44)-1)}，用于查询时快速验证
 叶节点与查询键的匹配关系。子指针位宽由公式\ref{eq:childbits}
 确定，随路由器容量参数动态调整；
-功能值位宽取决于使用场景（Cubby级路由中为槽位索引位宽，Facility级路由中为
-Cubby编号位宽）。类型位、子指针（或功能值及哈希指纹）拼接后得到完整节点编码，
-由MiniArray以Uniform模式紧凑存储。
+功能值位宽取决于使用场景（\texttt{Cubby}级路由中为槽位索引位宽，\texttt{Facility}级路由中为
+\texttt{Cubby}编号位宽）。类型位、子指针（或功能值及哈希指纹）拼接后得到完整节点编码，
+由\texttt{MiniArray}以Uniform模式紧凑存储。
 \begin{equation}
   \texttt{child\_bits\_} = \texttt{bits\_to\_represent}
 (\texttt{cap} \times 3 + \texttt{NODE\_PAD})
@@ -799,11 +800,11 @@ Cubby编号位宽）。类型位、子指针（或功能值及哈希指纹）拼
 
 \subsection{核心算法}
 
-\textbf{查询 (probe\_index)}：对 key 计算哈希得到 64-bit 二元串，
+查询 (\texttt{probe\_index})：对 key 计算哈希得到 64-bit 二元串，
 从根节点沿 最低有效位 位遍历 字典树。若 查找表 有效则跳过前 8 层直接跳转至目标节点。
-遇叶节点用指纹验证：匹配则返回 f\_value，否则返回 SIZE\_MAX。
+遇叶节点用指纹验证：匹配则返回 f\_value，否则返回 \texttt{SIZE\_MAX}。
 
-\textbf{插入 (insert)}：沿 key 的 最低有效位 哈希位遍历 字典树。五种情况：
+插入 (insert)：沿 key 的 最低有效位 哈希位遍历 字典树。五种情况：
 \begin{enumerate}
   \item 遇叶节点且指纹匹配：更新 f\_value
   \item 遇叶节点且指纹为0（空叶，首次使用）：覆盖为新键数据
@@ -814,23 +815,23 @@ Cubby编号位宽）。类型位、子指针（或功能值及哈希指纹）拼
 \end{enumerate}
 插入结束后若 \texttt{nodes\_.size()} 变化则失效 查找表。
 
-\textbf{do\_split(leaf\_idx, depth, e\_hash, e\_fval, n\_hash, n\_fval)}：
+do\_split(leaf\_idx, depth, e\_hash, e\_fval, n\_hash, n\_fval)：
 \begin{enumerate}
-  \item 从 depth 起找两 hash 的首个分叉位 diverge
-  \item 从 depth 到 diverge-1 逐位创建内部节点链（每次 alloc\_node）
-  \item 若当前节点为原叶：转换为 internal；若为内部节点：更新对应方向子指针
-  \item 在 diverge 处创建 e\_leaf（已存键）和 n\_leaf（新键）
+  \item 从 depth 起找两 hash 的首个分叉位 \texttt{diverge}
+  \item 从 depth 到 \texttt{diverge}-1 逐位创建内部节点链（每次 alloc\_node）
+  \item 若当前节点为原叶：转换为 \texttt{internal}；若为内部节点：更新对应方向子指针
+  \item 在 \texttt{diverge} 处创建 e\_leaf（已存键）和 n\_leaf（新键）
   \item 设置最后一个内部节点的左右子节点为两叶
 \end{enumerate}
 
-\textbf{删除 (remove)}：沿 字典树 walk 找到匹配叶节点，写入空叶标记
+删除 (remove)：沿 字典树 walk 找到匹配叶节点，写入空叶标记
 （即下述两个变量fval=0, hash=0的节点），n\_entries\_--。
 
 \subsection{显式双指针与查找表协同}
 
 字典树节点存储采用显式left+right双指针：内部节点的数据字段由两个等宽的
 \texttt{child\_bits\_}位子指针（分别指向左、右子树的根节点序号）拼接而成。
-\texttt{do\_split}需要分配新节点时，\texttt{alloc\_node()}始终在MiniArray
+\texttt{do\_split}需要分配新节点时，\texttt{alloc\_node()}始终在\texttt{MiniArray}
 末尾追加，已有节点的子指针引用关系因此在整个分裂过程中保持稳定已有节点
 索引和父子关系不因新节点插入而偏移。这一稳定拓扑简化了分裂算法的实现，也
 使查找表的重建判定简化为仅检查节点总数是否变化。
@@ -843,22 +844,22 @@ Cubby编号位宽）。类型位、子指针（或功能值及哈希指纹）拼
 对整体性能影响微乎其微。
 
 \begin{lstlisting}[caption={查找表 构建与查询}]
-void ensure_lut() {
+void \texttt{ensure_lut}() {
     if (lut_valid_) return;
     for (int prefix = 0; prefix < 256; ++prefix) {
         size_t cur = 0;
         for (int d = 0; d < 8; ++d) {
-            auto e = nodes_.get(cur);
+            auto e = \texttt{nodes_}.get(cur);
             if (is_leaf(e)) break;
             cur = hash_bit_at(prefix, d) ? right_child(e) : left_child(e);
         }
-        lut_[prefix] = (cur != NO_CHILD) ? (int32_t)cur : -1;
+        lut_[prefix] = (cur != \texttt{NO_CHILD}) ? (int32_t)cur : -1;
     }
     lut_valid_ = true;
 }
 \end{lstlisting}
 
-\section{Cubby实现}
+\section{\texttt{Cubby}实现}
 
 \subsection{bin参数计算}
 
@@ -873,23 +874,23 @@ $\Pr[s(x) < i] = 1/(\log^{(i)} n)^2$ 计算阈值，从$k$到0逐层比较并返
 
 \subsection{空闲槽查找}
 
-\texttt{free\_bitmap\_}（MiniArray, 1 bit/slot, 0表示占用）配合
+\texttt{free\_bitmap\_}（\texttt{MiniArray}, 1 bit/slot, 0表示占用）配合
 \texttt{first\_free\_}缓存指针，实现近似 O(1) 的空闲槽查找。
 \texttt{find\_free\_in\_bin()} 从缓存的 \texttt{first\_free\_} 位置起扫描目标 bin，
 插入后清 bit，删除后置 bit 并更新缓存。
 
 \begin{lstlisting}[caption={find\_free\_in\_bin 空闲槽扫描}]
 size_t find_free_in_bin(size_t bin_start, size_t bin_end, size_t reserved) {
-    if (first_free_ < bin_start) first_free_ = bin_start;
-    for (size_t i = first_free_; i < bin_end; ++i)
-        if (free_bitmap_.get(i) && i != reserved) { first_free_ = i + 1; return i; }
-    for (size_t i = bin_start; i < first_free_; ++i)
-        if (free_bitmap_.get(i) && i != reserved) { first_free_ = i; return i; }
-    return SIZE_MAX;
+    if (\texttt{first_free_} < bin_start) \texttt{first_free_} = bin_start;
+    for (size_t i = \texttt{first_free_}; i < bin_end; ++i)
+        if (\texttt{free_bitmap_}.get(i) && i != reserved) { \texttt{first_free_} = i + 1; return i; }
+    for (size_t i = bin_start; i < \texttt{first_free_}; ++i)
+        if (\texttt{free_bitmap_}.get(i) && i != reserved) { \texttt{first_free_} = i; return i; }
+    return \texttt{SIZE_MAX};
 }
 \end{lstlisting}
 
-\section{Facility实现}
+\section{\texttt{Facility}实现}
 
 \subsection{两级路由查询}
 
@@ -902,10 +903,10 @@ size_t find_free_in_bin(size_t bin_start, size_t bin_end, size_t reserved) {
 
 \subsection{合并与路由更新}
 
-\texttt{merge\_two\_of\_tier(tier)}：选取两个候选Cubby，提取全部元素，
-按实际数据量计算动态容量，通过\texttt{alloc\_cubby\_slot}获得新Cubby，
-逐元素插入新Cubby并逐一更新\texttt{cubby\_router\_}中键到cubby索引的映射，
-最后\texttt{deactivate()}原Cubby。使用\texttt{deactivate()}停用避免
+\texttt{merge\_two\_of\_tier(tier)}：选取两个候选\texttt{Cubby}，提取全部元素，
+按实际数据量计算动态容量，通过\texttt{alloc\_cubby\_slot}获得新\texttt{Cubby}，
+逐元素插入新\texttt{Cubby}并逐一更新\texttt{cubby\_router\_}中键到cubby索引的映射，
+最后\texttt{deactivate()}原\texttt{Cubby}。使用\texttt{deactivate()}停用避免
 \texttt{vector::erase}带来的索引偏移。
 
 \section{复杂度分析}
@@ -918,7 +919,7 @@ size_t find_free_in_bin(size_t bin_start, size_t bin_end, size_t reserved) {
 \resizebox{\linewidth}{!}{
 \begin{tabular}{l|c|c|c}
 \toprule
-\textbf{操作} & \textbf{期望} & \textbf{摊还（含合并）} & \textbf{主要原因} \\
+操作 & 期望 & 摊还（含合并） & 主要原因 \\
 \midrule
 查询 & $O(\log |S|)$ + 查找表加速 &  & 紧凑字典树 walk（查找表跳过前8层） \\
 插入 & $O(\log |S|)$ & $O(m)$ / 每次合并 & $m$为合并涉及的实际元素数 \\
@@ -931,9 +932,9 @@ size_t find_free_in_bin(size_t bin_start, size_t bin_end, size_t reserved) {
 \label{tab:complexity}
 \end{table}
 
-\noindent 上表中插入操作的期望复杂度$O(\log |S|)$来自Cubby内字典树插入过程，
+\noindent 上表中插入操作的期望复杂度$O(\log |S|)$来自\texttt{Cubby}内字典树插入过程，
 该过程沿哈希值的各比特位逐层下降以确定插入路径。$O(m)$的摊还成本则源于合并
-操作：每当系统触发Cubby合并时，需对已迁移至新位置的元素逐一重建字典树路由信息。
+操作：每当系统触发\texttt{Cubby}合并时，需对已迁移至新位置的元素逐一重建字典树路由信息。
 惰性状态标记策略将合并成本限定为与被合并元素数成线性关系，而非与系统内全部键
 的总数挂钩，这在大规模数据持续插入场景下有效抑制了合并成本的累积，使得整体
 性能衰减更为平缓。
@@ -950,7 +951,7 @@ $\log_2|S| - 8$层，较原始路径缩短至约一半。在$n \leq 10^6$条件�
 本章对实现的k-kick哈希方案进行了实验评估。实验分为两大部分：\newline
 第一部分在随机均匀分布键（即良好哈希条件）下，对比本方案与\newline
 \texttt{std::unordered\_map}的插入、查询、删除和内存四种维度的性能；
-第二部分在人为引入极端哈希碰撞的条件下，测试两类方案在冲突退化方面的
+第二部分在人为引入下，测试两类方案在冲突退化方面的
 表现差异。实验采用$k=4$的硬编码配置，数据规模根据$k$-kick树的理论模型
 进行选取。
 
@@ -974,27 +975,27 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
 \subsection{硬件与软件环境}
 
 \begin{itemize}
-  \item \textbf{硬件平台}：Intel Core i7（第10代，4核8线程，2.8 GHz基础频率，
+  \item 硬件平台：Intel Core i7（第10代，4核8线程，2.8 GHz基础频率，
     5.0 GHz睿频），16 GB DDR4，64位Windows 11专业版。
     实验期间关闭非必要后台进程，未做CPU亲和性绑定。
 
-  \item \textbf{编译器与编译选项}：GCC 15.2.0（通过MSYS2 UCRT64环境安装），编译
+  \item 编译器与编译选项：GCC 15.2.0（通过MSYS2 UCRT64环境安装），编译
     参数为\texttt{-std=c++23 -O3 -DNDEBUG}。
 
-  \item \textbf{数据类型}：键和值均使用32-bit无符号整数（\texttt{uint32\_t}）。
+  \item 数据类型：键和值均使用32-bit无符号整数（\texttt{uint32\_t}）。
     碰撞实验中为\texttt{std::unordered\_map}指定\texttt{BadHash}（固定返回0），
     使所有键落入同一桶，形成单链冲突。
 
-  \item \textbf{数据集与随机性}：所有测试数据通过\texttt{std::mt19937\_64}梅森
+  \item 数据集与随机性：所有测试数据通过\texttt{std::mt19937\_64}梅森
     旋转算法\cite{25}预先生成。对每个数据规模使用5个不同的随机种子独立生成5组数据集，
     报告5次试验的均值和标准差，以控制单次实验的偶然波动。
 
-  \item \textbf{测试流程}：每组实验按照``插入全部$n$个元素，查询全部$n$个元素，
+  \item 测试流程：每组实验按照``插入全部$n$个元素，查询全部$n$个元素，
     删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
     \texttt{std::chrono::high\_resolution\_clock}测量并转换为微秒。
     报告的总时间为该阶段对所有$n$个元素操作的总耗时，均值除以$n$得到每操作时间。
 
-  \item \textbf{内存测量}：进程内存占用通过Windows API函数
+  \item 内存测量：进程内存占用通过Windows API函数
     \texttt{GetProcessMemoryInfo}获取\texttt{WorkingSetSize}字段，
     在插入阶段前后各采集一次，以差值（MB）报告该次试验的内存增量。
 \end{itemize}
@@ -1020,7 +1021,7 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
 \centering
 \begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
+$n$ & \texttt{Facility} (us) & umap (us) & F/us（每次操作） & U/us（每次操作） \\
 \midrule
 $5\times10^4$ & $3.31\times 10^4$ & $2.15\times 10^3$ & 0.66 & 0.04 \\
 $1\times10^5$ & $7.10\times 10^4$ & $4.93\times 10^3$ & 0.71 & 0.05 \\
@@ -1035,10 +1036,10 @@ $1\times10^6$ & $7.47\times 10^6$ & $4.25\times 10^5$ & 7.47 & 0.42 \\
 
 $n=5\times10^4$至$1\times10^5$区间内，插入每键耗时0.66--0.71 us（每次操作）。
 $n=2\times10^5$时升至1.09 us（每次操作），$n=5\times10^5$时升至5.06 us（每次操作）。
-这一拐点对应全局合并流程：tier-1层活跃Cubby数量超过200个阈值后，系统将同层
-Cubby两两合并为更高层级的Cubby对象。合并采用将旧Cubby标记为停用而不进行物理删除的策略，摊还成本与当次合并涉及的元素数量成比例。$n=10^6$时插入
+这一拐点对应全局合并流程：tier-1层活跃\texttt{Cubby}数量超过200个阈值后，系统将同层
+\texttt{Cubby}两两合并为更高层级的\texttt{Cubby}对象。合并采用将旧\texttt{Cubby}标记为停用而不进行物理删除的策略，摊还成本与当次合并涉及的元素数量成比例。$n=10^6$时插入
 总耗时约7.47秒，含多层级合并的累计摊还成本。每键插入时间约为
-\texttt{unordered\_map}（0.04--0.42 us（每次操作））的15--18倍。
+\texttt{std::unordered\_map}（0.04--0.42 us（每次操作））的15--18倍。
 
 \subsection{查询性能}
 
@@ -1048,7 +1049,7 @@ Cubby两两合并为更高层级的Cubby对象。合并采用将旧Cubby标记�
 \centering
 \begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
+$n$ & \texttt{Facility} (us) & umap (us) & F/us（每次操作） & U/us（每次操作） \\
 \midrule
 $5\times10^4$ & $1.18\times 10^4$ & $5.79\times 10^2$ & 0.24 & 0.01 \\
 $1\times10^5$ & $2.77\times 10^4$ & $1.33\times 10^3$ & 0.28 & 0.01 \\
@@ -1064,11 +1065,11 @@ $1\times10^6$ & $1.59\times 10^6$ & $6.47\times 10^4$ & 1.59 & 0.06 \\
 \noindent 查询性能随$n$分为两个阶段。$n=5\times10^4$至$2\times10^5$范围内，
 8-bit 查找表将字典树前8层遍历替换为一次查表，每键耗时0.24--0.43 us（每次操作）。
 $n$增至$5\times10^5$后，字典树深度随$\log_2 n$增长（合并后引入的
-Cubby-router两级路由增加了查询路径深度），每键耗时升至1.31--1.59 us（每次操作）。
-与\texttt{unordered\_map}（0.01--0.06 us（每次操作））相比，查询时间高出20--25倍。
-差距来源主要来自于以下两个方面，分别为：两级字典树的逐位遍历（Facility级cubby\_router\_和Cubby级
-route\_各需一次walk-down）、MiniArray跨字位读取的开销，合并后
-多Cubby并行查询导致的缓存局部性损失。
+\texttt{Cubby}-router两级路由增加了查询路径深度），每键耗时升至1.31--1.59 us（每次操作）。
+与\texttt{std::unordered\_map}（0.01--0.06 us（每次操作））相比，查询时间高出20--25倍。
+差距来源主要来自于以下两个方面，分别为：两级字典树的逐位遍历（\texttt{Facility}级cubby\_router\_和\texttt{Cubby}级
+route\_各需一次\texttt{walk-down}）、\texttt{MiniArray}跨字位读取的开销，合并后
+多\texttt{Cubby}并行查询导致的缓存局部性损失。
 
 \subsection{删除性能}
 
@@ -1078,7 +1079,7 @@ route\_各需一次walk-down）、MiniArray跨字位读取的开销，合并后
 \centering
 \begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{Facility (us)} & \textbf{umap (us)} & \textbf{F/us（每次操作）} & \textbf{U/us（每次操作）} \\
+$n$ & \texttt{Facility} (us) & umap (us) & F/us（每次操作） & U/us（每次操作） \\
 \midrule
 $5\times10^4$ & $2.49\times 10^4$ & $1.47\times 10^3$ & 0.50 & 0.03 \\
 $1\times10^5$ & $5.11\times 10^4$ & $3.63\times 10^3$ & 0.51 & 0.04 \\
@@ -1092,7 +1093,7 @@ $1\times10^6$ & $2.64\times 10^6$ & $3.76\times 10^5$ & 2.64 & 0.38 \\
 \end{table}
 
 $n\leq 2\times10^5$区间内删除每键约0.50--0.84 us（每次操作），耗时主要来自
-cubby\_router\_查找所属Cubby，route\_查找槽位和空叶标记写入
+cubby\_router\_查找所属\texttt{Cubby}，route\_查找槽位和空叶标记写入
 （将叶节点的fval和hash字段清零。$n=10^6$时升至2.64 us（每次操作）。
 本实现中删除操作还需完成被删键的两级路由清理，该路径与查询操作几乎
 等长。若采用每一个cubby拥有独立路由器架构，删除时仅更新本地路由，效率可提升约一倍。
@@ -1112,7 +1113,7 @@ cubby\_router\_查找所属Cubby，route\_查找槽位和空叶标记写入
 \centering
 \begin{tabular}{c|r|r|r|r}
 \toprule
-$n$ & \textbf{Facility (MB)} & \textbf{umap (MB)} & \textbf{F B/key} & \textbf{U B/key} \\
+$n$ & \texttt{Facility} (MB) & umap (MB) & F B/key & U B/key \\
 \midrule
 $5\times10^4$ & 2.2 & 1.2 & 46.1 & 25.2 \\
 $1\times10^5$ & 4.2 & 2.8 & 44.0 & 29.4 \\
@@ -1130,16 +1131,15 @@ $1\times10^6$ & 97.4 & 30.6 & 102.2 & 32.1 \\
 内存访问延迟，在工程定位上与本方案构成互补。
 
 内存占用在$n=2\times10^5$前后发生明显变化。$n\leq 2\times10^5$
-合并前，所有键值对集中存储在tier-1 Cubby中，紧凑字典树编码将每键路由器
-空间控制在5--8字节的水平。该阶段Facility每键约44--46 B/key，约为
-\texttt{unordered\_map}（25--31 B/key）的1.4--1.7倍。$n=5\times10^5$
-和$10^6$处进入合并活跃阶段，高层级 Cubby的容量采用了
+合并前，所有键值对集中存储在tier-1 \texttt{Cubby}中，紧凑字典树编码将每键路由器
+空间控制在5--8字节的水平。该阶段\texttt{Facility}每键约44--46 B/key，约为
+\texttt{std::unordered\_map}（25--31 B/key）的1.4--1.7倍。$n=5\times10^5$
+和$10^6$处进入合并活跃阶段，高层级 \texttt{Cubby}的容量采用了
 $\max(\text{论文公式}, \text{merged\_size}\times 2)$的动态策略，
 实际内存增速超线性：$n=10^6$时总内存约97 MB（102 B/key），
-约为\texttt{unordered\_map}（32 B/key）的3.2倍。Facility
-在$n=10^6$时每键的额外空间（约70 B/key）主要来自高层级 Cubby中
-未被填满的槽位和两级路由的加倍字典树存储，而非元数据位宽本身（slot\_meta\_
-每槽仅5 bit）。
+约为\texttt{std::unordered\_map}（32 B/key）的3.2倍。\texttt{Facility}
+在$n=10^6$时每键的额外空间（约70 B/key）主要来自高层级 \texttt{Cubby}中
+未被填满的槽位和两级路由的加倍字典树存储，而非元数据位宽本身。
 
 \section{高碰撞条件下的查询退化对比}
 
@@ -1153,10 +1153,10 @@ $\max(\text{论文公式}, \text{merged\_size}\times 2)$的动态策略，
 
 本节使用\texttt{BadHash}（固定返回0）替换\texttt{std::unordered\_map}的
 默认哈希函数，所有键映射到同一桶，形成长度为$n$的单一冲突链。
-Facility的键经过\texttt{splitmix64}哈希后进入字典树路由，与
+\texttt{Facility}的键经过\texttt{splitmix64}哈希后进入字典树路由，与
 \texttt{BadHash}无关，不受单桶冲突影响。
 冲突链长度（即$n$）取$10^3$、$5\times10^3$、$10^4$、$2\times10^4$、
-$5\times10^4$和$10^5$，每组5次取均值。\texttt{unordered\_map}
+$5\times10^4$和$10^5$，每组5次取均值。\texttt{std::unordered\_map}
 在单桶冲突下插入和查询均退化为$O(n)$每操作，总耗时为$O(n^2)$量级，
 因此规模上限设在$10^5$（此时每次查询需遍历约$10^5$个元素，单次试验
 总耗时数十秒）。
@@ -1176,8 +1176,8 @@ $5\times10^4$和$10^5$，每组5次取均值。\texttt{unordered\_map}
 \centering
 \begin{tabular}{c|r|r|r|r}
 \toprule
-\textbf{链长$n$} & \textbf{Facility (us)} & \textbf{umap (us)} &
-\textbf{F ns/op} & \textbf{U ns/op} \\
+链长$n$ & \texttt{Facility} (us) & umap (us) &
+F ns/op & U ns/op \\
 \midrule
 $10^3$   & 189     & $1.33\times 10^3$   & 189   & 1328 \\
 $5\times10^3$ & 1004    & $2.96\times 10^4$   & 201   & 5925 \\
@@ -1198,16 +1198,16 @@ $10^5$   & 38702   & $1.32\times 10^7$   & 387   & 132461 \\
 增幅约100倍，且增长趋势与$n$基本成线性关系。这符合链式寻址法在最坏情况下
 $O(n)$每操作查询复杂度的理论预期。
 
-本方案（Facility）的每操作查询耗时则保持在完全不同的量级和增长曲线上：
+本方案（\texttt{Facility}）的每操作查询耗时则保持在完全不同的量级和增长曲线上：
 $n=10^3$时约189 ns/op，$n=10^5$时约387 ns/op，全程在189--763 ns/op的
 狭窄区间内波动，增幅仅约4倍。该轻微上升主要归因于字典树深度的对数增长
-（$\log_2(10^5) \approx 16.6$位）和合并后多Cubby两级路由带来的额外查找层级，
+（$\log_2(10^5) \approx 16.6$位）和合并后多\texttt{Cubby}两级路由带来的额外查找层级，
 与冲突链长度无关。8-bit 查找表的跳表加速（跳跃前8层字典树遍历）和
 \texttt{splitmix64}的雪崩混合机制共同确保了键在字典树逐位路径上被有效分散。
 
-$n=10^5$时，Facility单次查询耗时387 ns为
-\texttt{unordered\_map}（132.5 us（每次操作））的约1/342，即342倍的
-速度优势。$n=5\times10^4$时Facility约为\texttt{unordered\_map}的180倍，
+$n=10^5$时，\texttt{Facility}单次查询耗时387 ns为
+\texttt{std::unordered\_map}（132.5 us（每次操作））的约1/342，即342倍的
+速度优势。$n=5\times10^4$时\texttt{Facility}约为\texttt{std::unordered\_map}的180倍，
 $n=10^5$时扩大到342倍。
 
 \subsection{分析}
@@ -1221,9 +1221,9 @@ $n=10^5$时扩大到342倍。
 对数关系（约$\log_2(\text{同前缀键数})$）。
 8-bit 查找表将$\log_2 n$的前8层替换为$O(1)$查表，降低了常数因子。
 
-Facility在高碰撞条件下维持稳定性能原因不在于splitmix64本身的均匀性，而在于字典树的位级分岔结构。字典树将键的64-bit哈希视为独立的比特串，每一位决定子树的选择方向。即便在极端情况下两个不同键经splitmix64得到相同的64-bit哈希输出（概率约$2^{-64}$），它们也仅会在字典树中共享同一叶节点，不会产生链式冲突，因为字典树的节点本身不维护冲突链表，叶节点仅存储单一键的指纹和功能值。换言之，哈希碰撞在字典树中的语义退化为键更新（后插入的键覆盖前者），而非形成线性退化路径。碰撞抵抗因此是字典树数据结构的固有属性，与所选用哈希函数的碰撞概率无关。在实际的BadHash碰撞实验中，Facility内部仍对原始键执行splitmix64混合，键的实际哈希值在64-bit空间内均匀分布，字典树路径在统计上不相关，查询延迟维持在$O(\log n)$范围。\texttt{std::unordered\_map}与此形成鲜明对比：其桶结构是哈希值空间的直接划分，BadHash返回0使得整个键空间坍缩至单一冲突链，查询路径退化为顺序遍历。
+\texttt{Facility}在高碰撞条件下维持稳定性能原因不在于\texttt{splitmix64}本身的均匀性，而在于字典树的位级分岔结构。字典树将键的64-bit哈希视为独立的比特串，每一位决定子树的选择方向。即便在极端情况下两个不同键经\texttt{splitmix64}得到相同的64-bit哈希输出（概率约$2^{-64}$），它们也仅会在字典树中共享同一叶节点，不会产生链式冲突，因为字典树的节点本身不维护冲突链表，叶节点仅存储单一键的指纹和功能值。换言之，哈希碰撞在字典树中的语义退化为键更新（后插入的键覆盖前者），而非形成线性退化路径。碰撞抵抗因此是字典树数据结构的固有属性，与所选用哈希函数的碰撞概率无关。在实际的\texttt{BadHash}碰撞实验中，\texttt{Facility}内部仍对原始键执行\texttt{splitmix64}混合，键的实际哈希值在64-bit空间内均匀分布，字典树路径在统计上不相关，查询延迟维持在$O(\log n)$范围。\texttt{std::unordered\_map}与此形成鲜明对比：其桶结构是哈希值空间的直接划分，\texttt{BadHash}返回0使得整个键空间坍缩至单一冲突链，查询路径退化为顺序遍历。
 
-此外，Facility在碰撞条件下的内存占用并未显著膨胀
+此外，\texttt{Facility}在碰撞条件下的内存占用并未显著膨胀
 $n=5\times10^4$时内存为1.4 MB，$n=10^5$时为3.6 MB，与良好哈希条件下
 同规模的内存水平基本一致（分别为2.2 MB和4.2 MB）。这表明字典树路由架构
 不仅在查询延迟上具备碰撞抑制能力，在空间效率上也维持了较好的稳定性。
@@ -1237,11 +1237,11 @@ $n=5\times10^4$时内存为1.4 MB，$n=10^5$时为3.6 MB，与良好哈希条件
 内存每键约44--46 B/key。与\texttt{std::unordered\_map}相比，插入慢约15--18倍，
 查询慢约20--25倍，内存多约1.4--1.7倍。当$n$增至$10^6$时，合并操作导致的
 摊还成本使插入升至7.47 us（每次操作）（约12倍于小规模），内存升至102 B/key
-（约3.2倍于\texttt{unordered\_map}）。
+（约3.2倍于\texttt{std::unordered\_map}）。
 
 在极端碰撞条件下，两类方案的表现倒置。所有键集中于
-同一哈希桶时，\texttt{unordered\_map}的查询延迟随$n$线性增长
-（$n=10^5$时132.5 us（每次操作）），Facility为0.39 us（每次操作），
+同一哈希桶时，\texttt{std::unordered\_map}的查询延迟随$n$线性增长
+（$n=10^5$时132.5 us（每次操作）），\texttt{Facility}为0.39 us（每次操作），
 速度差距约342倍。本方案的适用场景并非与标准库在常规负载下
 竞争绝对速度，而是面向对哈希碰撞场景开放哈希服务的安全防护、
 面对对抗性输入的数据库索引，以及需严格最坏情况保证的实时系统。
@@ -1261,29 +1261,29 @@ $n=5\times10^4$时内存为1.4 MB，$n=10^5$时为3.6 MB，与良好哈希条件
 
 适配层以\texttt{KickHash64}作为哈希函数：调用两次LevelDB内置\texttt{Hash()}
 （不同种子），将两路32-bit结果拼接为64-bit哈希值，单次调用5.17 ns。
-\texttt{KickHashTable}包装Facility对象，对外暴露\texttt{Insert}、
-\texttt{Get}和\texttt{Remove}三个接口。Facility的\texttt{lookup\_value}
+\texttt{KickHashTable}包装\texttt{Facility}对象，对外暴露\texttt{Insert}、
+\texttt{Get}和\texttt{Remove}三个接口。\texttt{Facility}的\texttt{lookup\_value}
 以bool返回值替代异常，适配LevelDB的\texttt{-fno-exceptions}编译环境。
 
 适配过程中涉及三个具体的技术问题。
 
 分片到\texttt{uint64\_t}的语义映射：LevelDB的键类型为分片（字节串指针加长度），
-而Facility的操作接口以\texttt{uint64\_t}为键。\texttt{KickHash64}通过双种子
+而\texttt{Facility}的操作接口以\texttt{uint64\_t}为键。\texttt{KickHash64}通过双种子
 \texttt{Hash()}调用将任意长分片映射到64-bit哈希空间，利用\texttt{splitmix64}的
-雪崩效应保证位级均匀分布。该映射是单向的，Facility内部不保有分片的原始字节，
-因此查询命中后必须回退至内存表的Arena缓冲区做二进制比对，以排除$10^{-7}$量级的
+雪崩效应保证位级均匀分布。该映射是单向的，\texttt{Facility}内部不保有分片的原始字节，
+因此查询命中后必须回退至内存表的\texttt{Arena}缓冲区做二进制比对，以排除$10^{-7}$量级的
 64-bit哈希碰撞。
 
 异常处理规范的冲突：LevelDB编译时指定\texttt{-fno-exceptions}，要求所有
-代码路径以返回码传递错误信息。Facility的原始设计中部分函数通过抛出异常报告容量
+代码路径以返回码传递错误信息。\texttt{Facility}的原始设计中部分函数通过抛出异常报告容量
 越界和踢出链失败；适配时将这些路径全部改写为bool返回值，调用方在每次操作后检查
 返回值并决定重试或回退到跳跃链表路径。
 
-Arena指针的生命周期保证：LevelDB的内存表将键值对存储于Arena内存池中，
-Arena随内存表析构而整体释放。\texttt{KickHashTable}通过Facility的快照特性
-仅存储Arena缓冲区中的裸指针，不执行键值数据的深拷贝。这要求确保内存表与
+\texttt{Arena}指针的生命周期保证：LevelDB的内存表将键值对存储于\texttt{Arena}内存池中，
+\texttt{Arena}随内存表析构而整体释放。\texttt{KickHashTable}通过\texttt{Facility}的快照特性
+仅存储\texttt{Arena}缓冲区中的裸指针，不执行键值数据的深拷贝。这要求确保内存表与
 \texttt{KickHashTable}的生命周期严格绑定：\texttt{KickHashTable}的析构必须在
-Arena被销毁前完成，以避免悬空指针。当前集成通过在内存表析构函数中显式调用
+\texttt{Arena}被销毁前完成，以避免悬空指针。当前集成通过在内存表析构函数中显式调用
 \texttt{kick\_table\_.Reset()}来保证此顺序。
 
 在构建系统层面，CMake集成通过\texttt{option(USE\_KICK\_HASH)}定义编译开关，
@@ -1292,17 +1292,17 @@ Arena被销毁前完成，以避免悬空指针。当前集成通过在内存表
 开销与原始LevelDB完全一致。
 
 在内存表层面，写入路径（Add）在执行原有跳跃链表插入后，通过\newline
-\texttt{kick\_table\_.Insert}将Arena缓冲区指针同步存入Facility；查询路径（Get）
-优先以$O(1)$期望时间查询KickHashTable，命中后解析Arena缓冲区并做原始分片比对
+\texttt{kick\_table\_.Insert}将\texttt{Arena}缓冲区指针同步存入\texttt{Facility}；查询路径（Get）
+优先以$O(1)$期望时间查询\texttt{KickHashTable}，命中后解析\texttt{Arena}缓冲区并做原始分片比对
 以防64-bit哈希碰撞（概率约$10^{-7}$），未命中则回退至跳跃链表的$O(\log n)$
 查找。迭代器操作不受影响，始终基于跳跃链表的有序遍历能力。
 
 \section{双向开关设计}
 
 系统提供编译期和运行时两层开关。编译期通过CMake选项\newline
-\texttt{-DUSE\_KICK\_HASH=ON/OFF}决定是否编译KickHash相关代码
+\texttt{-DUSE\_KICK\_HASH=ON/OFF}决定是否编译\texttt{KickHash}相关代码
 关闭时无任何二进制膨胀或间接损耗。运行时通过\texttt{SetUseKickHash(bool)}接口
-支持同一进程内不同内存表实例独立选择策略，便于A/B对比测试。运行时切换允许在不停机、不重新编译的情况下在生产环境中动态开启或关闭KickHash加速：开发者可通过配置文件或管理接口实时控制启用状态，对同一组查询请求分别对比跳跃链表路径和KickHash路径的延迟分布与内存开销后选定最优策略。对于内存表写满后频繁切换的日志结构合并树引擎，该机制还支持按内存表实例粒度差异化配置，对热点查询密集的只读 内存表开启KickHash加速，对冷数据内存表保持默认跳跃链表以节省内存。
+支持同一进程内不同内存表实例独立选择策略，便于A/B对比测试。运行时切换允许在不停机、不重新编译的情况下在生产环境中动态开启或关闭\texttt{KickHash}加速：开发者可通过配置文件或管理接口实时控制启用状态，对同一组查询请求分别对比跳跃链表路径和\texttt{KickHash}路径的延迟分布与内存开销后选定最优策略。对于内存表写满后频繁切换的日志结构合并树引擎，该机制还支持按内存表实例粒度差异化配置，对热点查询密集的只读 内存表开启\texttt{KickHash}加速，对冷数据内存表保持默认跳跃链表以节省内存。
 
 \section{集成验证}
 
@@ -1313,14 +1313,14 @@ Arena被销毁前完成，以避免悬空指针。当前集成通过在内存表
 \centering
 \begin{tabular}{c|c|c}
 \toprule
-\textbf{验证项目} & \textbf{测试条件} & \textbf{实测结果} \\
+验证项目 & 测试条件 & 实测结果 \\
 \midrule
-KickHash64调用延迟 & 单次调用 & 5.17 ns \\
+\texttt{KickHash64}调用延迟 & 单次调用 & 5.17 ns \\
 插入延迟 & $n=2\times10^5$，16字节随机键 & 0.86 us（每次操作） \\
 查询延迟 & $n=2\times10^5$，16字节随机键 & 0.35 us（每次操作） \\
 删除延迟 & $n=2\times10^5$，16字节随机键 & 0.56 us（每次操作） \\
 全量查询正确率 & $n=10^6$次查询 & 100\% \\
-适配层开销占比 & KickHash64/总插入延迟 & $<0.15\%$ \\
+适配层开销占比 & \texttt{KickHash64}/总插入延迟 & $<0.15\%$ \\
 \bottomrule
 \end{tabular}
 \caption{集成验证主要结果}
@@ -1331,7 +1331,7 @@ KickHash64调用延迟 & 单次调用 & 5.17 ns \\
 在$n=2\times10^5$时查询延迟为0.35 us（每次操作），$n=10^6$时约0.74 us（每次操作），
 内存占用与第五章独立基准测试的测量数据一致（$n=2\times10^5$时约9 MB，
 $n=10^6$时约97 MB）。全部$10^6$次查询正确率为100\%，
-未出现任何因64-bit哈希碰撞或Arena指针失效导致的误判。
+未出现任何因64-bit哈希碰撞或\texttt{Arena}指针失效导致的误判。
 
 %=====================================================================
 \chapter{总结与展望}
@@ -1342,40 +1342,40 @@ $n=10^6$时约97 MB）。全部$10^6$次查询正确率为100\%，
 系统集成的完整研究链条：
 
 \begin{enumerate}
-  \item \textbf{核心算法实现}。以C++23完成了四层组件的纯头文件模板实现（总计约1065行）：
-    MiniArray位压缩数组（261行）、LocalQueryRouter紧凑二叉字典树+查找表路由（350行）、
-    Cubby弹性哈希表含free\_bitmap\_优先踢出链（419行）、Facility全局管理器含
+  \item 核心算法实现。以C++23完成了四层组件的纯头文件模板实现（总计约1065行）：
+    \texttt{MiniArray}位压缩数组（261行）、\texttt{LocalQueryRouter}紧凑二叉字典树+查找表路由（350行）、
+    \texttt{Cubby}弹性哈希表含free\_bitmap\_优先踢出链（419行）、\texttt{Facility}全局管理器含
     惰性状态标记合并策略（233行）。
 
-  \item \textbf{优先级踢出机制的精确对齐}。实现了try\_place递归踢出链搜索、
-    reserved参数防回退、KickList层级传递等关键细节，保证论文\S3.1\cite{1}
+  \item 优先级踢出机制的精确对齐。实现了try\_place递归踢出链搜索、
+    reserved参数防回退、\texttt{KickList}层级传递等关键细节，保证论文\S3.1\cite{1}
     的优先级约束在代码层面逐条落地。
 
-  \item \textbf{多维度的定量实验}。以\texttt{std::unordered\_map}为对照，
+  \item 多维度的定量实验。以\texttt{std::unordered\_map}为对照，
     在良好哈希（$n\in[5\times10^4,10^6]$）和单桶碰撞（$n\in[10^3,10^5]$）
     两种条件下完成插入、查询、删除和内存四项对比，每组5次独立试验。
     良好哈希条件下$n=2\times10^5$时插入约1.09 us（每次操作）、查询约0.43 us（每次操作）、
     空间约44 B/key；惰性状态标记合并将合并成本控制在$O(\text{merged\_keys})$。
-    高碰撞实验中，Facility在单桶冲突链长$10^5$条件下查询仅0.39 us（每次操作），
-    而\texttt{unordered\_map}退化至132.5 us（每次操作）（为Facility的342倍）。
+    高碰撞实验中，\texttt{Facility}在单桶冲突链长$10^5$条件下查询仅0.39 us（每次操作），
+    而\texttt{std::unordered\_map}退化至132.5 us（每次操作）（为\texttt{Facility}的342倍）。
 
-  \item \textbf{LevelDB集成与双向开关}。以适配器模式将方案集成至LevelDB 内存表，
-    实现KickHash64类型映射（5.17 ns/op）、Add/Get路径条件编译改造、
+  \item LevelDB集成与双向开关。以适配器模式将方案集成至LevelDB 内存表，
+    实现\texttt{KickHash64}类型映射（5.17 ns/op）、Add/Get路径条件编译改造、
     以及编译期CMake开关与运行时\texttt{SetUseKickHash()}双层级开关。
     集成验证中$10^6$次查询正确率100\%，适配层开销$<0.15\%$。
 \end{enumerate}
 
 \section{理论与实践}
-单从理论实现来看，Facility哈希方案的理论空间复杂度应当为
+单从理论实现来看，\texttt{Facility}哈希方案的理论空间复杂度应当为
 $O(\log ^{(k)}n)$，在本文实现中$k=4$。
 这个理论空间复杂度低于一般哈希表的理论空间下限。但实际实现时，
-每个 Cubby 都有独立的压缩二进制 字典树 作为路由表。而且本实现由于设计上的
-缺陷，Cubby 按 \texttt{bin\_sizes}（$s\_[]$）分配 slot 容量，bin 大小是按高概率保证设计的，
-大量 slot 实际为空。且合并 cubby 时，为保持索引稳定性，旧 Cubby 只是标记失效
+每个 \texttt{Cubby} 都有独立的压缩二进制 字典树 作为路由表。而且本实现由于设计上的
+缺陷，\texttt{Cubby} 按 \texttt{bin\_sizes}（$s\_[]$）分配 slot 容量，bin 大小是按高概率保证设计的，
+大量 slot 实际为空。且合并 cubby 时，为保持索引稳定性，旧 \texttt{Cubby} 只是标记失效
 但不释放内存（为保持索引稳定），造成内存积压。
 
-而在理论设计上，在良好哈希条件下，Facility 哈希方案的时间复杂度为$O(k)$，\newline
-而\texttt{std::unordered\_map}为$O(1)$，略快于 Facility。从实际表现上来看，
+而在理论设计上，在良好哈希条件下，\texttt{Facility} 哈希方案的时间复杂度为$O(k)$，\newline
+而\texttt{std::unordered\_map}为$O(1)$，略快于 \texttt{Facility}。从实际表现上来看，
 在未触发大量 cubby 合并时二者都相当接近理论值，但当触发 cubby 大量合并后
 本应当被摊还的合并成本被实际执行，导致性能下降。
 
@@ -1383,18 +1383,18 @@ $O(\log ^{(k)}n)$，在本文实现中$k=4$。
 \section{不足与展望}
 
 \begin{itemize}
-  \item \textbf{Per-cubby独立路由器}。\newline
+  \item \texttt{Per-cubby}独立路由器。\newline
     当前依赖单一全局\texttt{cubby\_router\_}，
     合并时需逐键更新。论文\cite{1}的per-cubby多路由器架构每路由器仅处理约
     $O(\log n/\log\log n)$个键可将合并成本进一步压缩。
-  \item \textbf{动态容量模型的常数调节}。$C_j=K/(\log^{(j)}n)^2$中
+  \item 动态容量模型的常数调节。$C_j=K/(\log^{(j)}n)^2$中
     $K\approx 409600$为固定值，应根据$n$自适应调节，改善大$n$下的空间利用率。
-  \item \textbf{参数$k$的可配置化}。当前$k$由\texttt{compute\_kick\_params}
+  \item 参数$k$的可配置化。当前$k$由\texttt{compute\_kick\_params}
     自动推导（通常收敛于$k\approx 4$），应提升为可配置参数，使用户按需调节
     时空权衡曲线。
-  \item \textbf{多线程并发支持}。当前为单线程串行模型，但不同bin和Cubby之间
+  \item 多线程并发支持。当前为单线程串行模型，但不同bin和\texttt{Cubby}之间
     具备天然的并行性，可探索细粒度锁或无锁实现。
-  \item \textbf{查找表位宽扩展}。当前8-bit 查找表（256项，1 KB）可将查询深度缩减约40\%。
+  \item 查找表位宽扩展。当前8-bit 查找表（256项，1 KB）可将查询深度缩减约40\%。
     扩展至12-bit（4096项）或16-bit（65536项）可进一步逼近完整四俄罗斯人方法\cite{7}
     的$O(1)$查询复杂度。
 \end{itemize}
