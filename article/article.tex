@@ -481,7 +481,7 @@ Luo和Carey的综述\cite{13}指出，改进内存表的索引结构是降低
     而非\texttt{CityHash}或\texttt{xxHash}等重型方案。\texttt{splitmix64}的64-bit雪崩混合步骤位扩散均匀，
     通过不同种子值可生成任意数量统计独立的哈希函数\cite{9}，单次调用成本
     极低（约5\,ns），适合字典树查询路径上的高频调用。
-  \item 与std::unordered\_map的定位差异。\newline
+  \item 与\texttt{std::unordered\_map}的定位差异。\newline
     C++标准库的\texttt{std::unordered\_map}\newline
     基于链式寻址法，在良好哈希条件下
     性能出色，但其查询路径依赖单个哈希函数的均匀性，对恶意
@@ -630,7 +630,7 @@ $256 \times 4\text{B} = 1\text{KB}$空间，将字典树查询深度缩减8层�
       \IF{成功}
         \STATE victim移入新槽，新键占据该槽
         \RETURN
-      \ELSE 恢复原槽
+      \ELSE \STATE 恢复原槽
       \ENDIF
     \ENDIF
   \ENDIF
@@ -640,7 +640,7 @@ $256 \times 4\text{B} = 1\text{KB}$空间，将字典树查询深度缩减8层�
 \end{algorithm}
 
 被踢键保持原深度，在其自身深度bin中寻找新空位。算法中的\texttt{reserved}
-参数防止被踢键在递归扫描时``发现''刚被清空的原槽。
+参数防止被踢键在递归扫描时发现刚被清空的原槽。
 
 \subsection{容量尺度}
 
@@ -712,9 +712,10 @@ Tier & \texttt{max\_cubbies} & 触发条件 \\
 \texttt{Cubby::route\_}定位到相应槽位，最后调用\texttt{lookup\_at}比对键值验证这个被查询的键值是否存在。
 
 删除：\texttt{cubby\_router\_}根据哈希值定位目标\texttt{cubby}，
-然后执行\newline
+然后执行方法\newline
 \texttt{Cubby::remove\_at}移除键值对并释放槽位，
-随后清理\texttt{cubby\_router\_.remove}更新路由表空闲标记。
+随后清理，即通过调用方法\newline
+\texttt{cubby\_router\_.remove}来更新路由表空闲标记。
 
 %=====================================================================
 \chapter{算法实现}
@@ -802,30 +803,30 @@ Non-uniform并平铺写入。
 
 查询 (\texttt{probe\_index})：对 key 计算哈希得到 64-bit 二元串，
 从根节点沿 最低有效位 位遍历 字典树。若 查找表 有效则跳过前 8 层直接跳转至目标节点。
-遇叶节点用指纹验证：匹配则返回 f\_value，否则返回 \texttt{SIZE\_MAX}。
+遇叶节点用指纹验证：匹配则返回 \texttt{f\_value}，否则返回 \texttt{SIZE\_MAX}。
 
-插入 (insert)：沿 key 的 最低有效位 哈希位遍历 字典树。五种情况：
+插入 (\texttt{insert})：沿 key 的 最低有效位 哈希位遍历 字典树。五种情况：
 \begin{enumerate}
-  \item 遇叶节点且指纹匹配：更新 f\_value
+  \item 遇叶节点且指纹匹配：更新 \texttt{f\_value}
   \item 遇叶节点且指纹为0（空叶，首次使用）：覆盖为新键数据
   \item 遇叶节点但指纹不匹配：执行 \texttt{do\_split()} 分裂。
     找分叉深度，创建内部节点链，在分叉处创建两新叶
-  \item 遇内部节点但方向为 NO\_CHILD：创建新叶并链接
+  \item 遇内部节点但方向为 \texttt{NO\_CHILD}：创建新叶并链接
   \item 路径走到头：追加新叶节点
 \end{enumerate}
 插入结束后若 \texttt{nodes\_.size()} 变化则失效 查找表。
 
-do\_split(leaf\_idx, depth, e\_hash, e\_fval, n\_hash, n\_fval)：
+\texttt{do\_split(leaf\_idx, depth, e\_hash, e\_fval, n\_hash, n\_fval)}：
 \begin{enumerate}
-  \item 从 depth 起找两 hash 的首个分叉位 \texttt{diverge}
-  \item 从 depth 到 \texttt{diverge}-1 逐位创建内部节点链（每次 alloc\_node）
+  \item 从 depth 起找两 \texttt{hash} 的首个分叉位 \texttt{diverge}
+  \item 从 depth 到 \texttt{diverge}-1 逐位创建内部节点链（每次 \texttt{alloc\_node}）
   \item 若当前节点为原叶：转换为 \texttt{internal}；若为内部节点：更新对应方向子指针
-  \item 在 \texttt{diverge} 处创建 e\_leaf（已存键）和 n\_leaf（新键）
+  \item 在 \texttt{diverge} 处创建 \texttt{e\_leaf}（已存键）和 \texttt{n\_leaf}（新键）
   \item 设置最后一个内部节点的左右子节点为两叶
 \end{enumerate}
 
-删除 (remove)：沿 字典树 walk 找到匹配叶节点，写入空叶标记
-（即下述两个变量fval=0, hash=0的节点），n\_entries\_--。
+删除 (\texttt{remove})：沿 字典树 遍历 找到匹配叶节点，写入空叶标记
+（即下述两个变量 \texttt{fval}=0, \texttt{hash}=0 的节点），\texttt{n\_entries\_}触发自减。
 
 \subsection{显式双指针与查找表协同}
 
@@ -896,9 +897,9 @@ size_t find_free_in_bin(size_t bin_start, size_t bin_end, size_t reserved) {
 
 \texttt{lookup(key)}：
 \begin{enumerate}
-  \item \texttt{cubby\_router\_.probe\_index(key)} 获取 cubby索引$ci$。
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_slot}(key)$ 获取槽索引$slot$。
-  \item $\text{cubbies\_}[ci].\texttt{lookup\_at}(slot, key)$ 获取返回值。
+  \item \texttt{cubby\_router\_.probe\_index(key)} 获取索引$ci$。
+  \item \texttt{cubbies\_[ci].lookup\_slot(key)} 获取槽索引$slot$。
+  \item \texttt{cubbies\_[ci].lookup\_at(slot, key)} 获取返回值。
 \end{enumerate}
 
 \subsection{合并与路由更新}
@@ -990,8 +991,8 @@ $O(\log^{(k)} n)$比特，其中$\log^{(k)} n$表示对$n$取$k$次迭代对数�
     旋转算法\cite{25}预先生成。对每个数据规模使用5个不同的随机种子独立生成5组数据集，
     报告5次试验的均值和标准差，以控制单次实验的偶然波动。
 
-  \item 测试流程：每组实验按照``插入全部$n$个元素，查询全部$n$个元素，
-    删除全部$n$个元素''的顺序执行。每个阶段的操作耗时通过C++标准库中的
+  \item 测试流程：每组实验按照插入全部$n$个元素，查询全部$n$个元素，
+    删除全部$n$个元素的顺序执行。每个阶段的操作耗时通过C++标准库中的
     \texttt{std::chrono::high\_resolution\_clock}测量并转换为微秒。
     报告的总时间为该阶段对所有$n$个元素操作的总耗时，均值除以$n$得到每操作时间。
 
@@ -1295,7 +1296,7 @@ $n=5\times10^4$时内存为1.4 MB，$n=10^5$时为3.6 MB，与良好哈希条件
 \texttt{kick\_table\_.Insert}将\texttt{Arena}缓冲区指针同步存入\texttt{Facility}；查询路径（Get）
 优先以$O(1)$期望时间查询\texttt{KickHashTable}，命中后解析\texttt{Arena}缓冲区并做原始分片比对
 以防64-bit哈希碰撞（概率约$10^{-7}$），未命中则回退至跳跃链表的$O(\log n)$
-查找。迭代器操作不受影响，始终基于跳跃链表的有序遍历能力。
+查找。迭代器操作不受影响，只基于跳跃链表有序遍历能力。
 
 \section{双向开关设计}
 
@@ -1374,7 +1375,7 @@ $O(\log ^{(k)}n)$，在本文实现中$k=4$。
 大量 slot 实际为空。且合并 cubby 时，为保持索引稳定性，旧 \texttt{Cubby} 只是标记失效
 但不释放内存（为保持索引稳定），造成内存积压。
 
-而在理论设计上，在良好哈希条件下，\texttt{Facility} 哈希方案的时间复杂度为$O(k)$，\newline
+而在理论设计上，在良好哈希条件下，\texttt{Facility} 哈希方案的时间复杂度为$O(k)$，
 而\texttt{std::unordered\_map}为$O(1)$，略快于 \texttt{Facility}。从实际表现上来看，
 在未触发大量 cubby 合并时二者都相当接近理论值，但当触发 cubby 大量合并后
 本应当被摊还的合并成本被实际执行，导致性能下降。
